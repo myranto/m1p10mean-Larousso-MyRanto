@@ -1,0 +1,61 @@
+emp:
+    -id
+    -name
+    -mail
+    -password
+    -profile
+    -start_time
+    -end_time
+
+customer:
+    -id
+    -name
+    -mail
+    -password
+    -prefered_service
+    -prefered_emp
+
+admin:
+    -name
+    -mail
+    -password
+
+service:
+    -id
+    -name
+    -price
+    -commission
+    -duration
+
+discount:
+    -id
+    -name
+    -percent
+    -is_service
+
+meeting:
+    -id
+    -customer_id
+    -emp_id
+    -meeting_date
+    -discount_id
+
+meet_service:
+    -meeting_id
+    -service_id
+    -discount_id
+
+pay:
+    -meeting_id
+    -amount
+    -commission
+
+type_cost:
+    -id
+    -nom
+
+cost:
+    -id
+    -cost_id
+    -date_cost
+    -value
