@@ -5,9 +5,9 @@ const user = require('../../models/person/User')
 //login user return user{name,mail,role,token}
 router.post('/login', async (req, res) => {
     const logged = await user.findOne({ mail: req.body.mail });
-    if (!logged) return res.status(400).send('Mail introuvable.');
+    if (!logged) return res.status(406).send('Mail introuvable.');
     console.log(logged.password);
-    if (req.body.password!==logged.password) return res.status(400).send('Mail ou mot de passe incorrect.')
+    if (req.body.password!==logged.password) return res.status(406).send('Mail ou mot de passe incorrect.')
     res.json({
         name:logged.name,
         mail:logged.mail,
@@ -17,14 +17,18 @@ router.post('/login', async (req, res) => {
 // register user
 router.post('/register',async (req,res)=>{
     try {
+        console.log(req.body);
         await user.create(req.body)
-        res.sendStatus(201)
+        return res.status(201).json('création réussi!');
     } catch (error) {
+        let message = error.message
         if(error.status){
-            res.status(error.status).json(error.message);
+            res.status(error.status).json(message);
         }
         else{
-            res.status(500).json(error.message)
+            if(error.code === 11000)
+                message = 'Email :'+req.body.mail+' déjà éxistant, veuillez choisir un autre'
+            res.status(500).json(message)
         }
     }
 })
@@ -37,5 +41,21 @@ router.put('/',async function(req,res){
         res.sendStatus(400).json(error);
     }
 });
-
+// find by role
+router.get('/find/:role',async function(req,res) {
+    try {
+        let model = await user.find({role: req.params.role});
+        if(!model){
+            throw {message:'not found',status:404};
+        } 
+        res.json(model);
+    } catch (error) {
+        if(error.status){
+            res.status(error.status).json(error.message);
+        }
+        else{
+            res.status(500).json(error);
+        }
+    }
+})
 module.exports = router;

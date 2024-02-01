@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
     profile: { type: String, required: false },
     prefered_service: { type: String, required:false},
     prefered_emp:{type: String, required:false},
-    start_time: { type: Date, required: false, validate: [validateStartTime, 'Start time must be valid'] },
-    end_time: { type: Date, required: false, validate: [validateEndTime, 'End time must be after start time'] }
+    start_time: { type: String, required: false},
+    end_time: { type: String, required: false }
 });
 // check if start_time is a valid date
 function validateStartTime(startTime) {
