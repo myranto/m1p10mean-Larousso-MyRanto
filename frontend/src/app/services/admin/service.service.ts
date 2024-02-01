@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { }
+import { Service } from '../../interfaces/service';
+import { host } from '../host';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
-  const url : string = "/service";
 
-  constructor(private http : HttpClient) { }
+  readonly url : string = "/service";
 
-  get() : Observable<
+  constructor() { }
+
+  async get() : Promise<Service[]> {
+    let response = await fetch(host+this.url);
+    return await response.json();
+  }
 
 }
+export { Service };
+
