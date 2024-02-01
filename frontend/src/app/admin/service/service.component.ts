@@ -1,13 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog'
 import { Service } from '../../interfaces/service';
 import { ServiceService } from '../../services/admin/service.service';
+import { FormComponent } from './form/form.component';
 
 @Component({
   selector: 'app-service',
   standalone: true,
   imports: [
-    MatTableModule
+    MatTableModule,
+    FormComponent,
   ],
   templateUrl: './service.component.html',
   styleUrl: './service.component.scss'
