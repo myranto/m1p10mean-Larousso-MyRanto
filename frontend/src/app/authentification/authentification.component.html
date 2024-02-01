@@ -1,0 +1,31 @@
+<mat-card>
+  <mat-card-content>
+    <form #loginForm="ngForm" (ngSubmit)="handleSubmit()">
+      <h2>Connexion</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Identifiant</mat-label>
+        <input matInput [(ngModel)]="username" name="username" required>
+        <mat-error>
+          Ce champ est obligatoire
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>mot de passe</mat-label>
+        <input matInput type="password"  [(ngModel)]="password" name="password" required>
+        <mat-error>
+          Ce champ est obligatoire
+        </mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="loginValid!=null">
+        {{loginValid}}
+      </mat-error>
+        <br>
+      <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Se connecter</button>
+      <p>
+
+      <a href="/authentification/register?role=customer" style="text-decoration: none; margin-right: 10px;">S'inscrire</a>
+      <a href="/forgot-password" style="text-decoration: none;">Mot de passe oublié</a>
+      </p>
+    </form>
+  </mat-card-content>
+</mat-card>

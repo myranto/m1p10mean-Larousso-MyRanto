@@ -15,7 +15,6 @@ export class ServiceService {
     let response = await fetch(host+this.url);
     return await response.json();
   }
-
 }
 export { Service };
 

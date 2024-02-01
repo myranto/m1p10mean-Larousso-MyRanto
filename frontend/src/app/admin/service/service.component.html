@@ -1,5 +1,4 @@
-<h1>Liste des services</h1>
-<service-form></service-form>
+<h1>{{ state }} error {{ error }}</h1>
 <table mat-table [dataSource]="models">
     <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Nom</th>
@@ -15,7 +14,7 @@
     </ng-container>
     <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef>Prix</th>
-        <td mat-cell *matCellDef="let model"> {{ model.price }}</td>
+        <th mat-cell *matCellDef="let model"> {{ model.price }}</th>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="headers"></tr>
     <tr mat-row *matRowDef="let row; columns: headers;"></tr>
