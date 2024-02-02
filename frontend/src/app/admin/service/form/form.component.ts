@@ -1,37 +1,32 @@
 import { Component, Inject, Input } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule} from '@angular/material/input';
 import { Service } from '../../../interfaces/service';
-import { MatButtonModule } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
-  MatDialogClose,
-  MatDialogModule
-} from '@angular/material/dialog';
+import { FormBuilder,ReactiveFormsModule,FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'service-form',
   standalone: true,
   imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogClose,
+    CommonModule,
+    ReactiveFormsModule,
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
 export class FormComponent {
-  constructor(public dialogService : MatDialogRef<FormComponent>,@Inject(MAT_DIALOG_DATA) public model : Service){
+  @Input() model! : Service;
+  form : FormGroup;
+  constructor(private formBuilder : FormBuilder){
+    this.form = this.formBuilder.group({
+      name:[this.model ? this.model.name : '',[Validators.required]],
+      price:[this.model ? this.model.price : 1,[Validators.min(1)]],
+      committee : [this.model ? this.model.committee : 0,[Validators.min(0),Validators.max(100)]],
+      duration:[this.model ? this.model.duration : 0,[Validators.min(0)]]
+    });
   }
 
-  onCancelClick() : void {
-    this.dialogService.close();
+  onSubmit(){
+    if(this.form.valid){
+      
+    }
   }
 }
