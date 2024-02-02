@@ -5,6 +5,7 @@
       <mat-error *ngIf="registerValid!=null">
         {{registerValid}}
       </mat-error>
+      <mat-error *ngIf="error_log">{{error_log}}</mat-error>
         <mat-form-field appearance="outline">
           <mat-label>Nom</mat-label>
           <input matInput [(ngModel)]="person.name" name="name" required>
@@ -12,14 +13,15 @@
             Ce champ est obligatoire
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Adresse email</mat-label>
-          <input matInput [(ngModel)]="person.mail" name="mail" required>
-          <mat-error>
-            Ce champ est obligatoire
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline">
+        <mat-label>Adresse email</mat-label>
+        <input matInput [(ngModel)]="person.mail" type="email" name="mail" required>
+        <mat-error >
+          Ce champ est obligatoire
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
           <mat-label>Mot de passe</mat-label>
           <input matInput type="password" [(ngModel)]="person.password" name="password" required>
           <mat-error>
@@ -47,7 +49,9 @@
       <div *ngIf="role === 'customer'">
         <mat-form-field appearance="outline">
           <mat-label>Service préféré</mat-label>
-          <input matInput  [(ngModel)]="person.prefered_service" name="prefered_service" >
+          <mat-select [(ngModel)]="person.prefered_service" name="prefered_service">
+            <mat-option *ngFor="let srv of service_list" [value]="srv._id">{{srv.name}} {{srv.duration}}min</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Employé préféré</mat-label>

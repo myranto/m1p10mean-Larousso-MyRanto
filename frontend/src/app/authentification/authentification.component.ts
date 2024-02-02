@@ -34,9 +34,10 @@ export class AuthentificationComponent {
       mail:this.username,
       password:this.password
     }
+    console.log(form)
     this.auth.login(form)
       .then((data)=>{
-           console.log(data)
+           localStorage.setItem('person_profil',JSON.stringify(data))
        })
       .catch((error)=>this.loginValid = error.message)
 

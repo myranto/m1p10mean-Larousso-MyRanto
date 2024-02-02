@@ -19,7 +19,12 @@ export class ServiceComponent {
   error : string = '';
   private service : ServiceService = inject(ServiceService);
 
-  constructor (){  
-    this.service.get().then(serviceList => this.models = serviceList).catch((e) => {this.state = 'error'; this.error = e});
+  constructor (){
+    this.service.get().then(serviceList => this.models = serviceList)
+      .catch((e) => {
+        console.log(e)
+      this.state = 'error';
+        this.error = e
+    });
   }
 }
