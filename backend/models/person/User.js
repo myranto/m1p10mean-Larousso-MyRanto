@@ -11,14 +11,6 @@ const userSchema = new mongoose.Schema({
     start_time: { type: String, required: false},
     end_time: { type: String, required: false }
 });
-// check if start_time is a valid date
-function validateStartTime(startTime) {
-    return !isNaN(new Date(startTime));
-}
-// verification que endTime est après startTime
-function validateEndTime(endTime) {
-    return this.start_time && endTime > this.start_time;
-}
 
 
 module.exports = mongoose.model('User', userSchema);

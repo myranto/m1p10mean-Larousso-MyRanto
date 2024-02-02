@@ -34,3 +34,10 @@ db.users.insert([
         "role":"customer",
     }
 ])
+
+db.services.insertMany([
+  { name: 'Service1', price: 100, committee: 20, duration: 60 },
+  { name: 'Service2', price: 200, committee: 30, duration: 120 },
+  { name: 'Service3', price: 150, committee: 25, duration: 90 },
+  { name: 'Service4', price: 300, committee: 50, duration: 180 }
+])
