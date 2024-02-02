@@ -13,7 +13,7 @@ export class AuthService {
   }
 //   login vers express
   async login(form:any): Promise<User|string> {
-      return  await postCall(`${this.url }/login`,form)
+      return  await postCall(`${this.url }/login`,form,false)
   }
 // register
   async register(form:any): Promise<string> {
