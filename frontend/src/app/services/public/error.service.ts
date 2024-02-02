@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ErrorComponent } from '../../public/error/error.component';
 
 @Injectable({
@@ -7,13 +6,5 @@ import { ErrorComponent } from '../../public/error/error.component';
 })
 export class ErrorService {
 
-  constructor(public dialog : MatDialog) { }
-  showError(error : string) : void {
-    console.log(error);
-    
-    console.log(this.dialog);
-    this.dialog.open(ErrorComponent,{
-      data:{error},
-    })
-  }
+  constructor() { }
 }

@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ErrorComponent } from '../../public/error/error.component';
 import { ErrorService } from '../../services/public/error.service';
+import {TableModule} from 'primeng/table';
 
 @Component({
   selector: 'app-service',
@@ -14,7 +15,8 @@ import { ErrorService } from '../../services/public/error.service';
     FormComponent,
     ErrorComponent,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    TableModule
   ],
   templateUrl: './service.component.html',
   styleUrl: './service.component.scss'
@@ -26,9 +28,5 @@ export class ServiceComponent {
   private service : ServiceService = inject(ServiceService);
 
   constructor (private errorService : ErrorService){  
-    this.service.get().subscribe({
-      next : serviceList => this.models = serviceList,
-      error : this.errorService.showError
-    });
   }
 }
