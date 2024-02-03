@@ -3,13 +3,16 @@ const router = express.Router();
 const user = require('../../models/person/User');
 const User = require('../../models/person/User');
 const { generateAccessToken } = require('../../jwt');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 //login user return user{name,mail,role,token}
 router.post('/login', async (req, res) => {
     const logged = await user.findOne({ mail: req.body.mail });
     console.log(req.body.mail);
     if (!logged) return res.status(406).json('Mail introuvable.');
-    if (req.body.password!==logged.password) return res.status(406).json('Mail ou mot de passe incorrect.')
+
+    if (!bcrypt.compare(req.body.password,logged.password)) return res.status(406).json('Mail ou mot de passe incorrect.')
     res.json({
         name:logged.name,
         mail:logged.mail,
@@ -21,6 +24,7 @@ router.post('/login', async (req, res) => {
 router.post('/register',async (req,res)=>{
     try {
         const person =  new User(req.body)
+        req.body.password = await bcrypt.hash(req.body.password,saltRounds)
         if (person.start_time && person.end_time) {
             const startDate = new Date(`2024-01-01T${person.start_time}:00`);
             const endDate = new Date(`2024-01-01T${person.end_time}:00`);
@@ -44,11 +48,24 @@ router.post('/register',async (req,res)=>{
         }
     }
 })
+router.put('/recovery',async function (req,res) {
+    try {
+        const one = user.findOne({ mail: req.body.mail })
+        if (!one) {
+            res.status(404).json('Mail introuvable.')
+        }
+        one.password = await bcrypt.hash(req.body.password,saltRounds)
+        await user.updateOne(one);
+        res.status(200).json('modification réussi');
+    } catch (error) {
+        res.sendStatus(400).json(error.message);
+    }
+})
 // updated user
 router.put('/',async function(req,res){
     try {
         await user.updateOne(req.body);
-        res.sendStatus(200);
+        res.status(200).json('modification réussi');
     } catch (error) {
         res.sendStatus(400).json(error.message);
     }

@@ -1,13 +1,14 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const excludedPaths = require('./config')
+const excludedPaths = require('./config');
+const isPathExcluded = require('./config');
 
 function generateAccessToken(username) {
     return jwt.sign({ username: username }, process.env.TOKEN_SECRET, { expiresIn: '12h' });
 }
 
  function authenticateToken(req, res, next) {
-    if (!excludedPaths.includes(req.path)) {
+    if (!isPathExcluded(req)) {
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
         if (token == null) return res.status(401).json('veuillez vous connecter')
