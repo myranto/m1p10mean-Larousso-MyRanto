@@ -1,6 +1,6 @@
-export interface Service {
-    _id:string,
-    name:string,
+import { HasId } from "./hasId";
+
+export interface Service extends HasId {
     duration:number,
     committee:number,
     price:number

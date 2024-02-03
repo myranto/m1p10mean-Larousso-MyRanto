@@ -1,23 +1,24 @@
-<p-dialog [(visible)]="show" [modal]="true" [draggable]="false" [closable]="false" [resizable]="false">
-    <h2>{{ model ? 'Modification de service' : 'Création de service' }} {{huhu}}</h2>
-    <form [formGroup]="form" id="service-form">
-        <span class="p-float-label field">
-            <input pInputText id="name" formControlName="name" />
-            <label for="name">Nom</label>
-        </span>
-        <span class="p-float-label field">
-            <input pInputText id="name" formControlName="price" />
-            <label for="name">Prix</label>
-        </span>
-        <span class="p-float-label field">
-            <input pInputText id="name" formControlName="committee" />
-            <label for="name">Commission</label>
-        </span>
-        <span class="p-float-label field">
-            <input pInputText id="name" formControlName="duration" />
-            <label for="name">Durée en minute</label>
-        </span>
-        <p-button class="button" label="Valider" type="submit" [loading]="loading"></p-button>
-        <p-button class="button" (onClick)="onCancel()" label="Annuler"></p-button>
-    </form>
-</p-dialog>
+<form (submit)="onSubmit()" [formGroup]="form" class="service-form">
+    <div class="field">
+        <label class="block" for="name">Nom</label>
+        <input pInputText required id="name" formControlName="name" />
+        <small id="name-help">Le nom est requis</small> 
+    </div>
+    <div class="field">
+        <label class="block" for="price">Prix</label>
+        <input pInputText required id="price" formControlName="price" />
+        <small id="price-help">Le prix doit être un nombre positif</small> 
+    </div>
+    <div class="field">
+        <label class="block" for="committee">Commission</label>
+        <input pInputText required id="committee" formControlName="committee" />
+        <small id="committee-help">La comission doit être un nombre entre 0 et 100</small>
+    </div>
+    <div class="field">
+        <label class="block" for="duration">Durée en minute</label>
+        <input pInputText required id="duration" formControlName="duration" />
+        <small id="duration-help" >La durée doit être un nombre supérieur ou égal à 0</small> 
+    </div>
+    <button pButton [loading]="loading" class="button p-button-success" type="submit">Valider</button>
+    <button pButton type="button" class="button p-button-danger" (click)="onCancel()">Annuler</button>
+</form>

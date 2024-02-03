@@ -8,6 +8,7 @@ require('dotenv').config();
 require('./db')
 
 var serviceRouter = require('./routes/service');
+var typeCostRouter = require('./routes/type_cost');
 var app = express();
 
 app.use(cors());
@@ -18,6 +19,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/service', serviceRouter);
+app.use('/typeCost',typeCostRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

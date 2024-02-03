@@ -1,6 +1,5 @@
 <h2>Liste des services</h2>
-<p-button label="Ajouter un service" (onClick)="showCreate()" icon="pi pi-plus"></p-button>
-<service-form [show]="create" [huhu]="create" [closeAction]="closeCreate"></service-form>
+<p-button label="Ajouter un service" (onClick)="showAddElement()" icon="pi pi-plus"></p-button>
 <p-table [value]="models">
 	<ng-template pTemplate="header">
 		<tr>
@@ -17,9 +16,10 @@
 			<td>{{ product.committee }}</td>
 			<td>{{ product.duration }}</td>
 			<td>
-				<p-button icon="pi pi-pencil" [text]="true" [rounded]="true" ></p-button>
-				<p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger"></p-button>
+				<p-button icon="pi pi-pencil" [text]="true" [rounded]="true" (onClick)="showUpdateElement(product)" ></p-button>
+				<p-button icon="pi pi-trash" [text]="true" [rounded]="true" (onClick)="dropElement(product)" severity="danger"></p-button>
 			</td>
 		</tr>
 	</ng-template>
 </p-table>
+<p-confirmDialog></p-confirmDialog>
