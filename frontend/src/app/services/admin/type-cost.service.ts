@@ -11,6 +11,6 @@ import { CrudService } from '../CrudService';
 export class TypeCostService extends CrudService<TypeCost>{
 
   constructor(protected http : HttpClient ){
-    super(http,"/");
+    super(http,"/type_cost");
   }
 }
