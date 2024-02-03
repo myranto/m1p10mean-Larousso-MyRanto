@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {User} from "../../interfaces/user";
 import {MatCard, MatCardContent} from "@angular/material/card";
 import {FormBuilder, FormControl, FormsModule, Validators} from "@angular/forms";
@@ -39,6 +39,8 @@ export class RegisterComponent implements OnInit{
   error_log = ''
   person_srv= inject(PersonService)
   service = inject(ServiceService)
+  confirmPassword= ''
+  password_message:any= null
   person:User ={
     _id:null,
     name:'',
@@ -51,7 +53,10 @@ export class RegisterComponent implements OnInit{
     start_time:null,
     end_time:null,
   }
-  constructor(private route:ActivatedRoute) { }
+  matchPassword(){
+    return this.person.password == this.confirmPassword
+  }
+  constructor(private route:ActivatedRoute,private router: Router ) { }
   ngOnInit(): void {
     this.route.queryParams.subscribe(params=>{
       this.role = params['role']
@@ -76,12 +81,19 @@ export class RegisterComponent implements OnInit{
     })
   }
   handleSubmit(){
+    if (!this.matchPassword()) this.password_message = 'Les mots de passe ne correspondent pas'
+    else
+    {
     console.log(this.person)
-    this.person_srv.register(this.person)
-      .then((data)=>{
-        console.log(data)
-      })
-      .catch((error)=>this.registerValid = error.message)
+      this.person_srv.register(this.person)
+        .then(async (data) => {
+          console.log(data)
+          if (this.role == 'customer') {
+            await this.router.navigate(['/'])
+          }
+        })
+        .catch((error) => this.registerValid = error.message)
+    }
   }
 }
 

@@ -21,13 +21,6 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-          <mat-label>Mot de passe</mat-label>
-          <input matInput type="password" [(ngModel)]="person.password" name="password" required>
-          <mat-error>
-            Ce champ est obligatoire
-          </mat-error>
-        </mat-form-field>
       <!-- champ pour l'employé -->
       <div *ngIf="role === 'employe'">
         <br>
@@ -59,9 +52,21 @@
             <mat-option *ngFor="let emp of employe" [value]="emp._id">{{emp.name}}</mat-option>
           </mat-select>
         </mat-form-field>
-
       </div>
-
+      <mat-form-field appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput type="password" [(ngModel)]="person.password" name="password" required>
+        <mat-error>
+          Ce champ est obligatoire
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Retaper le mot de passe</mat-label>
+        <input matInput type="password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+        <mat-error *ngIf="password_message!=null">
+          {{password_message}}
+        </mat-error>
+      </mat-form-field>
       <button mat-raised-button color="primary" [disabled]="!registerForm.form.valid">S'inscrire</button>
     </form>
   </mat-card-content>

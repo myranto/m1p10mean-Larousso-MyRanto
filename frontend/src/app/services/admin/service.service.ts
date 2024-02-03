@@ -15,7 +15,7 @@ export class ServiceService {
   async get() : Promise<Service[]> {
     // let response = await fetch(host+this.url);
     // return await response.json();
-    return getCall(host+this.url)
+    return getCall(host+this.url,false)
   }
 }
 export { Service };

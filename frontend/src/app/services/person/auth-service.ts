@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {User} from "../../interfaces/user";
 import {host} from "../host";
 import {error} from "@angular/compiler-cli/src/transformers/util";
-import {postCall} from "../../../api-request";
+import {postCall, putCall} from "../../../api-request";
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +18,8 @@ export class AuthService {
 // register
   async register(form:any): Promise<string> {
     return  await postCall(`${this.url }/register`,form)
+  }
+  async recoverypassword(form: any): Promise<string> {
+    return await putCall(`${this.url}/recovery`, form, false)
   }
 }

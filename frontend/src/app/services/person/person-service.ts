@@ -8,6 +8,6 @@ import {getCall} from "../../../api-request";
 })
 export class PersonService extends AuthService{
   async findByrole(role: string): Promise<User[]> {
-    return await getCall(this.url + '/find/' + role)
+    return await getCall(this.url + '/find/' + role,false)
   }
 }

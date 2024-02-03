@@ -6,6 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {AuthService} from "../services/person/auth-service";
 import {NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-authentification',
@@ -29,6 +30,7 @@ export class AuthentificationComponent {
     public username = ''
     public password = ''
     auth = inject(AuthService)
+  constructor(private router: Router  ) {}
   handleSubmit(){
     const form = {
       mail:this.username,
@@ -36,9 +38,24 @@ export class AuthentificationComponent {
     }
     console.log(form)
     this.auth.login(form)
-      .then((data)=>{
-           localStorage.setItem('person_profil',JSON.stringify(data))
-       })
+      .then(async (data) => {
+        // const expiryDate = new Date().getTime() + 12 * 60 * 60 * 1000;
+        // localStorage.setItem('expiryDate', String(expiryDate));
+        localStorage.setItem('person_profil', JSON.stringify(data))
+        if (typeof data !== "string")
+          switch (data.role) {
+            case 'admin':
+              await this.router.navigate(['/admin/home'])
+              break
+            case 'employe':
+              await this.router.navigate(['/employe/employe-component'])
+              break
+            default:
+              await this.router.navigate(['/customer/home-customer'])
+              break
+          }
+
+      })
       .catch((error)=>this.loginValid = error.message)
 
   }
