@@ -2,26 +2,29 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CrudService } from '../services/CrudService';
 import { HasId } from '../interfaces/hasId';
-import { inject } from '@angular/core';
+import { Type, inject } from '@angular/core';
+import { CrudFormComponent } from './CrudFormComponent';
 
-export class CrudComponent <T extends HasId,S extends CrudService<T>> {
+export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends CrudFormComponent<T,S>> {
   models : T[] = [];
   modelName: string;
-  private service : S;
-  private dialogService : DialogService = inject(DialogService);
-  private confirmationService : ConfirmationService = inject(ConfirmationService);
-  private messageService : MessageService = inject(MessageService);
+  protected service : S;
+  protected dialogService : DialogService = inject(DialogService);
+  protected confirmationService : ConfirmationService = inject(ConfirmationService);
+  protected messageService : MessageService = inject(MessageService);
+  protected formType;
 
-  constructor (service : S,modelName:string){
+  constructor (service : S,modelName:string,formType : Type<F>){
     this.modelName = modelName;
     this.service = service;
     this.service.get().subscribe({
       next:list => this.models = list
-    })
+    });
+    this.formType = formType;
   }
   
   showAddElement(){
-    let ref = this.dialogService.open(FormComponent,{
+    let ref = this.dialogService.open(this.formType,{
       header:'Modification de l\' entité '+this.modelName
     });
     ref.onClose.subscribe(result=>{
@@ -31,7 +34,7 @@ export class CrudComponent <T extends HasId,S extends CrudService<T>> {
     })
   }
   showUpdateElement(model : T){
-    let ref = this.dialogService.open(FormComponent,{
+    let ref = this.dialogService.open(this.formType,{
       header:'Modification de l\'entité '+this.modelName,
       data:{
         model:model,
@@ -40,6 +43,7 @@ export class CrudComponent <T extends HasId,S extends CrudService<T>> {
     })
     ref.onClose.subscribe((result)=>{
       if(result){
+      Object.assign(model,result);
       }
     });
   }

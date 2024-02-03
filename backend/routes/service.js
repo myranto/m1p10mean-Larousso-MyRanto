@@ -55,16 +55,17 @@ router.post('/',async function (req,res,next){
 router.put('/',async function(req,res,next){
     try {
         validator(req.body);
-        await service.updateOne(req.body);
+        await service.findByIdAndUpdate(req.body._id,req.body);
         res.status(200).send();
     } catch (error) {
+        console.log(error);
         res.status(400).json(error);
     }
 });
 
 router.delete('/:id',async function(req,res,next){
     try {
-        await service.deleteMany(await service.findById(req.params.id));
+        await service.findByIdAndDelete(req.params.id);
         res.status(200).send();
     } catch (error) {
         res.status(500).json(error);
