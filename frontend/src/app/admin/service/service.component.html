@@ -1,3 +1,6 @@
+<h2>Liste des services</h2>
+<p-button label="Ajouter un service" (onClick)="showCreate()" icon="pi pi-plus"></p-button>
+<service-form [show]="create" [huhu]="create" [closeAction]="closeCreate"></service-form>
 <p-table [value]="models">
 	<ng-template pTemplate="header">
 		<tr>
@@ -5,7 +8,6 @@
 			<th>Prix</th>
 			<th>Commission</th>
 			<th>Durée (minute)</th>
-			<th></th>
 		</tr>
 	</ng-template>
 	<ng-template pTemplate="body" let-product>
@@ -14,6 +16,10 @@
 			<td>{{ product.price }}</td>
 			<td>{{ product.committee }}</td>
 			<td>{{ product.duration }}</td>
+			<td>
+				<p-button icon="pi pi-pencil" [text]="true" [rounded]="true" ></p-button>
+				<p-button icon="pi pi-trash" [text]="true" [rounded]="true" severity="danger"></p-button>
+			</td>
 		</tr>
 	</ng-template>
 </p-table>
