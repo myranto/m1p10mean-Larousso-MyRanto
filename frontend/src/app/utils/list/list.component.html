@@ -1,9 +1,15 @@
 <div class="card">
+  <p-toolbar styleClass="mb-1 gap-1">
+    <ng-template pTemplate="left">
+      <app-modal [MyComponent]="MyComponent" ></app-modal>
+    </ng-template>
+  </p-toolbar>
   <p-table
     [columns]="column"
     [value]="data"
     [paginator]="true"
     [rows]="5"
+    [rowHover]="true"
     [showCurrentPageReport]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
     currentPageReportTemplate="lignes {first} à {last} avec {totalRecords} entrées"
@@ -22,7 +28,9 @@
           {{ col.selector(rowData) }}
         </td>
         <td >
-          <span *ngIf="edit"> <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  (click)="edit(rowData)"></p-button></span>{{' '}}
+          <span *ngIf="edit">
+            <app-modal [MyComponent]="MyComponent" [update]="true" [model]="rowData" ></app-modal>
+          </span>{{' '}}
           <span *ngIf="trash">
            <app-delete-row [name]="nameDelete" [row]="rowData" [delete]="trash"></app-delete-row>
           </span>

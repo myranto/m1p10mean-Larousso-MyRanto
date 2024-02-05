@@ -15,6 +15,9 @@ export class AuthService {
   async login(form:any): Promise<User|string> {
       return  await postCall(`${this.url }/login`,form,false)
   }
+  async update(form:User):Promise<string>{
+    return putCall(this.url,form,true)
+  }
 // register
   async register(form:any): Promise<string> {
     return  await postCall(`${this.url }/register`,form)

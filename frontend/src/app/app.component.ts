@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ConfirmationService, MessageService} from "primeng/api";
+import {DialogService} from "primeng/dynamicdialog";
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 
   ],
   providers:[ ConfirmationService,
+    DialogService,
     MessageService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

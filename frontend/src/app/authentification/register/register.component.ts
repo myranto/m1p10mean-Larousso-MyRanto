@@ -108,6 +108,19 @@ export class RegisterComponent implements OnInit{
       this.person_srv.register(this.person)
         .then(async (data) => {
           console.log(data)
+          this.person = {
+            _id:null,
+            name:'',
+            mail:'',
+            password:'',
+            role:this.role,
+            profile:null,
+            prefered_service:null,
+            prefered_emp:null,
+            start_time:null,
+            end_time:null,
+          }
+          this.confirmPassword=''
           if (this.role == 'customer') {
             await this.router.navigate(['/'])
           }

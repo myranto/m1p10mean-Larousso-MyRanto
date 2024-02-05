@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Type} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {TableModule} from "primeng/table";
 import {ButtonModule} from "primeng/button";
@@ -6,6 +6,10 @@ import {Router} from "@angular/router";
 import {DeleteRowComponent} from "../delete-row/delete-row.component";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {ToastModule} from "primeng/toast";
+import {ModalComponent} from "../modal/modal.component";
+import {ToolbarModule} from "primeng/toolbar";
+import {RippleModule} from "primeng/ripple";
+import {Base} from "../base";
 
 @Component({
   selector: 'app-list',
@@ -17,7 +21,10 @@ import {ToastModule} from "primeng/toast";
     NgIf,
     DeleteRowComponent,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    ModalComponent,
+    ToolbarModule,
+    RippleModule
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
@@ -30,11 +37,12 @@ export class ListComponent {
   @Input() clicked:any;
   @Input() nameDelete!:string;
   @Input() isLink:boolean=true;
+  @Input() MyComponent!:Type<Base>
+
   constructor(private router: Router  ) {}
 
-
-
   async onRowClick(rowData: any) {
+
     if (this.isLink) {
       const path = this.clicked(rowData)
       console.log(path)
