@@ -13,6 +13,8 @@ require('./db')
 // console.log(process.env.TOKEN_SECRET);
 var serviceRouter = require('./routes/service');
 const userRouter = require('./routes/person/User');
+var typeCostRouter = require('./routes/type_cost');
+
 const { authenticateToken } = require('./jwt');
 var app = express();
 
@@ -26,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(authenticateToken)
 app.use('/service', serviceRouter)
 app.use('/user',userRouter)
+app.use('/typeCost',typeCostRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

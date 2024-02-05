@@ -14,8 +14,8 @@ router.post('/login', async (req, res) => {
 
     if (!bcrypt.compare(req.body.password,logged.password)) return res.status(406).json('Mail ou mot de passe incorrect.')
     res.json({
+        id:logged._id,
         name:logged.name,
-        mail:logged.mail,
         role:logged.role,
         token:generateAccessToken(logged.mail)
     })
@@ -39,26 +39,27 @@ router.post('/register',async (req,res)=>{
     } catch (error) {
         let message = error.message
         if(error.status){
-            res.status(error.status).json(message);
+            return res.status(error.status).json(message);
         }
         else{
             if(error.code === 11000)
                 message = 'Email :'+req.body.mail+' déjà éxistant, veuillez choisir un autre'
-            res.status(500).json(message)
+            return res.status(500).json(message)
         }
     }
 })
 router.put('/recovery',async function (req,res) {
     try {
-        const one = user.findOne({ mail: req.body.mail })
+    const one = await user.findOne({ mail: req.body.mail })
+        console.log(one);
         if (!one) {
-            res.status(404).json('Mail introuvable.')
+           return res.status(404).json('Mail introuvable.')
         }
         one.password = await bcrypt.hash(req.body.password,saltRounds)
         await user.updateOne(one);
-        res.status(200).json('modification réussi');
+        return res.status(200).json('modification réussi');
     } catch (error) {
-        res.sendStatus(400).json(error.message);
+       return res.status(400).json(error.message);
     }
 })
 // updated user
@@ -67,7 +68,7 @@ router.put('/',async function(req,res){
         await user.updateOne(req.body);
         res.status(200).json('modification réussi');
     } catch (error) {
-        res.sendStatus(400).json(error.message);
+        return res.sendStatus(400).json(error.message);
     }
 });
 // find by role
@@ -80,11 +81,19 @@ router.get('/find/:role',async function(req,res) {
         res.json(model);
     } catch (error) {
         if(error.status){
-            res.status(error.status).json(error.message);
+           return res.status(error.status).json(error.message);
         }
         else{
-            res.status(406).json(error.message);
+            return res.status(406).json(error.message);
         }
+    }
+})
+router.delete('/:id',async function (req,res) {
+    try {
+        await user.deleteMany(await user.findById(req.params.id));
+        res.status(200).json('suppression réussi');
+    } catch (error) {
+        return res.sendStatus(400).json(error.message);
     }
 })
 module.exports = router;
