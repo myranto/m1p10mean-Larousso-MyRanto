@@ -10,6 +10,14 @@ import {MatButton} from "@angular/material/button";
 import {PersonService} from "../../services/person/person-service";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {Service, ServiceService} from "../../services/admin/service.service";
+import {InputTextModule} from "primeng/inputtext";
+import {PasswordModule} from "primeng/password";
+import {DropdownModule} from "primeng/dropdown";
+import {CardModule} from "primeng/card";
+import {MessageModule} from "primeng/message";
+import {InputGroupModule} from "primeng/inputgroup";
+import {InputGroupAddonModule} from "primeng/inputgroupaddon";
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-register',
@@ -26,7 +34,15 @@ import {Service, ServiceService} from "../../services/admin/service.service";
     MatLabel,
     MatSelect,
     MatOption,
-    NgForOf
+    NgForOf,
+    InputTextModule,
+    PasswordModule,
+    DropdownModule,
+    CardModule,
+    MessageModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    ButtonModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -56,29 +72,33 @@ export class RegisterComponent implements OnInit{
   matchPassword(){
     return this.person.password == this.confirmPassword
   }
-  constructor(private route:ActivatedRoute,private router: Router ) { }
+  constructor(private route:ActivatedRoute,private router: Router ) {
+
+  }
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params=>{
-      this.role = params['role']
-      console.log(params['role'])
-      this.person.role=this.role
-      if (this.role == 'customer'){
-        this.service.get()
-          .then(r => {
-            this.service_list = r
-          })
-          .catch((error)=> {
-            this.error_log = error.message
-          })
-        this.person_srv.findByrole('employe')
-          .then(r => {
-            this.employe = r
-          })
-          .catch((error)=> {
-            this.error_log = error.message
-          })
-      }
-    })
+    let params = this.route.snapshot.queryParams;
+    this.role = params['role']
+    console.log(params['role'])
+    this.person.role=this.role
+    if (this.role == 'customer'){
+      this.service.get()
+        .then(r => {
+          this.service_list = r
+        })
+        .catch((error)=> {
+          this.error_log = error.message
+        })
+      this.person_srv.findByrole('employe')
+        .then(r => {
+          this.employe = r
+        })
+        .catch((error)=> {
+          this.error_log = error.message
+        })
+    }
+  }
+  async goBack() {
+      await this.router.navigate(['/'])
   }
   handleSubmit(){
     if (!this.matchPassword()) this.password_message = 'Les mots de passe ne correspondent pas'

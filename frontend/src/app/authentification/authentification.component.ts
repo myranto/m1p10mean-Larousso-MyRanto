@@ -5,12 +5,25 @@ import {MatInput} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {AuthService} from "../services/person/auth-service";
-import {NgIf} from "@angular/common";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 import {Router} from "@angular/router";
+import {InputTextModule} from "primeng/inputtext";
+import {ButtonModule} from "primeng/button";
+import {PasswordModule} from "primeng/password";
+import {CheckboxModule} from "primeng/checkbox";
+import {RippleModule} from "primeng/ripple";
 
 @Component({
   selector: 'app-authentification',
   standalone: true,
+  styles: [`
+        :host ::ng-deep .pi-eye,
+        :host ::ng-deep .pi-eye-slash {
+            transform:scale(1.6);
+            margin-right: 1rem;
+            color: var(--primary-color) !important;
+        }
+    `],
   imports: [
     MatCard,
     MatCardContent,
@@ -20,7 +33,13 @@ import {Router} from "@angular/router";
     MatInput,
     FormsModule,
     MatButton,
-    NgIf
+    NgIf,
+    InputTextModule,
+    ButtonModule,
+    NgOptimizedImage,
+    PasswordModule,
+    CheckboxModule,
+    RippleModule
   ],
   templateUrl: './authentification.component.html',
   styleUrl: './authentification.component.scss'

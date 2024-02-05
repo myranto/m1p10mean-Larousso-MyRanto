@@ -1,31 +1,27 @@
 <mat-card>
   <mat-card-content>
     <form #loginForm="ngForm" (ngSubmit)="handleSubmit()">
-      <h2>Connexion</h2>
-      <mat-form-field appearance="outline">
-        <mat-label>Identifiant</mat-label>
-        <input matInput [(ngModel)]="username" name="username" required>
-        <mat-error>
-          Ce champ est obligatoire
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>mot de passe</mat-label>
-        <input matInput type="password"  [(ngModel)]="password" name="password" required>
-        <mat-error>
-          Ce champ est obligatoire
-        </mat-error>
-      </mat-form-field>
-      <mat-error *ngIf="loginValid!=null">
-        {{loginValid}}
-      </mat-error>
-        <br>
-      <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Se connecter</button>
-      <p>
 
-      <a href="/authentification/register?role=customer" style="text-decoration: none; margin-right: 10px;">S'inscrire</a>
-      <a href="/authentification/recoverycomponent" style="text-decoration: none;">Mot de passe oublié</a>
-      </p>
+      <div class="card flex pi-align-justify">
+        <h2>Connexion</h2>
+        <p>
+          <input [(ngModel)]="username" placeholder="Identifiant" id="username" name="username"  aria-describedby="username-help"  pInputText type="text" required/>
+        </p>
+        <p>
+          <input [(ngModel)]="password" placeholder="mot de passe" id="password" name="password"  aria-describedby="password-help"  pInputText type="password" required/>
+
+        </p>
+        <br>
+        <mat-error *ngIf="loginValid!=null" style="color: crimson">
+          <p>{{loginValid}}</p>
+        </mat-error>
+        <p-button  [disabled]="!loginForm.form.valid" (onClick)="handleSubmit()" >Se connecter</p-button>
+        <p>
+
+          <a href="/authentification/register?role=customer" style="text-decoration: none; margin-right: 10px;">S'inscrire</a>
+          <a href="/authentification/recoverycomponent" style="text-decoration: none;">Mot de passe oublié</a>
+        </p>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

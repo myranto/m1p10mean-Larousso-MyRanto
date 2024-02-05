@@ -8,6 +8,11 @@ import {NgIf} from "@angular/common";
 import {User} from "../../interfaces/user";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/person/auth-service";
+import {CardModule} from "primeng/card";
+import {InputGroupAddonModule} from "primeng/inputgroupaddon";
+import {InputGroupModule} from "primeng/inputgroup";
+import {InputTextModule} from "primeng/inputtext";
+import {ButtonModule} from "primeng/button";
 
 @Component({
   selector: 'app-recoverycomponent',
@@ -21,7 +26,12 @@ import {AuthService} from "../../services/person/auth-service";
     MatFormField,
     MatInput,
     MatLabel,
-    NgIf
+    NgIf,
+    CardModule,
+    InputGroupAddonModule,
+    InputGroupModule,
+    InputTextModule,
+    ButtonModule
   ],
   templateUrl: './recoverycomponent.component.html',
   styleUrl: './recoverycomponent.component.scss'

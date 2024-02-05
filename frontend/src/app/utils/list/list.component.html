@@ -1,0 +1,42 @@
+<div class="card">
+  <p-table
+    [columns]="column"
+    [value]="data"
+    [paginator]="true"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="lignes {first} à {last} avec {totalRecords} entrées"
+    [rowsPerPageOptions]="[5, 10, 20]"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.name }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr (click)="onRowClick(rowData)" style="cursor: pointer">
+        <td *ngFor="let col of columns">
+          {{ col.selector(rowData) }}
+        </td>
+        <td >
+          <span *ngIf="edit"> <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  (click)="edit(rowData)"></p-button></span>{{' '}}
+          <span *ngIf="trash">
+           <app-delete-row [name]="nameDelete" [row]="rowData" [delete]="trash"></app-delete-row>
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="paginatorleft">
+      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+    </ng-template>
+  </p-table>
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+</div>
+

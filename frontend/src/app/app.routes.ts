@@ -14,6 +14,11 @@ export const routes: Routes = [
     },
     {
       path:'',
+      redirectTo:'authentification',
+      pathMatch:'full'
+    },
+    {
+      path:'',
       component:AuthentificationComponent
     },
     {

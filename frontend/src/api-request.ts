@@ -2,16 +2,9 @@ export function getProfileStorage(auth:boolean = true){
   const user = localStorage.getItem('person_profil')
   if (user==null && auth) throw new Error("Veuillez-vous connecter")
   if (user==null) return null
+  console.log(user)
   return JSON.parse(user)
 }
-// const config = {
-//   method: 'GET',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     'authorization':`Bearer ${profile?.token}`,
-//     'role':profile?.role
-//   },
-// }
 // config nle header, afaka manampy header hafa via additionalHeaders
 function setConfig(method: string, token: string, role: string, body: any = null, additionalHeaders: object = {}) {
   return  {

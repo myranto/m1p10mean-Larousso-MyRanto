@@ -1,41 +1,48 @@
-<mat-card>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <p-card [style]="{width:'500px', height: '100%'}">
   <mat-card-content>
     <form #recoveryForm="ngForm" (ngSubmit)="handleSubmit()">
       <h2>Récupération de mot de passe</h2>
-
       <ng-container *ngIf="action === 'sendMail'; else modifyForm">
-        <mat-form-field appearance="outline">
-          <mat-label>Entrez votre identifiant</mat-label>
-          <input matInput [(ngModel)]="person.mail" name="username" required>
-          <mat-error>
-            Ce champ est obligatoire
-          </mat-error>
-        </mat-form-field>
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-envelope"></i>
+          </p-inputGroupAddon>
+          <input [(ngModel)]="person.mail" aria-describedby="mail-help" id="mail" name="mail" pInputText
+                 placeholder="Entrez votre identifiant" required
+                 type="email"/>
+        </p-inputGroup>
       </ng-container>
 
       <ng-template #modifyForm>
-        <mat-form-field appearance="outline">
-          <mat-label>Mot de passe</mat-label>
-          <input matInput type="password" [(ngModel)]="person.password" name="password">
-          <mat-error>
-            Ce champ est obligatoire
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Retaper le mot de passe</mat-label>
-          <input matInput type="password" [(ngModel)]="confirmPassword" name="confirmPassword">
-        </mat-form-field>
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input [(ngModel)]="person.password" name="password" pInputText placeholder="mot de passe" required
+                 type="password">
+        </p-inputGroup>
+        <br>
+        <p-inputGroup>
+          <p-inputGroupAddon>
+            <i class="pi pi-lock"></i>
+          </p-inputGroupAddon>
+          <input [(ngModel)]="confirmPassword" name="confirmPassword" pInputText placeholder="Retaper mot de passe"
+                 required type="password">
+        </p-inputGroup>
           <div *ngIf="password_message!=null" style="color: crimson">
             {{password_message}}
           </div>
       </ng-template>
 
-      <mat-error *ngIf="error!=''">
+      <div *ngIf="error!=''" style="color: crimson">
         {{error}}
-      </mat-error>
+      </div>
       <br>
-      <button mat-raised-button color="gray" style="margin-right: 20px;" (click)="goBack()">Retour</button>{{'   '}}
-      <button mat-raised-button color="primary" [disabled]="!recoveryForm.form.valid">valider</button>
+        <p-button (click)="goBack()" severity="secondary">Retour</p-button>
+        {{'   '}}
+      <p-button [disabled]="!recoveryForm.form.valid" [style]="{float:'right'}" (onClick)="handleSubmit()" color="primary" label="valider"></p-button>
     </form>
   </mat-card-content>
-</mat-card>
+  </p-card>
+</div>
