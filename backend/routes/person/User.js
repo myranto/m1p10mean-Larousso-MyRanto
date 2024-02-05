@@ -38,6 +38,7 @@ router.post('/register',async (req,res)=>{
         return res.status(201).json('création réussi!');
     } catch (error) {
         let message = error.message
+        console.log(error);
         if(error.status){
             return res.status(error.status).json(message);
         }
@@ -65,10 +66,13 @@ router.put('/recovery',async function (req,res) {
 // updated user
 router.put('/',async function(req,res){
     try {
-        await user.updateOne(req.body);
+        console.log(req.body);
+        const { _id, ...updateData } = req.body;
+    await user.updateOne({ _id }, { $set: updateData });
         res.status(200).json('modification réussi');
     } catch (error) {
-        return res.sendStatus(400).json(error.message);
+        console.log(error);
+        return res.status(400).json(error.message);
     }
 });
 // find by role
