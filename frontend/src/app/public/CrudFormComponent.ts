@@ -1,9 +1,9 @@
 import { FormBuilder,FormGroup } from '@angular/forms';
 import {DynamicDialogRef,DynamicDialogConfig} from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { HasId } from '../interfaces/hasId';
-import { CrudService } from '../services/CrudService';
 import { inject } from '@angular/core';
+import {HasId} from "../utils/interfaces/hasId";
+import {CrudService} from "../utils/services/CrudService";
 
 export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{
   model! : T;
@@ -22,7 +22,7 @@ export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{
     this.model = this.config.data?.model;
     this.update = this.config.data?.update;
   }
-  
+
   onSubmit(){
     this.loading = true;
     const temp : T = {} as T;

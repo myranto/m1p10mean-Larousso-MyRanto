@@ -1,9 +1,9 @@
 import { DialogService } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CrudService } from '../services/CrudService';
-import { HasId } from '../interfaces/hasId';
 import { Type, inject } from '@angular/core';
 import { CrudFormComponent } from './CrudFormComponent';
+import {CrudService} from "../utils/services/CrudService";
+import {HasId} from "../utils/interfaces/hasId";
 
 export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends CrudFormComponent<T,S>> {
   models : T[] = [];
@@ -22,7 +22,7 @@ export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends C
     });
     this.formType = formType;
   }
-  
+
   showAddElement(){
     let ref = this.dialogService.open(this.formType,{
       header:'Modification de l\' entité '+this.modelName
