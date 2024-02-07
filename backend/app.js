@@ -3,13 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const crypto = require('crypto');
 var cors = require('cors');
 require('dotenv').config();
 require('./db')
+// const TOKEN_SECRET = crypto.randomBytes(64).toString('hex')
 
+// process.env.TOKEN_SECRET = TOKEN_SECRET
+// console.log(process.env.TOKEN_SECRET);
 var serviceRouter = require('./routes/service');
 var typeCostRouter = require('./routes/type_cost');
+const userRouter = require('./routes/person/User');
+const discountRouter  = require('./routes/discount/discount')
 var app = express();
+const { authenticateToken } = require('./jwt');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -18,8 +25,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(authenticateToken)
 app.use('/service', serviceRouter);
 app.use('/type_cost',typeCostRouter);
+app.use('/user',userRouter)
+app.use('/discount',discountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
