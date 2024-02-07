@@ -32,23 +32,33 @@ discount:
     -name
     -percent
     -is_service
+    -date_start
+    -date_end
 
 meeting:
     -id
-    -customer_id
-    -emp_id
+    -client = {
+        id,
+        name
+    }
+    -  emp = {
+        id,
+        name
+    }
     -meeting_date
-    -discount_id
+    - services [
+    {
+        id,
+        name,
+        discount
+    }
+    ]
+    - pay: {
+        -amount
+        -commission
+    }
+    discount 
 
-meet_service:
-    -meeting_id
-    -service_id
-    -discount_id
-
-pay:
-    -meeting_id
-    -amount
-    -commission
 
 type_cost:
     -id
@@ -56,6 +66,9 @@ type_cost:
 
 cost:
     -id
-    -cost_id
+    -type : {
+        id,
+        name
+    }
     -date_cost
     -value
