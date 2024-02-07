@@ -47,6 +47,7 @@ export async function deleteCall(url: string, body: any, auth:boolean=true) {
 }
 export async function postCall(url: string, body: any, auth:boolean=true) {
   const profile = getProfileStorage(auth)
+  console.log(url)
   const response = await fetch(url, setConfig('POST',profile?.token,profile?.role,body))
   if (response.status < 200 || response.status >= 300)  {
     throw new Error(JSON.parse(await response.text()))
