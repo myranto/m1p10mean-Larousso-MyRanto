@@ -24,15 +24,20 @@
 <div class="grid formgrid" style="position:relative;top:10px;">
     <div class="col-12 mb-2 lg:col-4 lg:mb-0">
         <span class="p-float-label">
-            <p-calendar [(ngModel)]="model.date_start" dateFormat="dd/mm/yy" appendTo="body" id="start"></p-calendar>
+            <p-calendar [(ngModel)]="model.date_start" [touchUI]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" appendTo="body" id="start" required></p-calendar>
             <label for="start">Début</label>
         </span>
     </div>
     <div class="col-12 mb-2 lg:col-4 lg:mb-0">
         <span class="p-float-label">
-            <p-calendar [(ngModel)]="model.date_end" dateFormat="dd/mm/yy" appendTo="body" id="end"></p-calendar>
+            <p-calendar [(ngModel)]="model.date_end" [touchUI]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" appendTo="body" [minDate]="model.date_start" id="end" required></p-calendar>
             <label for="end">Fin</label>
         </span>
     </div>
-    <p-button (onClick)="submit()" severity="success" label="valider"></p-button>
+    <div class="col-12 md:col-2">
+        <p-button (onClick)="close()" severity="secondary" label="annuler" />
+    </div>
+    <div class="col-12 md:col-2">
+        <p-button (onClick)="submit()"  severity="success" label="valider" />
+    </div>
 </div>

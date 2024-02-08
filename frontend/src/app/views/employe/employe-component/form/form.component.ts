@@ -54,7 +54,7 @@ export class FormComponent extends Base {
   update: boolean = false
   model!: User
 
-  constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef) {
+  constructor(private config: DynamicDialogConfig) {
     super()
 
     this.model = this.config?.data?.model ? this.config.data.model : this.person
@@ -118,9 +118,9 @@ export class FormComponent extends Base {
       } else {
         await this.create()
       }
+      this.data = res
       // this.refreshService.triggerRefresh();
       super.submit()
-      this.ref.close(res);
     } catch (e: any) {
       this.registerValid = e.message
     }

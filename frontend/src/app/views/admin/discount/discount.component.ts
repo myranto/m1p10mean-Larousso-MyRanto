@@ -4,7 +4,9 @@ import {Discountservice} from "../../../utils/services/admin/discountservice";
 import {RefreshService} from "../../utils/refresh-service";
 import {ListComponent} from "../../utils/list/list.component";
 import {FormDiscountComponent} from "./form-discount/form-discount.component";
-
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import {formatDate} from "@angular/common";
 @Component({
   selector: 'app-discount',
   standalone: true,
@@ -17,6 +19,8 @@ import {FormDiscountComponent} from "./form-discount/form-discount.component";
 export class DiscountComponent {
   discount_list:Discount[] = []
   constructor(private discount:Discountservice, private refreshService: RefreshService) {
+      this.findAll()
+      this.drop = this.drop.bind(this)
     this.refreshService.refresh.subscribe(()=>this.findAll())
   }
   findAll(){
@@ -26,7 +30,7 @@ export class DiscountComponent {
   }
   async drop(row:any){
     if (this.discount){
-      await this.discount.drop(row._id)
+      await this.discount.drop(row._id).toPromise()
       this.refreshService.triggerRefresh()
     }
   }
@@ -48,12 +52,16 @@ export class DiscountComponent {
     },
     {
       name:'Début',
-      selector:(row:any)=>row?.date_start,
+      selector:(row:any)=>  format(new Date(row?.date_start), 'dd MMMM yyyy', {
+          locale: fr,
+      }),
       sortable:true,
     },
     {
       name:'fin',
-      selector:(row:any)=>row?.date_end,
+      selector:(row:any)=>  format(new Date(row?.date_end), 'dd MMMM yyyy', {
+        locale: fr,
+      }),
       sortable:true,
     },
   ]

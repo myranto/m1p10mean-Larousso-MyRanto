@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
 import {InputNumberModule} from "primeng/inputnumber";
 import {CheckboxModule} from "primeng/checkbox";
+import {ModalComponent} from "../../../utils/modal/modal.component";
 
 @Component({
   selector: 'app-form-discount',
@@ -32,15 +33,18 @@ export class FormDiscountComponent extends Base{
     _id:undefined,
     name:'',
     percent:'',
-    is_service:true,
+    is_service:'true',
     date_start:'',
-    date_end:null,
+    date_end:new Date(),
   }
   discount_srv = inject(Discountservice)
 
-  constructor(private config: DynamicDialogConfig, private ref: DynamicDialogRef) {
+  constructor(private config: DynamicDialogConfig) {
     super()
     this.model = this.config?.data?.model ? this.config.data.model : this.discount
+      if (this.config?.data?.model)
+          this.model.date_start = new Date(this.model.date_start)
+          this.model.date_end = new Date(this.model.date_end)
     this.update = this.config?.data?.update
   }
 
@@ -73,19 +77,23 @@ export class FormDiscountComponent extends Base{
       }
     })
   }
-
-  override  submit() {
+    verifierDate(date1: Date, date2: Date): boolean {
+        return date1.getTime() < date2.getTime();
+    }
+    override  submit() {
     const res = this.update ? 'modification effectué, ' + this.model?.name : 'Création effectuée avec succès'
     try {
+        if(!this.model.name||!this.model.percent) throw new Error('Veuillez remplir les champs')
+        if (!this.verifierDate(new Date(this.model.date_start),new Date(this.model.date_end))) throw new Error('la date début doit etre inférieur à date fin')
       if (this.update) {
          this.updateModel()
       } else {
          this.create()
       }
+      this.data = res
       super.submit()
-      this.ref.close(res);
     } catch (e: any) {
-      console.log(e)
+      this.messageService.add({ severity: 'error', summary: "Erreur d'entrée", detail: e.message })
     }
   }
 }

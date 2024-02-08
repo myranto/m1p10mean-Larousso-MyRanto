@@ -2,7 +2,6 @@ export function getProfileStorage(auth:boolean = true){
   const user = localStorage.getItem('person_profil')
   if (user==null && auth) throw new Error("Veuillez-vous connecter")
   if (user==null) return null
-  console.log(user)
   return JSON.parse(user)
 }
 export function removeProfileStorage(){
