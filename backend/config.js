@@ -5,7 +5,6 @@ const excludedPaths = [
       '/user/recovery',
       '/user/register/cli',
       '/user/find/:role',
-      '/user/register/cli',
       '/service'
     ];
 

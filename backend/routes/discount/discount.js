@@ -39,9 +39,10 @@ router.post('/',async function (req,res){
 router.put('/',async function(req,res){
     try {
         // validator(req.body);
-        await service.updateOne(req.body);
+        await discount.findByIdAndUpdate(req.body._id,req.body);
         res.status(200).json();
     } catch (error) {
+        console.log(error);
         res.status(400).json(error);
     }
 });
