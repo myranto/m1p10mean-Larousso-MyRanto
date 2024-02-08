@@ -127,6 +127,7 @@ export class RegisterComponent implements OnInit{
             end_time:null,
           }
           this.confirmPassword=''
+            alert('création réussi')
           if (this.role == 'customer') {
             await this.router.navigate(['/'])
           }

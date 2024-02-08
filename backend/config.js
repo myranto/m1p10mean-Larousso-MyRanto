@@ -3,6 +3,7 @@ const { pathToRegexp } = require("path-to-regexp");
 const excludedPaths = [
       '/user/login',
       '/user/recovery',
+      '/user/register/cli',
       '/user/find/:role',
       '/user/register/cli',
       '/service'

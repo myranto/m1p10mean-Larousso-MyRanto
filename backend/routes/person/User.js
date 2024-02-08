@@ -20,10 +20,19 @@ router.post('/login', async (req, res) => {
         token:generateAccessToken(logged.mail)
     })
 });
-// register user
-router.post('/register',async (req,res)=>{
+
+function validMail(email) {
+    var regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+    return regex.test(email);
+}
+
+
+async function register(req,res) {
     try {
         const person =  new User(req.body)
+        if (!validMail(person.mail)) {
+            throw new Error("Email invalid")
+        }
         req.body.password = await bcrypt.hash(req.body.password,saltRounds)
         if (person.start_time && person.end_time) {
             const startDate = new Date(`2024-01-01T${person.start_time}:00`);
@@ -48,6 +57,14 @@ router.post('/register',async (req,res)=>{
             return res.status(500).json(message)
         }
     }
+}
+
+// register user
+router.post('/register',async (req,res)=>{
+    await register(req,res)
+})
+router.post('/register/cli',async (req,res)=>{
+    await register(req,res)
 })
 router.put('/recovery',async function (req,res) {
     try {

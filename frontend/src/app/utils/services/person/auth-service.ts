@@ -20,9 +20,12 @@ export class AuthService {
   async update(form:User):Promise<string>{
     return putCall(this.url,form,true)
   }
+    async registerother(form:any): Promise<string> {
+        return  await postCall(`${this.url }/register`,form)
+    }
 // register
   async register(form:any): Promise<string> {
-    return  await postCall(`${this.url }/register`,form)
+    return  await postCall(`${this.url }/register/cli`,form,false)
   }
   async recoverypassword(form: any): Promise<string> {
     return await putCall(`${this.url}/recovery`, form, false)
