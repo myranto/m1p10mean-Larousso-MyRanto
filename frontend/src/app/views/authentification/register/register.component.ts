@@ -19,6 +19,7 @@ import {InputGroupModule} from "primeng/inputgroup";
 import {InputGroupAddonModule} from "primeng/inputgroupaddon";
 import {ButtonModule} from "primeng/button";
 import {RippleModule} from "primeng/ripple";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-register',
@@ -74,7 +75,7 @@ export class RegisterComponent implements OnInit{
   matchPassword(){
     return this.person.password == this.confirmPassword
   }
-  constructor(private route:ActivatedRoute,private router: Router ) {
+  constructor(private route:ActivatedRoute,private router: Router, private  message:MessageService) {
 
   }
   ngOnInit(): void {
@@ -87,13 +88,6 @@ export class RegisterComponent implements OnInit{
             next:list => this.service_list = list,
             error:err => this.error_log = err.error
         });
-      // this.service.get()
-      //   .then(r => {
-      //     this.service_list = r
-      //   })
-      //   .catch((error)=> {
-      //     this.error_log = error.message
-      //   })
       this.person_srv.findByrole('employe')
         .then(r => {
           this.employe = r
@@ -113,7 +107,8 @@ export class RegisterComponent implements OnInit{
     console.log(this.person)
       this.person_srv.register(this.person)
         .then(async (data) => {
-          console.log(data)
+
+        this.message.add({ severity: 'success', summary: 'Succès', detail: 'inscription réussi' });
           this.person = {
             _id:null,
             name:'',
@@ -127,7 +122,6 @@ export class RegisterComponent implements OnInit{
             end_time:null,
           }
           this.confirmPassword=''
-            alert('création réussi')
           if (this.role == 'customer') {
             await this.router.navigate(['/'])
           }

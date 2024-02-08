@@ -5,6 +5,9 @@ export function getProfileStorage(auth:boolean = true){
   console.log(user)
   return JSON.parse(user)
 }
+export function removeProfileStorage(){
+    localStorage.removeItem('person_profil')
+}
 // config nle header, afaka manampy header hafa via additionalHeaders
 function setConfig(method: string, token: string, role: string, body: any = null, additionalHeaders: object = {}) {
   return  {

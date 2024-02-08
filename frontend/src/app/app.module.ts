@@ -6,10 +6,11 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { NotfoundComponent } from './demo/components/notfound/notfound.component';
 import {ConfirmationService, MessageService} from "primeng/api";
 import {DialogService} from "primeng/dynamicdialog";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
     declarations: [AppComponent, NotfoundComponent],
-    imports: [AppRoutingModule, AppLayoutModule],
+    imports: [AppRoutingModule, AppLayoutModule, ToastModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         ConfirmationService,
