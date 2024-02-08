@@ -3,11 +3,25 @@ import {Base} from "../../../utils/base";
 import {Discountservice} from "../../../../utils/services/admin/discountservice";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Discount} from "../../../../utils/interfaces/discount";
+import {InputTextModule} from "primeng/inputtext";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CalendarModule} from "primeng/calendar";
+import {InputNumberModule} from "primeng/inputnumber";
+import {CheckboxModule} from "primeng/checkbox";
 
 @Component({
   selector: 'app-form-discount',
   standalone: true,
-  imports: [],
+    imports: [
+        InputTextModule,
+        RadioButtonModule,
+        FormsModule,
+        CalendarModule,
+        InputNumberModule,
+        CheckboxModule,
+        ReactiveFormsModule
+    ],
   templateUrl: './form-discount.component.html',
   styleUrl: './form-discount.component.scss'
 })

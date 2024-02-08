@@ -34,6 +34,7 @@ export class ListComponent {
   @Input() column: any = [];
   @Input() trash:any='';
   @Input() edit:any='';
+  @Input() header:any='Création';
   @Input() clicked:any;
   @Input() nameDelete!:string;
   @Input() isLink:boolean=true;

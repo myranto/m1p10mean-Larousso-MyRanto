@@ -11,6 +11,7 @@ import {RegisterComponent} from "./views/authentification/register/register.comp
 import {AuthentificationComponent} from "./views/authentification/authentification.component";
 import {TypeCostComponent} from "./views/admin/typeCost/type-cost.component";
 import {AuthGuard} from "./auth-guard";
+import {DiscountComponent} from "./views/admin/discount/discount.component";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {AuthGuard} from "./auth-guard";
                 canActivate: [AuthGuard],
                 children: [
                     { path: 'admin/service', component: ServiceComponent },
+                    { path: 'admin/discount', component: DiscountComponent },
                     { path: 'admin/home', component: HomeComponent },
                     {path:'admin/type_cost',component:TypeCostComponent},
                     { path: 'customer/home-customer',component: HomeCustomerComponent },

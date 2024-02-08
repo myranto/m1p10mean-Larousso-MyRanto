@@ -2,7 +2,6 @@
 <!--  <p-card>-->
       <form #registerForm="ngForm" (ngSubmit)="submit()">
 <!--        <div class="flex justify-content-center">-->
-         <h2>Modification</h2>
           <p-message *ngIf="registerValid!=null" severity="error" text="{{registerValid}}"></p-message>
 <!--          <p-message *ngIf="error_log" severity="error" text="{{error_log}}"></p-message>-->
           <p-inputGroup>
@@ -58,7 +57,7 @@
           </p>
           <br>
 
-          <p-button [disabled]="!registerForm.form.valid" (onClick)="submit()" color="primary" label="valider"></p-button>
+          <p-button [disabled]="!registerForm.form.valid" (onClick)="submit()" severity="success" label="valider"></p-button>
           <br>
 <!--        </div>-->
       </form>

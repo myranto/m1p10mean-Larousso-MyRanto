@@ -6,7 +6,6 @@
                     <div class="flex align-items-center justify-content-between mb-5 gap-5">
                         <ng-container *ngIf="role==='customer'">
                             <p-button icon="pi pi-arrow-left" (click)="goBack()"></p-button>
-<!--                            <p-button iconPos="left" icon="pi-arrow-left" class="font-medium no-underline ml-2 text-right" (click)="goBack()" severity="secondary" />-->
                             {{'   '}}</ng-container>
                     </div>
                     <div class="text-900 text-3xl font-medium mb-3">Bienvenue!</div>
@@ -47,28 +46,7 @@
                         </div>
                         <br>
                     </div>
-                    <div *ngIf="role === 'customer'">
-                        <br>
-                        <div style="display: flex; justify-content: space-between;">
-                            <p-dropdown
-                                [(ngModel)]="person.prefered_service"
-                                [options]="service_list" id="float"
-                                optionLabel="name"
-                                [ngModelOptions]="{standalone: true}"
-                                optionValue="_id"
-                                placeholder="service préféré"></p-dropdown>
-                            <!-- Employé préféré -->
-                            <p-dropdown
-                                [(ngModel)]="person.prefered_emp"
-                                [options]="employe" id="float-label"
-                                optionLabel="name"
-                                [ngModelOptions]="{standalone: true}"
-                                optionValue="_id"
-                                placeholder="employé préféré"></p-dropdown>
-                        </div>
-                        <br>
-                        <br>
-                    </div>
+
                     <p-inputGroup>
                         <p-inputGroupAddon>
                             <i class="pi pi-lock"></i>

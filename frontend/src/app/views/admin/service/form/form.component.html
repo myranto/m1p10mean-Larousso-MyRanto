@@ -2,12 +2,12 @@
     <div class="field">
         <label class="block" for="name">Nom</label>
         <input pInputText required id="name" formControlName="name" />
-        <small id="name-help">Le nom est requis</small> 
+        <small id="name-help">Le nom est requis</small>
     </div>
     <div class="field">
         <label class="block" for="price">Prix</label>
         <input pInputText required id="price" formControlName="price" />
-        <small id="price-help">Le prix doit être un nombre positif</small> 
+        <small id="price-help">Le prix doit être un nombre positif</small>
     </div>
     <div class="field">
         <label class="block" for="committee">Commission</label>
@@ -17,7 +17,7 @@
     <div class="field">
         <label class="block" for="duration">Durée en minute</label>
         <input pInputText required id="duration" formControlName="duration" />
-        <small id="duration-help" >La durée doit être un nombre supérieur ou égal à 0</small> 
+        <small id="duration-help" >La durée doit être un nombre supérieur ou égal à 0</small>
     </div>
     <p-button [loading]="loading" [style]="{width:'100%'}" severity="success" class="button" label="Valider" type="submit"></p-button>
     <p-button type="button" (onClick)="onCancel()" [style]="{width:'100%'}" severity="danger" label="Annuler" class="button" ></p-button>

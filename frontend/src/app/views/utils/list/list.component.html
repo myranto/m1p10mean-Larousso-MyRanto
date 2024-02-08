@@ -1,7 +1,7 @@
 <div class="card">
   <p-toolbar styleClass="mb-1 gap-1">
     <ng-template pTemplate="left">
-      <app-modal [MyComponent]="MyComponent" ></app-modal>
+      <app-modal [MyComponent]="MyComponent" header="Création {{header}}" ></app-modal>
     </ng-template>
   </p-toolbar>
   <p-table
@@ -29,7 +29,7 @@
         </td>
         <td >
           <span *ngIf="edit">
-            <app-modal [MyComponent]="MyComponent" [update]="true" [model]="rowData" ></app-modal>
+            <app-modal [MyComponent]="MyComponent" header="Modification {{header}}" [update]="true" [model]="rowData" ></app-modal>
           </span>{{' '}}
           <span *ngIf="trash">
            <app-delete-row [name]="nameDelete" [row]="rowData" [delete]="trash"></app-delete-row>

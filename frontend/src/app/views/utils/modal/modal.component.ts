@@ -16,26 +16,27 @@ import {NgIf} from "@angular/common";
   styleUrl: './modal.component.scss'
 })
 export class ModalComponent implements OnDestroy{
-  @Input() MyComponent!:Type<Base>
-  @Input() update:boolean = false
-  @Input() model!:any
-
+    @Input() MyComponent!:Type<Base>
+    @Input() update:boolean = false
+    @Input() model!:any
+    @Input() header:string = 'Création'
   constructor(public dialogService: DialogService, public messageService:MessageService) {
   }
   ref:DynamicDialogRef|undefined
   show(){
     this.ref = this.dialogService.open(this.MyComponent,{
-      // header: 'Select a Product',
+      header: this.header,
       width: '50vw',
       data:{
         update:this.update,
         model:this.model
       },
-      contentStyle: { overflow: 'auto' },
+      contentStyle: { overflow: 'auto',"max-height": "calc(100vh - 20px)" },
       breakpoints: {
         '960px': '75vw',
         '640px': '90vw'
       },
+      baseZIndex: 10000,
       templates: {
         footer: Footer
       }
