@@ -72,7 +72,7 @@ export class FormComponent extends Base {
     if (!this.matchPassword()) return Promise.reject(new Error('Les mots de passe ne correspondent pas'))
     else {
       console.log(this.model)
-      return this.person_srv.register(this.model)
+      return this.person_srv.registerother(this.model)
         .then(async (data) => {
           console.log(data)
           this.model = {
