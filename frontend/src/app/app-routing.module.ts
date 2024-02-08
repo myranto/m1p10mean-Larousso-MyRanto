@@ -10,15 +10,15 @@ import {RecoverycomponentComponent} from "./views/authentification/recoverycompo
 import {RegisterComponent} from "./views/authentification/register/register.component";
 import {AuthentificationComponent} from "./views/authentification/authentification.component";
 import {TypeCostComponent} from "./views/admin/typeCost/type-cost.component";
+import {AuthGuard} from "./auth-guard";
 
 @NgModule({
     imports: [
         RouterModule.forRoot([
             {
                 path: 'views', component: AppLayoutComponent,
+                canActivate: [AuthGuard],
                 children: [
-                    // { path: '', loadChildren: () => import('./demo/components/dashboard/dashboard.module').then(m => m.DashboardModule) },
-                    // { path: 'uikit', loadChildren: () => import('./demo/components/uikit/uikit.module').then(m => m.UIkitModule) },
                     { path: 'admin/service', component: ServiceComponent },
                     { path: 'admin/home', component: HomeComponent },
                     {path:'admin/type_cost',component:TypeCostComponent},
