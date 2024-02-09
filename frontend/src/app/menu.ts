@@ -1,4 +1,12 @@
-export const MenuCustomer =  []
+export const MenuCustomer =  [
+    {
+        label :'Rendez-vous',
+        items:[
+            { label:'Prendre un rendez-vous',icon:'pi pi-calendar', routerLink:['customer/ask_appointment'] },
+            { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['customer/appointment'] }
+        ]
+    }
+]
 
 export const MenuAdmin= [
         {
@@ -19,4 +27,11 @@ export const MenuAdmin= [
         },
     ]
 
-export const MenuEmploye= []
+export const MenuEmploye= [
+    {
+        label :'Rendez-vous',
+        items:[
+            { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['employe/appointment'] }
+        ]
+    }
+]

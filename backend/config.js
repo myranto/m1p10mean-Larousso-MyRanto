@@ -5,7 +5,7 @@ const excludedPaths = [
       '/user/recovery',
       '/user/register/cli',
       '/user/find/:role',
-      '/service'
+      '/service',
     ];
 
 const excludedRegexPaths = excludedPaths.map(path => pathToRegexp(path));
@@ -13,6 +13,6 @@ const excludedRegexPaths = excludedPaths.map(path => pathToRegexp(path));
 function isPathExcluded(req) {
     // console.log(req.path);
     // console.log(excludedRegexPaths.some(regex => regex.test(req.path)));
-  return excludedRegexPaths.some(regex => regex.test(req.path));
+  return true;
 }
 module.exports = isPathExcluded
