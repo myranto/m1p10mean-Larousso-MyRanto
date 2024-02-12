@@ -1,0 +1,9 @@
+<form (submit)="onSubmit()" [formGroup]="form" class="service-form">
+    <div class="field">
+        <label class="block" for="name">Nom</label>
+        <input pInputText required id="name" formControlName="name" />
+        <small id="name-help">Le nom est requis</small> 
+    </div>
+    <button pButton [loading]="loading" class="button p-button-success" type="submit">Valider</button>
+    <button pButton type="button" class="button p-button-danger" (click)="onCancel()">Annuler</button>
+</form>
