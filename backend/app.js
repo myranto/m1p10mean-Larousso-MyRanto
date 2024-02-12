@@ -14,7 +14,9 @@ require('./db')
 var serviceRouter = require('./routes/service');
 var typeCostRouter = require('./routes/type_cost');
 const userRouter = require('./routes/person/User');
-const discountRouter  = require('./routes/discount/discount')
+const discountRouter  = require('./routes/discount/discount');
+const appointment = require('./routes/appointment');
+
 var app = express();
 const { authenticateToken } = require('./jwt');
 
@@ -30,6 +32,7 @@ app.use('/service', serviceRouter);
 app.use('/type_cost',typeCostRouter);
 app.use('/user',userRouter)
 app.use('/discount',discountRouter);
+app.use('/appointment',appointment);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

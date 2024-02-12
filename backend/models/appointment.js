@@ -1,21 +1,30 @@
 const mongoose = require('mongoose');
 const appointmentSchema = mongoose.Schema({
-    client : {
+    customer : {
         id :  { type : String , required : true},
         name: { type : String , required : true},
     },
-    emp : {
-        id: { type : String , required : true},
-        name : { type : String , required : true}
-    },
-    meeting_date : { type : Date, required : true},
-    service : [
+    date : { type : Date, required : true,validate:{
+        validator:function(value){
+            return value > new Date();
+        },
+        message:'La doit être antérieur au date d\' aujourd\'hui'
+    }},
+    services : [
         {
-            id : { type : String , required : true},
-            name : { type : String , required : true},
-            dicount: { type : Number}
+            id: {type:String,required:true},
+            name:{type: String, required: true, unique:true},
+            price:{type: Number, required: true, min:0},
+            committee:{type: Number, required: true, min:0,max:100},
+            duration:{type:Number, required:true,min:0},
+            dicount: { type : Number},
+            emp : {
+                id : {type : String},
+                name : {type : String},
+                price : {type : Number}
+            }
         }
     ],
-    dicount : { type : Number}
+    discount : { type : Number}
 });
 module.exports = mongoose.model('appointment',appointmentSchema);

@@ -7,7 +7,7 @@ import {Injectable} from "@angular/core";
   providedIn: 'root'
 })
 export class Discountservice extends CrudService<Discount>{
-  constructor(protected http : HttpClient ){
+  constructor(http : HttpClient ){
     super(http,"/discount");
   }
 }

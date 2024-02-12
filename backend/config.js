@@ -5,7 +5,7 @@ const excludedPaths = [
       '/user/recovery',
       '/user/register/cli',
       '/user/find/:role',
-      '/service'
+      '/service',
     ];
 
 const excludedRegexPaths = excludedPaths.map(path => pathToRegexp(path));

@@ -12,6 +12,9 @@ import {AuthentificationComponent} from "./views/authentification/authentificati
 import {TypeCostComponent} from "./views/admin/typeCost/type-cost.component";
 import {AuthGuard} from "./auth-guard";
 import {DiscountComponent} from "./views/admin/discount/discount.component";
+import { AskAppointmentComponent } from './views/customer/ask-appointment/ask-appointment.component';
+import { AppointmentComponent } from './views/customer/appointment/appointment.component';
+import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-appointment.component';
 
 @NgModule({
     imports: [
@@ -23,9 +26,12 @@ import {DiscountComponent} from "./views/admin/discount/discount.component";
                     { path: 'admin/service', component: ServiceComponent },
                     { path: 'admin/discount', component: DiscountComponent },
                     { path: 'admin/home', component: HomeComponent },
-                    {path:'admin/type_cost',component:TypeCostComponent},
+                    { path: 'admin/type_cost',component:TypeCostComponent},
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
+                    { path: 'customer/ask_appointment',component: AskAppointmentComponent },
+                    { path: 'customer/appointment',component: AppointmentComponent },
                     { path: 'employe/employe-component',component: EmployeComponentComponent },
+                    { path: 'employe/appointment',component: EmpAppointmentComponent }
                 ]
             },
             {

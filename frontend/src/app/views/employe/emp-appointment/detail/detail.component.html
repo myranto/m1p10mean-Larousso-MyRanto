@@ -1,0 +1,23 @@
+<p>Rendez vous du {{ appointment.date | date:'d MMMM yyyy':'':'fr'}} avec {{ appointment.customer.name }}</p>
+<p-table [value]="appointment.services" >
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Nom</th>
+            <th>Employé responsable</th>
+            <th>Durrée estimée</th>
+            <th>Taux de la commission</th>
+            <th>commission</th>
+            <th>Prix</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.emp ? product.emp.name : 'Aucun employé designé' }}</td>
+            <td>{{ product.duration }} Mn.</td>
+            <td>{{ product.committee }} %</td>
+            <td>{{ (product.committee/100)*product.price }} Ar.</td>
+            <td>{{ product.price }} Ar.</td>
+        </tr>
+    </ng-template>
+</p-table>

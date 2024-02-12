@@ -4,10 +4,10 @@ import {host} from "./host";
 import {getProfileStorage} from "../../../api-request";
 
 export class CrudService<T> {
-    url : string;
-    #http : HttpClient;
+    protected url : string;
+    protected http : HttpClient;
     constructor(http : HttpClient,url : string) {
-      this.#http = http;
+      this.http = http;
       this.url = url;
     }
     getHeaders(){
@@ -17,18 +17,18 @@ export class CrudService<T> {
             'role': profile?.role
         })
     }
-    get() : Observable<T[]> {
 
-      return this.#http.get<T[]>(host+this.url, { headers: this.getHeaders() });
+    get() : Observable<T[]> {
+      return this.http.get<T[]>(host+this.url, { headers: this.getHeaders() });
     }
 
     create(model : T) : Observable<T> {
-      return this.#http.post<T>(host+this.url,model,{ headers: this.getHeaders() });
+      return this.http.post<T>(host+this.url,model,{ headers: this.getHeaders() });
     }
     update(model : T){
-      return this.#http.put(host+this.url,model,{ headers: this.getHeaders() });
+      return this.http.put(host+this.url,model,{ headers: this.getHeaders() });
     }
     drop(id : string){
-      return this.#http.delete(host+this.url+`/${id}`,{ headers: this.getHeaders() });
+      return this.http.delete(host+this.url+`/${id}`,{ headers: this.getHeaders() });
     }
 }

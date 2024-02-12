@@ -3,7 +3,6 @@ import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import {InputGroupModule} from 'primeng/inputgroup';
 import { CrudFormComponent } from '../../../../public/CrudFormComponent';
 import {Service, ServiceService} from "../../../../utils/services/admin/service.service";
 
@@ -15,7 +14,6 @@ import {Service, ServiceService} from "../../../../utils/services/admin/service.
     ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
-    InputGroupModule
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
