@@ -1,6 +1,5 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const excludedPaths = require('./config');
 const isPathExcluded = require('./config');
 
 function generateAccessToken(username) {
