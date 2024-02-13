@@ -14,15 +14,15 @@ export class AppointmentService extends CrudService<Appointment> {
   }
 
   byCustomer(id : string,page? : number){
-    return this.http.get<Appointment[]>(host+this.url,{params:{customer:id,page: page ? page : 0}});
+    return this.http.get<Appointment[]>(host+this.url,{params:{customer:id,page: page ? page : 0},headers: this.getHeaders()});
   }
   countByCustomer(id : string){
-    return this.http.get<{count:number}>(host+this.url+'/count',{params:{customer:id}});
+    return this.http.get<{count:number}>(host+this.url+'/count',{params:{customer:id},headers: this.getHeaders()});
   }
   byEmp(id : string,page? : number){
-    return this.http.get<Appointment[]>(host+this.url,{params:{employe : id,page: page ? page : 0}});
+    return this.http.get<Appointment[]>(host+this.url,{params:{employe : id,page: page ? page : 0},headers: this.getHeaders()});
   }
   countByEmp(id : string){
-    return this.http.get<{count:number}>(host+this.url+'/count',{params:{employe : id}});
+    return this.http.get<{count:number}>(host+this.url+'/count',{params:{employe : id},headers: this.getHeaders()});
   }
 }

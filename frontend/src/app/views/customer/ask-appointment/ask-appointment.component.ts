@@ -5,9 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
-import { Service } from 'src/app/interfaces/service';
 import { ConfirmComponent } from './confirm/confirm.component';
-import { ServiceService } from 'src/app/utils/services/admin/service.service';
+import {Service, ServiceService} from 'src/app/utils/services/admin/service.service';
 import { User } from 'src/app/utils/interfaces/user';
 import { PersonService } from 'src/app/utils/services/person/person-service';
 import { DropdownModule } from 'primeng/dropdown';
@@ -44,7 +43,7 @@ export class AskAppointmentComponent implements OnInit{
       selectedEmp : [null]
     });
   }
-  
+
   ngOnInit(): void {
     this.state = 'loading';
     this.personService.findByrole('employe').then((empList) => {
@@ -66,7 +65,7 @@ export class AskAppointmentComponent implements OnInit{
   removeFromSelected(model){
     this.selectedServices = this.selectedServices.filter((service) => service !== model);
   }
-  
+
   getTotalPrice(){
     let total = 0;
     this.selectedServices.forEach((selected)=> total+= selected.price );

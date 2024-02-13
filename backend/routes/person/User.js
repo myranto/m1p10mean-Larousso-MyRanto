@@ -95,7 +95,11 @@ router.put('/',async function(req,res){
 // find by role
 router.get('/find/:role',async function(req,res) {
     try {
-        let model = await user.find({role: req.params.role});
+        const page = req.query.page ? parseInt(req.query.page) :null ;
+        const size = req.query.size ? parseInt(req.query.size) :null;
+        let model = page!==null&&size!==null ? await user.find({role: req.params.role}) : await user.find({role: req.params.role})
+            .skip((page - 1) * size)
+            .limit(size);
         if(!model){
             throw {message:'not found',status:404};
         } 
@@ -109,6 +113,7 @@ router.get('/find/:role',async function(req,res) {
         }
     }
 })
+
 router.delete('/:id',async function (req,res) {
     try {
         await user.deleteMany(await user.findById(req.params.id));
