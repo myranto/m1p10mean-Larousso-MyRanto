@@ -7,6 +7,7 @@ router.post('/', async function(req,res){
         await appointment.create(req.body);
         return res.status(200).send();
     } catch (error) {
+        console.log(error);
         if(error.errors && error.errors.date){
             return res.status(400).send(error.errors.date.properties.message);
         }

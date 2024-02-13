@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const discount = require('../../models/discount/discount')
+const discount = require('../../models/discount/discount');
+const User = require('../../models/person/User');
+const sendMail = require('../../service/MailSender');
 
 router.get('/',async function (req,res){
     try {
-        res.json(await discount.find());
+       
+      res.json(await discount.find());
     } catch (error) {
+        console.log(error);
         res.status(500).json(error);
     }
 });
@@ -29,9 +33,21 @@ router.get('/:id',async function (req,res){
 router.post('/',async function (req,res){
     try {
         // validator(req.body);
+        const user_list = await User.find({role:'customer'})
         let document =  await discount.create(req.body);
+            user_list.forEach(async p => {
+                const msg = {
+                    to: p.mail,
+                    from: 'my.randrianantoandro@gmail.com',
+                    subject: 'Coiffure:Offre spéciale!',
+                    text: 'Voici un nouvel offre que vous ne pouvez refuser '+req.body.name,
+                    html: '<p>Voici un nouvel offre que vous ne pouvez laisser passer '+req.body.name+', avec une remise de <strong>'+req.body.percent+'%</strong></p> ',
+                };
+                await sendMail(msg)
+            });
         res.status(200).json(document);
     } catch (error) {
+        console.log(error);
         res.status(400).json(error);
     }
 });
