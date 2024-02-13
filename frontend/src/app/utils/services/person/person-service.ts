@@ -21,12 +21,16 @@ export class PersonService extends AuthService{
     return await deleteCall(this.url + '/' + idperson,null,true)
   }
   
-  findInTheSession() : Observable<User> {
+  findById(id : string) : Observable<User> {
     const user = JSON.parse(localStorage.getItem('person_profil'));
     let headers =  new HttpHeaders({
       'authorization': `Bearer ${user?.token}`,
       'role': user?.role
     });
-    return this.http.get<User>(this.url+'/'+user.id,{headers:headers});
+    return this.http.get<User>(this.url+'/'+id,{headers:headers});
+  }
+  findInTheSession() : Observable<User> {
+    const user = JSON.parse(localStorage.getItem('person_profil'));
+    return this.findById(user.id);
   }
 }

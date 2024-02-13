@@ -4,6 +4,7 @@ const user = require('../../models/person/User');
 const User = require('../../models/person/User');
 const { generateAccessToken } = require('../../jwt');
 const bcrypt = require('bcryptjs');
+const { model } = require('mongoose');
 const saltRounds = 10;
 
 //login user return user{name,mail,role,token}
@@ -83,9 +84,9 @@ router.put('/recovery',async function (req,res) {
 // updated user
 router.put('/',async function(req,res){
     try {
-        console.log(req.body);
+        console.log(req.body.prefered_emp);
         const { _id, ...updateData } = req.body;
-    await user.updateOne({ _id }, { $set: updateData });
+        await user.updateOne({ _id }, { $set: updateData });
         res.status(200).json('modification réussi');
     } catch (error) {
         console.log(error);
@@ -112,14 +113,14 @@ router.get('/find/:role',async function(req,res) {
 
 router.get('/:id',async function (req,res){
     try{
-        return res.status(200).send(await user.findById(req.params.id));
+        let model = await user.findById(req.params.id).populate({path:"prefered_emp",model:"User"}).populate({path:"prefered_service",model:"Service"});
+        return res.status(200).send(model);
     }catch(error){
         if(error.status){
             return res.status(error.status).json(error.message);
-         }
-         else{
-             return res.status(404).json(error.message);
-         }
+        }else{
+            return res.status(404);
+        }
     }
 });
 

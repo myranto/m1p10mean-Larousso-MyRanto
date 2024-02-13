@@ -5,6 +5,12 @@ export const MenuCustomer =  [
             { label:'Prendre un rendez-vous',icon:'pi pi-calendar', routerLink:['customer/ask_appointment'] },
             { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['customer/appointment'] }
         ]
+    },
+    {
+        label :'Profil',
+        items:[
+            { label:'Modifier votre profil',icon:'pi pi-person', routerLink:['customer/profile'] }
+        ]
     }
 ]
 
