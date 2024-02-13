@@ -108,7 +108,21 @@ router.get('/find/:role',async function(req,res) {
             return res.status(406).json(error.message);
         }
     }
-})
+});
+
+router.get('/:id',async function (req,res){
+    try{
+        return res.status(200).send(await user.findById(req.params.id));
+    }catch(error){
+        if(error.status){
+            return res.status(error.status).json(error.message);
+         }
+         else{
+             return res.status(404).json(error.message);
+         }
+    }
+});
+
 router.delete('/:id',async function (req,res) {
     try {
         await user.deleteMany(await user.findById(req.params.id));

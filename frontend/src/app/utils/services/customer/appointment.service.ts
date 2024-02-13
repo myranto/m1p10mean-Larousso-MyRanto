@@ -25,4 +25,7 @@ export class AppointmentService extends CrudService<Appointment> {
   countByEmp(id : string){
     return this.http.get<{count:number}>(host+this.url+'/count',{params:{employe : id}});
   }
+  pay(model : Appointment){
+    return this.http.post(host+"/payment",{appointment:model._id},{headers:this.getHeaders()});
+  }
 }

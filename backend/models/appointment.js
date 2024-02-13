@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const appointmentSchema = mongoose.Schema({
-    customer : {
-        id :  { type : String , required : true},
-        name: { type : String , required : true},
-    },
+    customer : { type: mongoose.Schema.Types.ObjectId , required: true ,ref:"user"},
     date : { type : Date, required : true,validate:{
         validator:function(value){
             return value > new Date();
@@ -13,18 +10,19 @@ const appointmentSchema = mongoose.Schema({
     services : [
         {
             id: {type:String,required:true},
-            name:{type: String, required: true, unique:true},
+            name:{type: String, required: true},
             price:{type: Number, required: true, min:0},
             committee:{type: Number, required: true, min:0,max:100},
             duration:{type:Number, required:true,min:0},
             dicount: { type : Number},
-            emp : {
-                id : {type : String},
-                name : {type : String},
-                price : {type : Number}
-            }
+            emp : { type : mongoose.Schema.Types.ObjectId , required: false,ref:"user"}
         }
     ],
-    discount : { type : Number}
+    discount : { type : Number},
+    payment : {
+        payment_date : { type: Date },
+        amount : { type : Number }
+    }
 });
+
 module.exports = mongoose.model('appointment',appointmentSchema);

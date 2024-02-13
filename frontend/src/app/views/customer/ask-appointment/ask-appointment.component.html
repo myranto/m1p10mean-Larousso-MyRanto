@@ -1,5 +1,5 @@
 <label for="date">Date du rendez vous</label>
-<p-calendar id="date" [style]="{width:'100%'}" placeholder="Date et heure du rendez-vous" [(ngModel)]="calendarDate" [showIcon]="true"></p-calendar>
+<p-calendar id="date" [showTime]="true" [style]="{width:'100%'}" placeholder="Date et heure du rendez-vous" [(ngModel)]="calendarDate" [showIcon]="true"></p-calendar>
 <label for="service">Ajouter un service</label>
 
 <form id="service" class="form" [formGroup]="form" (submit)="add()" >
@@ -15,6 +15,7 @@
             <th>Nom</th>
             <th>Prix</th>
             <th>Employé responsable</th>
+            <th>Durrée estimée</th>
             <th></th>
         </tr>
     </ng-template>
@@ -22,7 +23,8 @@
         <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.price }} Ar.</td>
-            <td>{{ product.emp ? product.emp.name : 'Aucun employé selectionné' }}</td>
+            <td>{{ product.emp_name ? product.emp_name : 'Aucun employé selectionné' }}</td>
+            <td>{{ product.duration }} Mn</td>
             <td><p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="removeFromSelected(product)" ></p-button></td>
         </tr>
     </ng-template>

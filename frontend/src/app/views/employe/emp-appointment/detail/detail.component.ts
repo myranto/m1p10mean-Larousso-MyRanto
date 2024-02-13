@@ -18,7 +18,7 @@ registerLocaleData(localeFr,'fr');
   styleUrl: './detail.component.scss'
 })
 export class DetailComponent {
-  appointment : Appointment;
+  appointment : any;
 
   constructor(private config : DynamicDialogConfig){
     this.appointment = this.config.data.appointment;

@@ -15,6 +15,7 @@ import {DiscountComponent} from "./views/admin/discount/discount.component";
 import { AskAppointmentComponent } from './views/customer/ask-appointment/ask-appointment.component';
 import { AppointmentComponent } from './views/customer/appointment/appointment.component';
 import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-appointment.component';
+import { EmpProfileComponent } from './views/employe/emp-profile/emp-profile.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-app
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },
                     { path: 'employe/employe-component',component: EmployeComponentComponent },
-                    { path: 'employe/appointment',component: EmpAppointmentComponent }
+                    { path: 'employe/appointment',component: EmpAppointmentComponent },
+                    { path: 'employe/profile',component: EmpProfileComponent}
                 ]
             },
             {

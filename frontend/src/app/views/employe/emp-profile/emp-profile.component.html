@@ -1,0 +1,19 @@
+<form *ngIf="fb" [formGroup]="fb">
+    <div class="flex flex-column gap-2">
+        <label for="mail">E-mail</label>
+        <input pInputText id="mail" formControlName="mail" [style]="{width:'100%'}" />
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="name">Nom</label>
+        <input pInputText id="name" formControlName="name" [style]="{width:'100%'}" />
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="startTime">Heure de début de service </label>
+        <p-calendar [timeOnly]="true" formControlName="startTime" id="startTime" [style]="{width:'100%'}" />
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="endTime">Heure de fin de service </label>
+        <p-calendar [timeOnly]="true" formControlName="endTime" id="endTime" [style]="{width:'100%'}" />
+    </div>
+    <p-button [style]="{width:'100%'}" (onClick)="updateProfile()" label="Valider"></p-button>
+</form>

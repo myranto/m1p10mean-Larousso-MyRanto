@@ -33,7 +33,7 @@ export class AskAppointmentComponent implements OnInit{
   calendarDate : any;
   services : Service[]= [];
   empList : User[];
-  selectedServices : { id : string, name : string , price : number,committee : number,duration : number, emp: { id : string, name : string} | null } [] = [];
+  selectedServices : any = [];
   state : string = 'idle';
   form : FormGroup;
 
@@ -109,7 +109,8 @@ export class AskAppointmentComponent implements OnInit{
             price : selectedService.price,
             duration : selectedService.duration,
             committee : selectedService.committee,
-            emp : selectedEmp ? { id : selectedEmp._id, name : selectedEmp.name } : null
+            emp : selectedEmp ? selectedEmp._id : null,
+            emp_name : selectedEmp ? selectedEmp.name : null
           }
         );
         this.form.reset();

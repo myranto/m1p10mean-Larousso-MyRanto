@@ -33,5 +33,11 @@ export const MenuEmploye= [
         items:[
             { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['employe/appointment'] }
         ]
+    },
+    {
+        label:"Profile",
+        items : [
+            { label:"Modifier",icon:"pi pi-pencil",routerLink:['employe/profile']}
+        ]
     }
 ]

@@ -23,7 +23,7 @@ registerLocaleData(localeFr,'fr');
 })
 export class ConfirmComponent {
   appointmentDate : any;
-  services : { id : string, name : string , price : number, committee : number,duration : number, emp: { id : string, name : string} | null }[];
+  services : { id : string, name : string , price : number, committee : number,duration : number, emp: string | null }[];
   total : any;
   loading : boolean = false;
 
@@ -38,12 +38,10 @@ export class ConfirmComponent {
     this.loading = true;
     let appointment : Appointment = {
       _id:undefined,
-      customer:{
-        id : customer.id,
-        name : customer.name
-      },
+      customer: customer.id,
       date:this.appointmentDate,
-      services : this.services
+      services : this.services,
+      payment : null
     };
     this.service.create(appointment).subscribe(
       {

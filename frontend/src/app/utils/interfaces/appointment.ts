@@ -1,9 +1,6 @@
 export interface Appointment {
     _id : string | null,
-    customer : {
-        id : string,
-        name : string
-    },
+    customer : string
     date : Date,
     services : {
         id : string,
@@ -11,9 +8,10 @@ export interface Appointment {
         duration:number,
         committee : number,
         price:number,
-        emp: {
-            id : string,
-            name : string
-        } | null
-    }[]
+        emp: string
+    }[],
+    payment : {
+        payment_date : Date,
+        amount : number
+    } | null
 }

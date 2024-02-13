@@ -1,3 +1,5 @@
+import { Time } from "@angular/common";
+
 export interface User {
   _id:string|null,
   name:string,
@@ -7,6 +9,6 @@ export interface User {
   profile:string|null,
   prefered_service:string|null,
   prefered_emp:string|null,
-  start_time:Date|null,
-  end_time:Date|null,
+  start_time: Time,
+  end_time: Time,
 }
