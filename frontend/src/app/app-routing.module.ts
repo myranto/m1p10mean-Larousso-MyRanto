@@ -15,6 +15,7 @@ import {DiscountComponent} from "./views/admin/discount/discount.component";
 import { AskAppointmentComponent } from './views/customer/ask-appointment/ask-appointment.component';
 import { AppointmentComponent } from './views/customer/appointment/appointment.component';
 import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-appointment.component';
+import {McalendarComponent} from "./demo/components/mcalendar/mcalendar.component";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-app
                     { path: 'admin/discount', component: DiscountComponent },
                     { path: 'admin/home', component: HomeComponent },
                     { path: 'admin/type_cost',component:TypeCostComponent},
+                    { path: 'admin/calendar',component:McalendarComponent},
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },

@@ -10,7 +10,6 @@ import {ModalComponent} from "../modal/modal.component";
 import {ToolbarModule} from "primeng/toolbar";
 import {RippleModule} from "primeng/ripple";
 import {Base} from "../base";
-
 @Component({
   selector: 'app-list',
   standalone: true,
