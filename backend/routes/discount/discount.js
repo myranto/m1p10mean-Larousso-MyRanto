@@ -6,7 +6,6 @@ const { sendMail, HTML_TEMPLATE } = require('../../service/MailSender');
 
 router.get('/',async function (req,res){
     try {
-       
       res.json(await discount.find());
     } catch (error) {
         console.log(error);

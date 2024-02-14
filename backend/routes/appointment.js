@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var appointment = require('../models/appointment');
-
+const moment = require('moment');
 router.post('/', async function(req,res){
     try {
         await appointment.create(req.body);
@@ -62,5 +62,67 @@ router.delete('/:id',async function(req,res){
         return res.status(400).send(error);
     }
 });
+
+router.put('/date/:id',async function(req,res){
+    try {
+        let model = await appointment.findById({_id : req.params.id});
+        if (!model) {
+            throw new Error('Aucun rendez-vous trouvé avec cet ID');
+        } 
+        model.date = new Date(req.body.start)
+        await model.save()
+        console.log('mety');
+        return res.status(200).send();
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send(error);
+    }
+})
+
+router.get('/calendar',async function(req,res){
+    try {
+        const { role, id, mode, date } = req.query;
+        console.log('role '+role+' id '+id+' mode '+mode+' date '+date);
+        const newDate = new Date(date)
+        const start = moment(newDate).startOf(mode).toDate();
+        const end = moment(newDate).endOf(mode).toDate();
+        let result = []
+        switch (role) {
+            case 'admin':
+                result = await appointment.find({
+                    date:{
+                        $gte: start,
+                        $lte: end
+                    }
+                })
+                break;
+            case 'customer':
+                result = await appointment.find({
+                    'customer.id':id,
+                    date:{
+                        $gte: start,
+                        $lte: end
+                    }
+                })
+                break
+            case 'employe':
+                result = await appointment.find({
+                    'services.emp.id':id,
+                    date:{
+                        $gte: start,
+                        $lte: end
+                    }
+                })
+                break
+            default:
+                throw new Error('requete invalide')
+                break;
+        }
+        return res.status(200).send(result);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send(error);
+    }
+})
 
 module.exports = router;
