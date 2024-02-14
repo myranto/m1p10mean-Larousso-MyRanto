@@ -15,7 +15,7 @@ export class CrudService<T> {
         return new HttpHeaders({
             'authorization': `Bearer ${profile?.token}`,
             'role': profile?.role
-        })
+        });
     }
 
     get() : Observable<T[]> {
@@ -25,6 +25,7 @@ export class CrudService<T> {
     create(model : T) : Observable<T> {
       return this.http.post<T>(host+this.url,model,{ headers: this.getHeaders() });
     }
+
     update(model : T){
       return this.http.put(host+this.url,model,{ headers: this.getHeaders() });
     }

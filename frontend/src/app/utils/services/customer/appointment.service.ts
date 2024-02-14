@@ -31,4 +31,7 @@ export class AppointmentService extends CrudService<Appointment> {
   updateDateEvent(id,form){
       return this.http.put(host+this.url+'/date/'+id,form,{ headers: this.getHeaders() })
   }
+  pay(model : Appointment){
+    return this.http.post(host+"/payment",{appointment:model._id},{headers:this.getHeaders()});
+  }
 }

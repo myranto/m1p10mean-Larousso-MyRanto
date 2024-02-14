@@ -1,4 +1,4 @@
-<p>Rendez vous du {{ appointment.date | date:'d MMMM yyyy':'':'fr'}}</p>
+<p>Rendez vous du {{ appointment.date | date:'d MMMM yyyy à HH:mm':'':'fr'}}</p>
 <p-table [value]="appointment.services" >
     <ng-template pTemplate="header">
         <tr>
@@ -18,6 +18,6 @@
     </ng-template>
 </p-table>
 <div class="button">
-    <p-button class="bt" [style]="{width:'100%'}" severity="danger" (onClick)="remove()" label="supprimer le rendez-vous"></p-button>
-    <p-button class="bt" [style]="{width:'100%'}" severity="danger" (onClick)="closeDialog()" label="Fermer"></p-button>
+    <p-button class="bt" [style]="{width:'100%'}" *ngIf="canBePaid()" (onClick)="pay()" label="Ajouter un paiement"></p-button>
+    <p-button class="bt" [style]="{width:'100%'}" severity="danger" (onClick)="close()" label="Fermer la fenêtre"></p-button>
 </div>

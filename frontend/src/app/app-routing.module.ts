@@ -16,6 +16,8 @@ import { AskAppointmentComponent } from './views/customer/ask-appointment/ask-ap
 import { AppointmentComponent } from './views/customer/appointment/appointment.component';
 import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-appointment.component';
 import {McalendarComponent} from "./demo/components/mcalendar/mcalendar.component";
+import { EmpProfileComponent } from './views/employe/emp-profile/emp-profile.component';
+import { CustomerProfileComponent } from './views/customer/customer-profile/customer-profile.component';
 
 @NgModule({
     imports: [
@@ -32,8 +34,10 @@ import {McalendarComponent} from "./demo/components/mcalendar/mcalendar.componen
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },
+                    { path: 'customer/profile',component: CustomerProfileComponent },
                     { path: 'employe/employe-component',component: EmployeComponentComponent },
-                    { path: 'employe/appointment',component: EmpAppointmentComponent }
+                    { path: 'employe/appointment',component: EmpAppointmentComponent },
+                    { path: 'employe/profile',component: EmpProfileComponent}
                 ]
             },
             {

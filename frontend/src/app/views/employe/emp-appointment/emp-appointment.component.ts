@@ -61,9 +61,9 @@ export class EmpAppointmentComponent {
 
   calculateTotalMinute(appointment : Appointment){
     let total = 0;
-    let customer = JSON.parse(localStorage.getItem('person_profil'));
+    let emp = JSON.parse(localStorage.getItem('person_profil'));
     appointment.services.forEach((srv)=>{
-      if(srv.emp && srv.emp.id === customer.id){
+      if(srv.emp && srv.emp === emp.id){
         total += srv.duration;
       }
     });
@@ -72,9 +72,9 @@ export class EmpAppointmentComponent {
 
   calculateCommittee(appointment : Appointment){
     let total = 0;
-    let customer = JSON.parse(localStorage.getItem('person_profil'));
+    let emp = JSON.parse(localStorage.getItem('person_profil'));
     appointment.services.forEach((srv)=>{
-      if(srv.emp && srv.emp.id === customer.id){
+      if(srv.emp && srv.emp === emp.id){
         total += (srv.committee/100) * srv.price;
       }
     });

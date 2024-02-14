@@ -6,6 +6,12 @@ export const MenuCustomer =  [
             { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['customer/appointment'] },
             { label: 'Calendrier', icon: 'pi pi-fw pi-calendar', routerLink: ['admin/calendar'] }
         ]
+    },
+    {
+        label :'Profil',
+        items:[
+            { label:'Modifier votre profil',icon:'pi pi-person', routerLink:['customer/profile'] }
+        ]
     }
 ]
 
@@ -34,6 +40,12 @@ export const MenuEmploye= [
         items:[
             { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['employe/appointment'] },
             { label: 'Calendrier', icon: 'pi pi-fw pi-calendar', routerLink: ['admin/calendar'] }
+        ]
+    },
+    {
+        label:"Profile",
+        items : [
+            { label:"Modifier",icon:"pi pi-pencil",routerLink:['employe/profile']}
         ]
     }
 ]

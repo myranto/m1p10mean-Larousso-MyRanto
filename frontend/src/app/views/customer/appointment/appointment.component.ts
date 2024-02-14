@@ -8,6 +8,8 @@ import LocaleFr from '@angular/common/locales/fr';
 import { DialogService } from 'primeng/dynamicdialog';
 import { DetailsComponent } from './details/details.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 registerLocaleData(LocaleFr,'fr');
 
@@ -17,7 +19,8 @@ registerLocaleData(LocaleFr,'fr');
   imports: [
     CommonModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    ConfirmDialogModule
   ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss'
@@ -25,10 +28,10 @@ registerLocaleData(LocaleFr,'fr');
 export class AppointmentComponent implements OnInit{
   appointments : Appointment[];
   totalAppointments : number;
-  selectAppointment : Appointment;
+  selectedAppointment : Appointment;
   state : string = 'idle';
 
-  constructor(private service : AppointmentService,private dialogService : DialogService){}
+  constructor(private service : AppointmentService,private dialogService : DialogService,private confirmationService : ConfirmationService,private messageService : MessageService){}
 
   ngOnInit(): void {
     this.state = 'loading';
@@ -40,19 +43,18 @@ export class AppointmentComponent implements OnInit{
   }
 
   showDetail(){
-    console.log(this.selectAppointment);
     this.dialogService.open(DetailsComponent,{
       data:{
-        appointment:this.selectAppointment
+        appointment:this.selectedAppointment
       },
       header:'Détail du rendez-vous',
       style:{
         width:'100%'
       }
-    }).onClose.subscribe((deleted)=>{
-      if(deleted){
-        this.appointments = this.appointments.filter((appointment) => appointment !== this.selectAppointment);
-      }
+    }).onClose.subscribe((value)=>{
+      console.log(value);
+      
+      this.selectedAppointment.payment = value.payment;
     });
   }
 
@@ -78,4 +80,24 @@ export class AppointmentComponent implements OnInit{
       this.appointments = next
     });
   }
+
+  delete(appointment : Appointment){
+    console.log(appointment);
+    this.confirmationService.confirm({message:"Confirmer la suppression du rendez-vous",accept:()=>{
+        this.service.drop(appointment._id).subscribe({
+          error:(error)=>{
+            this.messageService.add({summary:'Erreur',detail:error,severity:'error'});
+          },
+          next:()=>{
+            this.messageService.add({summary:'Réussie',detail:'Le rendez-vous a été supprimé avec succés',severity:'success'});
+            this.appointments = this.appointments.filter((apt) => apt !== appointment);
+          }
+        });
+      },
+      acceptLabel:"Supprimer",
+      rejectLabel:"Annuler",
+      acceptButtonStyleClass:"p-button-danger"
+    });
+  }
+
 }

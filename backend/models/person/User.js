@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
     profile: { type: String, required: false },
     prefered_service: { type: String, required:false},
     prefered_emp:{type: String, required:false},
-    start_time: { type: String, required: false},
-    end_time: { type: String, required: false }
+    start_time: { type: { hours:Number,minutes:Number }, required: false},
+    end_time: { type: { hours:Number,minutes:Number }, required: false }
 });
 
 
