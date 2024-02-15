@@ -2,12 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
 import { Service } from 'src/app/interfaces/service';
 import { User } from 'src/app/utils/interfaces/user';
 import { ServiceService } from 'src/app/utils/services/admin/service.service';
+import { host } from 'src/app/utils/services/host';
 import { PersonService } from 'src/app/utils/services/person/person-service';
 
 @Component({
@@ -19,7 +22,9 @@ import { PersonService } from 'src/app/utils/services/person/person-service';
     ReactiveFormsModule,
     ButtonModule,
     CommonModule,
-    DropdownModule
+    DropdownModule,
+    FileUploadModule,
+    AvatarModule
   ],
   templateUrl: './customer-profile.component.html',
   styleUrl: './customer-profile.component.scss'
@@ -56,5 +61,14 @@ export class CustomerProfileComponent {
         this.messageService.add({summary:"Erreur",detail:"Les données sont invalides",severity:"error"})
       );
     }
+  }
+  onUpload(){
+    this.messageService.add({severity:'success',summary:"Photo changée"})
+  }
+  getProfile(){
+    return host+"/profiles/"+this.customer?.profile;
+  }
+  getUrl(){
+    return host+"/user/profile/"+this.customer?._id;
   }
 }

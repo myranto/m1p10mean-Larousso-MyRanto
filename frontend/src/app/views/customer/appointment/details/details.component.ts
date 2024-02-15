@@ -9,6 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { AppointmentService } from 'src/app/utils/services/customer/appointment.service';
 import { MessageService } from 'primeng/api';
 import { PaymentComponent } from '../payment/payment.component';
+import { host } from 'src/app/utils/services/host';
+import { AvatarModule } from 'primeng/avatar';
 
 registerLocaleData(localeFr,'fr');
 
@@ -18,7 +20,8 @@ registerLocaleData(localeFr,'fr');
   imports: [
     TableModule,
     CommonModule,
-    ButtonModule
+    ButtonModule,
+    AvatarModule
   ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss'
@@ -40,5 +43,8 @@ export class DetailsComponent {
 
   canBePaid(){
     return !this.appointment.payment && new Date(this.appointment.date )> new Date()
+  }
+  getProfile(emp){
+    return host+"/profiles/"+emp?.profile;
   }
 }

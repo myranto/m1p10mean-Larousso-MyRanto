@@ -12,6 +12,9 @@ import { User } from 'src/app/utils/interfaces/user';
 import { PersonService } from 'src/app/utils/services/person/person-service';
 import { DropdownModule } from 'primeng/dropdown';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { host } from 'src/app/utils/services/host';
+import { AvatarModule } from 'primeng/avatar';
 
 
 @Component({
@@ -24,7 +27,9 @@ import { Router } from '@angular/router';
     ButtonModule,
     DynamicDialogModule,
     DropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    AvatarModule
   ],
   templateUrl: './ask-appointment.component.html',
   styleUrl: './ask-appointment.component.scss'
@@ -39,9 +44,13 @@ export class AskAppointmentComponent implements OnInit{
 
   constructor(private serviceService : ServiceService,private messageService : MessageService,private dialogService : DialogService,
     private personService : PersonService,private formBuilder : FormBuilder,private router : Router ){
-    this.form = this.formBuilder.group({
-      selectedService : [null,[Validators.required]],
-      selectedEmp : [null]
+    this.personService.findInTheSession().subscribe((customer)=>{
+      console.log(customer);
+      
+      this.form = this.formBuilder.group({
+        selectedService : [customer.prefered_service,[Validators.required]],
+        selectedEmp : [customer.prefered_emp]
+      });
     });
   }
   
@@ -110,11 +119,15 @@ export class AskAppointmentComponent implements OnInit{
             duration : selectedService.duration,
             committee : selectedService.committee,
             emp : selectedEmp ? selectedEmp._id : null,
-            emp_name : selectedEmp ? selectedEmp.name : null
+            emp_name : selectedEmp ? selectedEmp.name : null,
+            emp_avatar : selectedEmp ? selectedEmp.profile : null
           }
         );
         this.form.reset();
       }
     }
+  }
+  getProfile(profile){
+    return host+"/profiles/"+profile;
   }
 }

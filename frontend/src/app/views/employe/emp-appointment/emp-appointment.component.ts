@@ -6,6 +6,8 @@ import { TableModule } from 'primeng/table';
 import { Appointment } from 'src/app/utils/interfaces/appointment';
 import { AppointmentService } from 'src/app/utils/services/customer/appointment.service';
 import { DetailComponent } from './detail/detail.component';
+import { host } from 'src/app/utils/services/host';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-emp-appointment',
@@ -13,7 +15,8 @@ import { DetailComponent } from './detail/detail.component';
   imports: [
     TableModule,
     PaginatorModule,
-    CommonModule
+    CommonModule,
+    AvatarModule
   ],
   templateUrl: './emp-appointment.component.html',
   styleUrl: './emp-appointment.component.scss'
@@ -86,5 +89,8 @@ export class EmpAppointmentComponent {
     this.service.byEmp(emp.id,event.page).subscribe((next)=>{
       this.appointments = next
     });
+  }
+  getProfile(customer){
+    return host+"/profiles/"+customer?.profile;
   }
 }

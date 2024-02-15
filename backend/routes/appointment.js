@@ -45,8 +45,8 @@ router.get('/',async function(req,res){
             let page = parseInt(req.query.page);
             result.skip(page*100).limit(100);
         }
-        result.populate({path:"services",populate:{path:"emp",model:"User",select:"name"}});
-        result.populate({path:"customer",model:"User",select:"name"});
+        result.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
+        result.populate({path:"customer",model:"User",select:"name profile"});
         return res.send(await result);
     } catch(error) {
         console.log(error);

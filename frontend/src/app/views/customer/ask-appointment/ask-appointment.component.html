@@ -2,7 +2,7 @@
 <p-calendar id="date" [showTime]="true" [style]="{width:'100%'}" placeholder="Date et heure du rendez-vous" [(ngModel)]="calendarDate" [showIcon]="true"></p-calendar>
 <label for="service">Ajouter un service</label>
 
-<form id="service" class="form" [formGroup]="form" (submit)="add()" >
+<form id="service" *ngIf="form" class="form" [formGroup]="form" (submit)="add()" >
     <p-dropdown class="field" [style]="{width:'100%'}" formControlName="selectedService" [options]="services" optionLabel="name" placeholder="Selectionner le service*" required ></p-dropdown>
     <p-dropdown class="field" [style]="{width:'100%'}" formControlName="selectedEmp" [options]="empList" optionLabel="name" placeholder="Selectionner l'employé"></p-dropdown>
     <p-button class="field" [style]="{width:'100%'}" label="Ajouter" severity="success" icon="pi pi-plus" type="submit" ></p-button>
@@ -15,6 +15,7 @@
             <th>Nom</th>
             <th>Prix</th>
             <th>Employé responsable</th>
+            <th></th>
             <th>Durrée estimée</th>
             <th></th>
         </tr>
@@ -24,6 +25,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }} Ar.</td>
             <td>{{ product.emp_name ? product.emp_name : 'Aucun employé selectionné' }}</td>
+            <td><p-avatar *ngIf="product.emp_avatar" size="xlarge" shape="circle" [image]="getProfile(product.emp_avatar)"></p-avatar></td>
             <td>{{ product.duration }} Mn</td>
             <td><p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="removeFromSelected(product)" ></p-button></td>
         </tr>

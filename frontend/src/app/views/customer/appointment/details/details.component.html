@@ -4,6 +4,7 @@
         <tr>
             <th>Nom</th>
             <th>Employé responsable</th>
+            <th></th>
             <th>Durrée estimée</th>
             <th>Prix</th>
         </tr>
@@ -12,6 +13,7 @@
         <tr>
             <td>{{ product.name }}</td>
             <td>{{ product.emp ? product.emp.name : 'Aucun employé designé' }}</td>
+            <td><p-avatar *ngIf="product.emp" [image]="getProfile(product.emp)" shape="circle" size="xlarge" ></p-avatar></td>
             <td>{{ product.duration }} Mn.</td>
             <td>{{ product.price }} Ar.</td>
         </tr>

@@ -7,6 +7,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { User } from 'src/app/utils/interfaces/user';
 import { PersonService } from 'src/app/utils/services/person/person-service';
+import { FileUploadModule } from 'primeng/fileupload';
+import { AvatarModule } from 'primeng/avatar';
+import { host } from 'src/app/utils/services/host';
 
 @Component({
   selector: 'app-emp-profile',
@@ -17,7 +20,9 @@ import { PersonService } from 'src/app/utils/services/person/person-service';
     ReactiveFormsModule,
     FormsModule,
     CalendarModule,
-    CommonModule
+    CommonModule,
+    FileUploadModule,
+    AvatarModule
   ],
   templateUrl: './emp-profile.component.html',
   styleUrl: './emp-profile.component.scss'
@@ -63,5 +68,15 @@ export class EmpProfileComponent {
         this.messageService.add({summary:"Erreur",detail:"Les données sont invalides",severity:"error"})
       );
     }
+  }
+  getProfile(){
+    return host+"/profiles/"+this.employe?.profile;
+  }
+  getUrl(){
+    return host+"/user/profile/"+this.employe?._id;
+  }
+
+  onUpload(){
+    this.messageService.add({severity:'success',summary:"Photo changée"})
   }
 }
