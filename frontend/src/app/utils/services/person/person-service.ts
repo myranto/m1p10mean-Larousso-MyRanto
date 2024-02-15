@@ -14,13 +14,13 @@ export class PersonService extends AuthService{
     super();
   }
 
-  async findByrole(role: string): Promise<User[]> {
+  async findByrole(role: string): Promise<any[]> {
     return await getCall(this.url + '/find/' + role,false)
   }
   async deletePersonById(idperson: string): Promise<string> {
     return await deleteCall(this.url + '/' + idperson,null,true)
   }
-  
+
   findById(id : string) : Observable<User> {
     const user = JSON.parse(localStorage.getItem('person_profil'));
     let headers =  new HttpHeaders({

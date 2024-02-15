@@ -109,7 +109,7 @@ router.get('/calendar',async function(req,res){
         let result = []
         switch (role) {
             case 'admin':
-                result = await appointment.find({
+                result =  appointment.find({
                     date:{
                         $gte: start,
                         $lte: end
@@ -117,8 +117,8 @@ router.get('/calendar',async function(req,res){
                 })
                 break;
             case 'customer':
-                result = await appointment.find({
-                    'customer.id':id,
+                result =  appointment.find({
+                    'customer':id,
                     date:{
                         $gte: start,
                         $lte: end
@@ -126,8 +126,8 @@ router.get('/calendar',async function(req,res){
                 })
                 break
             case 'employe':
-                result = await appointment.find({
-                    'services.emp.id':id,
+                result =  appointment.find({
+                    'services.emp':id,
                     date:{
                         $gte: start,
                         $lte: end
@@ -136,9 +136,12 @@ router.get('/calendar',async function(req,res){
                 break
             default:
                 throw new Error('requete invalide')
-                break;
         }
-        return res.status(200).send(result);
+        result.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
+        result.populate({path:"customer",model:"User",select:"name profile"});
+        const val = await result
+        console.log(val);
+        return res.status(200).send(val);
     } catch (error) {
         console.log(error);
         return res.status(400).send(error);

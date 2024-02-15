@@ -31,6 +31,8 @@
             [events]="events"
             [excludeDays]="[0, 6]"
             locale="fr"
+            [dayStartHour]="6"
+            [dayEndHour]="20"
             [refresh]="refresh"
             (eventClicked)="eventClicked($event)"
             (eventTimesChanged)="eventTimesChanged($event)"
@@ -41,11 +43,12 @@
             [events]="events"
             locale="fr"
             [refresh]="refresh"
+            [dayStartHour]="6"
+            [dayEndHour]="20"
             (eventClicked)="eventClicked($event)"
             (eventTimesChanged)="eventTimesChanged($event)"
         />
     </div>
 </div>
 
-<!--            [dayStartHour]="6"-->
-<!--            [dayEndHour]="18"-->
+

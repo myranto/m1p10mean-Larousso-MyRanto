@@ -52,15 +52,20 @@ export class FormComponent extends Base {
     end_time: null,
   }
   update: boolean = false
-  model!: User
+  model!: any
 
   constructor(private config: DynamicDialogConfig) {
     super()
 
     this.model = this.config?.data?.model ? this.config.data.model : this.person
     this.update = this.config?.data?.update
+      if (this.model?.start_time?.hours && this.model?.end_time?.hours) {
+          this.model.start_time = `${this.model.start_time.hours.toString().padStart(2, '0')}:${this.model.start_time.minutes.toString().padStart(2, '0')}`;
+          this.model.end_time = `${this.model.end_time.hours.toString().padStart(2, '0')}:${this.model.end_time.minutes.toString().padStart(2, '0')}`;
+      }
     this.model.password = ''
     this.model.role = 'employe'
+      console.log(this.model)
   }
 
   matchPassword() {

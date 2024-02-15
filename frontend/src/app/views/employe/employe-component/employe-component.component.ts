@@ -25,7 +25,10 @@ export class EmployeComponentComponent {
 
   findAllEmploye(){
     this.user.findByrole('employe')
-      .then((list)=>this.employe_list = list)
+      .then((list)=> {
+          console.log(list)
+          this.employe_list = list
+      })
       .catch((error)=>console.log('ito le message'+error.message))
   }
 

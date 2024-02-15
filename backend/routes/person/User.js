@@ -40,18 +40,24 @@ function validMail(email) {
 
 async function register(req,res) {
     try {
-        const person =  new User(req.body)
-        if (!validMail(person.mail)) {
+        // const person =  new User(req.body)
+        if (!validMail(req.body.mail)) {
             throw new Error("Email invalid")
         }
         req.body.password = await bcrypt.hash(req.body.password,saltRounds)
-        if (person.start_time && person.end_time) {
-            const startDate = new Date(`2024-01-01T${person.start_time}:00`);
-            const endDate = new Date(`2024-01-01T${person.end_time}:00`);
-            console.log(startDate);
-            console.log(endDate);
+        if (req.body.start_time && req.body.end_time) {
+            const startDate = new Date(`2024-01-01T${req.body.start_time}:00`);
+            const endDate = new Date(`2024-01-01T${req.body.end_time}:00`);
             if (startDate > endDate) {
                 throw new Error("l'heure de début doit etre inférieur à l'heure de fin")
+            }
+            if (req.body.start_time) {
+                const [hours, minutes] = req.body.start_time.split(':').map(Number);
+                req.body.start_time = { hours, minutes };
+            }
+            if (req.body.end_time) {
+                const [hours, minutes] = req.body.end_time.split(':').map(Number);
+                req.body.end_time = { hours, minutes };
             }
         }
         await user.create(req.body)
@@ -94,6 +100,14 @@ router.put('/recovery',async function (req,res) {
 // updated user
 router.put('/',async function(req,res){
     try {
+        if (req.body.start_time) {
+            const [hours, minutes] = req.body.start_time.split(':').map(Number);
+            req.body.start_time = { hours, minutes };
+        }
+        if (req.body.end_time) {
+            const [hours, minutes] = req.body.end_time.split(':').map(Number);
+            req.body.end_time = { hours, minutes };
+        }
         const { _id, ...updateData } = req.body;
         await user.updateOne({ _id }, { $set: updateData });
         res.status(200).json('modification réussi');
