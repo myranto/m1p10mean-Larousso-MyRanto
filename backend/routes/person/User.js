@@ -6,6 +6,16 @@ const { generateAccessToken } = require('../../jwt');
 const bcrypt = require('bcryptjs');
 const { model } = require('mongoose');
 const saltRounds = 10;
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+    destination : (req,file,cb)=>{
+        cb(null,'public/profiles');
+    },
+    filename : (req,file,cb) => {
+        cb(null,req.params.id+'-'+file.originalname);
+    }
+});
 
 //login user return user{name,mail,role,token}
 router.post('/login', async (req, res) => {
@@ -84,7 +94,6 @@ router.put('/recovery',async function (req,res) {
 // updated user
 router.put('/',async function(req,res){
     try {
-        console.log(req.body.prefered_emp);
         const { _id, ...updateData } = req.body;
         await user.updateOne({ _id }, { $set: updateData });
         res.status(200).json('modification réussi');
@@ -96,7 +105,7 @@ router.put('/',async function(req,res){
 // find by role
 router.get('/find/:role',async function(req,res) {
     try {
-        let model = await user.find({role: req.params.role});
+        let model = await user.find({role: req.params.role},{password:0});
         if(!model){
             throw {message:'not found',status:404};
         } 
@@ -113,7 +122,7 @@ router.get('/find/:role',async function(req,res) {
 
 router.get('/:id',async function (req,res){
     try{
-        let model = await user.findById(req.params.id).populate({path:"prefered_emp",model:"User"}).populate({path:"prefered_service",model:"Service"});
+        let model = await user.findById(req.params.id,{password:0}).populate({path:"prefered_emp",model:"User",select:'-password'}).populate({path:"prefered_service",model:"Service"});
         return res.status(200).send(model);
     }catch(error){
         if(error.status){
@@ -131,5 +140,11 @@ router.delete('/:id',async function (req,res) {
     } catch (error) {
         return res.sendStatus(400).json(error.message);
     }
-})
+});
+
+router.post('/profile/:id',multer({storage:storage}).single('file'),async function(req,res){
+    await user.updateOne({_id : req.params.id},{$set:{profile:req.params.id+'-'+req.file.originalname}});
+    res.status(200).json("Profile enregistré");
+});
+
 module.exports = router;

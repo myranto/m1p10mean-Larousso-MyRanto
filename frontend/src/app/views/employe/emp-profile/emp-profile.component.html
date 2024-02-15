@@ -1,4 +1,10 @@
-<form *ngIf="fb" [formGroup]="fb">
+<p>Photo de profil</p>
+<p-fileUpload name="file" (onUpload)="onUpload()" [url]="getUrl()" accept="image/*">
+    <ng-template pTemplate="content">
+        <p-avatar image="{{getProfile()}}" shape="circle" size="xlarge"></p-avatar>
+    </ng-template>
+</p-fileUpload>
+<form class="form" *ngIf="fb" [formGroup]="fb">
     <div class="flex flex-column gap-2">
         <label for="mail">E-mail</label>
         <input pInputText id="mail" formControlName="mail" [style]="{width:'100%'}" />

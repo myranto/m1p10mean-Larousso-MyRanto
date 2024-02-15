@@ -7,6 +7,7 @@
 >
     <ng-template pTemplate="header">
         <tr>
+            <th></th>
             <th>Nom du client</th>
             <th>Date du rendez-vous</th>
             <th>La durée de vos services</th>
@@ -16,6 +17,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-appointment>
         <tr [pSelectableRow]="appointment">
+            <td><p-avatar [image]="getProfile(appointments.customer)" shape="circle" size="xlarge" ></p-avatar></td>
             <td>{{ appointment.customer.name}}</td>
             <td>{{ appointment.date | date:'d MMMM yyyy':'':'fr' }}</td>
             <td>{{ calculateTotalMinute(appointment) }} Mn.</td>
