@@ -4,30 +4,44 @@ import {PersonService} from "../../../utils/services/person/person-service";
 import {ListComponent} from "../../utils/list/list.component";
 import {FormComponent} from "./form/form.component";
 import {RefreshService} from "../../utils/refresh-service";
+import {MaxRows} from "../../../../api-request";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-employe-component',
+  selector: 'app-person-list-component',
   standalone: true,
   imports: [
     ListComponent
   ],
-  templateUrl: './employe-component.component.html',
-  styleUrl: './employe-component.component.scss'
+  templateUrl: './person-list.component.html',
+  styleUrl: './person-list.component.scss'
 })
-export class EmployeComponentComponent {
-  employe_list:User[] = []
-
-  constructor(private user:PersonService, private ref:ChangeDetectorRef,private refreshService: RefreshService) {
-    this.drop = this.drop.bind(this);
+export class PersonListComponent {
+  person_list:User[] = []
+    page:number = 0
+    row:number = MaxRows
+    totalrow:number
+    role = 'employe'
+  constructor(private user:PersonService, private ref:ChangeDetectorRef,private refreshService: RefreshService,private route: ActivatedRoute) {
+      let params = this.route.snapshot.queryParams;
+      this.role = params['role'] ? params['role'] :'employe'
+      this.drop = this.drop.bind(this)
+    this.updatePage = this.updatePage.bind(this)
+      this.user.countByrole(this.role)
+          .then((count)=> this.totalrow = count)
     this.findAllEmploye()
     this.refreshService.refresh.subscribe(() => this.findAllEmploye());
   }
-
+  updatePage(newPage,row){
+      this.page =newPage
+      this.row=row
+      this.findAllEmploye()
+      this.refreshService.triggerRefresh();
+  }
   findAllEmploye(){
-    this.user.findByrole('employe')
+    this.user.findByrole(this.role,this.page,this.row)
       .then((list)=> {
-          console.log(list)
-          this.employe_list = list
+          this.person_list = list
       })
       .catch((error)=>console.log('ito le message'+error.message))
   }
@@ -49,7 +63,7 @@ export class EmployeComponentComponent {
     },
     {
       name:'role',
-      selector:(row:any)=>row?.role,
+      selector:(row:any)=> row?.role=='employe' ? 'employée' : 'client',
       sortable:true,
     },
   ]

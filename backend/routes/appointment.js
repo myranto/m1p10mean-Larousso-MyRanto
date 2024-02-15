@@ -3,6 +3,7 @@ var router = express.Router();
 var appointment = require('../models/appointment');
 const moment = require('moment');
 var user = require('../models/person/User');
+const { sendMail, HTML_TEMPLATE } = require('../service/MailSender');
 
 router.post('/', async function(req,res){
     try {
@@ -85,13 +86,26 @@ router.delete('/:id',async function(req,res){
 
 router.put('/date/:id',async function(req,res){
     try {
-        let model = await appointment.findById({_id : req.params.id});
-        if (!model) {
+        let model =  appointment.findById({_id : req.params.id});
+        model.populate({path:"customer",model:"User",select:"name profile mail"});
+       const val = await model
+        if (!val) {
             throw new Error('Aucun rendez-vous trouvé avec cet ID');
         } 
-        model.date = new Date(req.body.start)
-        await model.save()
-        console.log('mety');
+        val.date = new Date(req.body.start)
+        await val.save()
+        const message = 'Cher client, nous vous informons que votre rendez-vous viens d\'etre deplacer'
+        const msg = {
+            to: val.customer.mail,
+            from: 'my.randrianantoandro@gmail.com',
+            subject: 'Coiffure:Offre spéciale!',
+            text: message,
+            html: HTML_TEMPLATE(message)
+        };
+        await sendMail(msg, (info) => {
+            console.log("Email sent successfully");
+            console.log("MESSAGE ID: ", info.messageId);
+        });
         return res.status(200).send();
     } catch (error) {
         console.log(error);
@@ -140,7 +154,7 @@ router.get('/calendar',async function(req,res){
         result.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
         result.populate({path:"customer",model:"User",select:"name profile"});
         const val = await result
-        console.log(val);
+        
         return res.status(200).send(val);
     } catch (error) {
         console.log(error);

@@ -10,45 +10,53 @@ import {ModalComponent} from "../modal/modal.component";
 import {ToolbarModule} from "primeng/toolbar";
 import {RippleModule} from "primeng/ripple";
 import {Base} from "../base";
+import {PaginatorModule} from "primeng/paginator";
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [
-    NgForOf,
-    TableModule,
-    ButtonModule,
-    NgIf,
-    DeleteRowComponent,
-    ConfirmDialogModule,
-    ToastModule,
-    ModalComponent,
-    ToolbarModule,
-    RippleModule
-  ],
+    imports: [
+        NgForOf,
+        TableModule,
+        ButtonModule,
+        NgIf,
+        DeleteRowComponent,
+        ConfirmDialogModule,
+        ToastModule,
+        ModalComponent,
+        ToolbarModule,
+        RippleModule,
+        PaginatorModule
+    ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent {
-  @Input() data: any = [];
-  @Input() column: any = [];
-  @Input() trash:any='';
-  @Input() edit:any='';
-  @Input() header:any='Création';
-  @Input() clicked:any;
-  @Input() nameDelete!:string;
-  @Input() isLink:boolean=true;
-  @Input() MyComponent!:Type<Base>
-
-  constructor(private router: Router  ) {}
+    @Input() data: any = [];
+    @Input() column: any = [];
+    @Input() trash:any='';
+    @Input() edit:any='';
+    @Input() header:any='Création';
+    @Input() clicked:any;
+    @Input() nameDelete!:string;
+    @Input() isLink:boolean=true;
+    @Input() MyComponent!:Type<Base>
+    @Input() updatePage!:any
+    @Input() totalRow!:number
+    @Input() acceptNew:boolean = true
+  constructor(private router: Router) {}
 
   async onRowClick(rowData: any) {
 
     if (this.isLink) {
       const path = this.clicked(rowData)
-      console.log(path)
       await this.router.navigate([path])
     }
     else this.clicked(rowData)
+  }
+  changePage(event){
+      console.log(event)
+      if (this.updatePage)
+          this.updatePage(event.page,event.rows)
   }
 
 }

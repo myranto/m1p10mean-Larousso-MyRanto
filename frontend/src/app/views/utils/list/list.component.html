@@ -1,19 +1,14 @@
 <div class="card">
   <p-toolbar styleClass="mb-1 gap-1">
     <ng-template pTemplate="left">
-      <app-modal [MyComponent]="MyComponent" header="Création {{header}}" ></app-modal>
+      <app-modal [acceptNew]="acceptNew" [MyComponent]="MyComponent" header="Création {{header}}" ></app-modal>
     </ng-template>
   </p-toolbar>
   <p-table
     [columns]="column"
     [value]="data"
-    [paginator]="true"
-    [rows]="5"
     [rowHover]="true"
-    [showCurrentPageReport]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
-    currentPageReportTemplate="lignes {first} à {last} avec {totalRecords} entrées"
-    [rowsPerPageOptions]="[5, 10, 20]"
   >
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -37,13 +32,8 @@
         </td>
       </tr>
     </ng-template>
-<!--    <ng-template pTemplate="paginatorleft">-->
-<!--      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>-->
-<!--    </ng-template>-->
-<!--    <ng-template pTemplate="paginatorright">-->
-<!--      <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>-->
-<!--    </ng-template>-->
   </p-table>
+    <p-paginator  [first]="0" (onPageChange)="changePage($event)" [rowsPerPageOptions]="[5, 10, 20]" [rows]="5" [totalRecords]="totalRow" ></p-paginator>
   <p-confirmDialog></p-confirmDialog>
 </div>
 

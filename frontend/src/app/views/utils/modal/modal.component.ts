@@ -20,6 +20,7 @@ export class ModalComponent implements OnDestroy{
     @Input() update:boolean = false
     @Input() model!:any
     @Input() header:string = 'Création'
+    @Input() acceptNew:boolean = true
   constructor(public dialogService: DialogService, public messageService:MessageService) {
   }
   ref:DynamicDialogRef|undefined

@@ -4,7 +4,7 @@ import { NotfoundComponent } from './demo/components/notfound/notfound.component
 import { AppLayoutComponent } from "./layout/app.layout.component";
 import {ServiceComponent} from "./views/admin/service/service.component";
 import {HomeCustomerComponent} from "./views/customer/home-customer/home-customer.component";
-import {EmployeComponentComponent} from "./views/employe/employe-component/employe-component.component";
+import {PersonListComponent} from "./views/employe/employe-component/person-list.component";
 import {HomeComponent} from "./views/admin/home/home.component";
 import {RecoverycomponentComponent} from "./views/authentification/recoverycomponent/recoverycomponent.component";
 import {RegisterComponent} from "./views/authentification/register/register.component";
@@ -31,11 +31,11 @@ import { CustomerProfileComponent } from './views/customer/customer-profile/cust
                     { path: 'admin/home', component: HomeComponent },
                     { path: 'admin/type_cost',component:TypeCostComponent},
                     { path: 'admin/calendar',component:McalendarComponent},
+                    { path: 'admin/person',component: PersonListComponent },
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },
                     { path: 'customer/profile',component: CustomerProfileComponent },
-                    { path: 'employe/employe-component',component: EmployeComponentComponent },
                     { path: 'employe/appointment',component: EmpAppointmentComponent },
                     { path: 'employe/profile',component: EmpProfileComponent}
                 ]
@@ -53,7 +53,7 @@ import { CustomerProfileComponent } from './views/customer/customer-profile/cust
                 component: AuthentificationComponent
             },
             { path: 'notfound', component: NotfoundComponent },
-            { path: '**', redirectTo: '/notfound' },
+            // { path: '**', redirectTo: '/notfound' },
         ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', onSameUrlNavigation: 'reload' })
     ],
     exports: [RouterModule]

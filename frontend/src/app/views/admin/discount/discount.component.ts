@@ -7,6 +7,7 @@ import {FormDiscountComponent} from "./form-discount/form-discount.component";
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import {formatDate} from "@angular/common";
+import {MaxRows} from "../../../../api-request";
 @Component({
   selector: 'app-discount',
   standalone: true,
@@ -17,14 +18,28 @@ import {formatDate} from "@angular/common";
   styleUrl: './discount.component.scss'
 })
 export class DiscountComponent {
+    page:number = 0
+    row:number = MaxRows
+    totalrow:number
   discount_list:Discount[] = []
   constructor(private discount:Discountservice, private refreshService: RefreshService) {
       this.findAll()
       this.drop = this.drop.bind(this)
+      this.discount.count()
+          .subscribe({
+              next:total => this.totalrow = total
+          })
+      this.updatePage = this.updatePage.bind(this)
     this.refreshService.refresh.subscribe(()=>this.findAll())
   }
+    updatePage(newPage,row){
+        this.page =newPage
+        this.row=row
+        this.findAll()
+        this.refreshService.triggerRefresh();
+    }
   findAll(){
-    this.discount.get().subscribe({
+    this.discount.getPaginate(this.page,this.row).subscribe({
       next:list => this.discount_list = list
     })
   }

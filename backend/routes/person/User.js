@@ -116,10 +116,29 @@ router.put('/',async function(req,res){
         return res.status(400).json(error.message);
     }
 });
+
+router.get('/count/:role',async function(req,res){
+    try {
+        return res.status(200).json(await user.countDocuments({role: req.params.role}));
+    } catch(error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+})
+
 // find by role
 router.get('/find/:role',async function(req,res) {
     try {
-        let model = await user.find({role: req.params.role},{password:0});
+        let model = null
+        if (req.query.page) {
+            const page = parseInt(req.query.page);
+            const row = parseInt(req.query.row);
+            model = await user.find({role: req.params.role},{password:0}).skip(page*row).limit(row);
+        }
+        else{
+            model = await user.find({role: req.params.role},{password:0});
+        } 
+        console.log(model?.length);
         if(!model){
             throw {message:'not found',status:404};
         } 

@@ -53,7 +53,7 @@ export class AppointmentComponent implements OnInit{
       }
     }).onClose.subscribe((value)=>{
       console.log(value);
-      
+
       this.selectedAppointment.payment = value.payment;
     });
   }

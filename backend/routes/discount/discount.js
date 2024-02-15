@@ -6,13 +6,25 @@ const { sendMail, HTML_TEMPLATE } = require('../../service/MailSender');
 
 router.get('/',async function (req,res){
     try {
-      res.json(await discount.find());
+        if (req.query.page) {
+            const page = parseInt(req.query.page);
+            const row = parseInt(req.query.row);
+           return res.json(await discount.find().skip(page*row).limit(row));
+        }
+      return res.json(await discount.find());
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
 });
-
+router.get('/count',async function(req,res){
+    try {
+        return res.status(200).json(await discount.countDocuments());
+    } catch(error) {
+        console.log(error);
+        return res.sendStatus(500);
+    }
+})
 router.get('/:id',async function (req,res){
     try {
         let model = await discount.findById(req.params.id);

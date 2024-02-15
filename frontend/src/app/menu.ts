@@ -23,13 +23,19 @@ export const MenuAdmin= [
             ]
         },
         {
-            label: 'Pages',
+            label: 'Ressources',
             items: [
                 { label: 'Services', icon: 'pi pi-fw pi-bookmark-fill', routerLink: ['admin/service'] },
-                { label: 'Employées', icon: 'pi pi-fw pi-user-edit', routerLink: ['admin/home'] },
                 { label: 'Type dépense', icon: 'pi pi-fw pi-money-bill', routerLink: ['admin/type_cost'] },
                 { label: 'Offres spéciales', icon: 'pi pi-fw pi-star-fill', routerLink: ['admin/discount'] },
                 { label: 'Calendrier', icon: 'pi pi-fw pi-calendar', routerLink: ['admin/calendar'] }
+            ]
+        },
+        {
+            label: 'Gestion personne',
+            items: [
+                { label: 'Employées', icon: 'pi pi-fw pi-user-edit', routerLink: ['admin/home'] },
+                { label: 'Clients', icon: 'pi pi-fw pi-user', routerLink: ['admin/person'], queryParams:{role: 'customer'} },
             ]
         },
     ]
