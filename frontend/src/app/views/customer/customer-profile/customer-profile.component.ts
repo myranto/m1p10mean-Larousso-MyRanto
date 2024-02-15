@@ -7,9 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextModule } from 'primeng/inputtext';
-import { Service } from 'src/app/interfaces/service';
 import { User } from 'src/app/utils/interfaces/user';
-import { ServiceService } from 'src/app/utils/services/admin/service.service';
+import {Service, ServiceService} from 'src/app/utils/services/admin/service.service';
 import { host } from 'src/app/utils/services/host';
 import { PersonService } from 'src/app/utils/services/person/person-service';
 
