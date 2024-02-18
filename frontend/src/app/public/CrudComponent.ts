@@ -25,7 +25,7 @@ export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends C
 
   showAddElement(){
     let ref = this.dialogService.open(this.formType,{
-      header:'Modification de l\' entité '+this.modelName
+      header:'Modification de l\' entité '+this.modelName,
     });
     ref.onClose.subscribe(result=>{
       if(result){

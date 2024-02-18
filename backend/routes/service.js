@@ -2,20 +2,6 @@ var express = require('express');
 var router = express.Router();
 var service = require('../models/service');
 
-function validator(model){
-    if(!model.name || model.name.trim() === ''){
-        throw "Le nom est invalide";
-    }
-    if(!model.price || model.price < 0 ){
-        throw "Le prixe doit être supérieur à 0";
-    }
-    if(!model.committee || model.committee < 0 || model.committee > 100){
-        throw "La commission doit être entre 0 et 100";
-    }
-    if(!model.duration || model.duration <= 0){
-        throw "La durée doit être positif";
-    }
-}
 
 router.get('/',async function (req,res,next){
     try {
@@ -44,7 +30,6 @@ router.get('/:id',async function (req,res,next){
 
 router.post('/',async function (req,res,next){
     try {
-        validator(req.body);
         let document =  await service.create(req.body);
         res.status(200).json(document);
     } catch (error) {
@@ -54,7 +39,6 @@ router.post('/',async function (req,res,next){
 
 router.put('/',async function(req,res,next){
     try {
-        validator(req.body);
         await service.findByIdAndUpdate(req.body._id,req.body);
         res.status(200).send();
     } catch (error) {

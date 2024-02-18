@@ -10,12 +10,13 @@ require('./db')
 
 // process.env.TOKEN_SECRET = TOKEN_SECRET
 // console.log(process.env.TOKEN_SECRET);
-var serviceRouter = require('./routes/service');
-var typeCostRouter = require('./routes/type_cost');
+const serviceRouter = require('./routes/service');
+const typeCostRouter = require('./routes/type_cost');
 const userRouter = require('./routes/person/User');
 const discountRouter  = require('./routes/discount/discount');
 const appointment = require('./routes/appointment');
-var payment = require('./routes/payment');
+const payment = require('./routes/payment');
+const spent = require("./routes/spent");
 
 var app = express();
 const { authenticateToken } = require('./jwt');
@@ -33,6 +34,7 @@ app.use('/user',userRouter)
 app.use('/discount',discountRouter);
 app.use('/appointment',appointment);
 app.use('/payment',payment);
+app.use('/spent',spent);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
