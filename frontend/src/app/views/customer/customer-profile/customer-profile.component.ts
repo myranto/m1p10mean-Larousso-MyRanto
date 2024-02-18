@@ -34,6 +34,7 @@ export class CustomerProfileComponent {
   employes : User[] = [];
   services : Service[] = [];
   customer : User;
+  selectedPicture;
   constructor(private service : PersonService,private serviceService : ServiceService,private builder : FormBuilder,private messageService : MessageService){
     this.serviceService.get().subscribe((list)=> this.services = list);
     service.findByrole('employe').then((list)=> this.employes = list).catch((err)=> this.messageService.add({summary:"erreur",detail:err,severity:'error'}));
@@ -62,9 +63,19 @@ export class CustomerProfileComponent {
       );
     }
   }
-  onUpload(){
+
+  onUpload(event){
+    let file = event.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedPicture = reader.result;
+      }
+      reader.readAsDataURL(file);
+    }
     this.messageService.add({severity:'success',summary:"Photo changée"})
   }
+
   getProfile(){
     return host+"/profiles/"+this.customer?.profile;
   }

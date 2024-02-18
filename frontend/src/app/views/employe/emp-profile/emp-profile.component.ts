@@ -30,6 +30,7 @@ import { host } from 'src/app/utils/services/host';
 export class EmpProfileComponent {
   employe : User;
   fb : FormGroup;
+  selectedPicture;
 
   constructor(private personService : PersonService,private messageService : MessageService,private builder : FormBuilder){
     this.personService.findInTheSession().subscribe((emp)=>{
@@ -69,14 +70,24 @@ export class EmpProfileComponent {
       );
     }
   }
+
   getProfile(){
     return host+"/profiles/"+this.employe?.profile;
   }
+
   getUrl(){
     return host+"/user/profile/"+this.employe?._id;
   }
 
-  onUpload(){
+  onUpload(event){
+    let file = event.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedPicture = reader.result;
+      }
+      reader.readAsDataURL(file);
+    }
     this.messageService.add({severity:'success',summary:"Photo changée"})
   }
 }
