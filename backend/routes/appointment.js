@@ -203,14 +203,24 @@ router.get('/calendar',async function(req,res){
 })
 router.get('/commission', async function(req, res) {
     const pdate = req.query.date;
-    console.log(new Date(pdate));
     if (pdate) {
-        const aplist = await appointment.find({date: new Date(pdate)});
+        let start = new Date(pdate);
+        start.setHours(0,0,0,0);
+        let end = new Date(pdate);
+        end.setHours(23,59,59,999);
+        const aplist = await appointment.find({
+            date: {
+                $gte: start,
+                $lt: end
+            }
+        });
+
         let commission = 0;
         for (const row of aplist) {
             for (const key of row.services) {
-                if (key.emp === req.query.id) {
-                    commission += key.committee * key.price;
+                
+                if (key.emp.toString() === req.query.id) {
+                    commission += (key.committee/100) * key.price;
                 }
             }
         }

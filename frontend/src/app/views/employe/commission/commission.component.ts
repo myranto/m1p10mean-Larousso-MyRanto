@@ -10,6 +10,7 @@ import {host} from "../../../utils/services/host";
 import {AvatarModule} from "primeng/avatar";
 import {DatePipe} from "@angular/common";
 import {TableModule} from "primeng/table";
+import {InputGroupModule} from "primeng/inputgroup";
 
 @Component({
   selector: 'app-commission',
@@ -19,7 +20,8 @@ import {TableModule} from "primeng/table";
         PaginatorModule,
         AvatarModule,
         DatePipe,
-        TableModule
+        TableModule,
+        InputGroupModule
     ],
   templateUrl: './commission.component.html',
   styleUrl: './commission.component.scss'
@@ -62,7 +64,7 @@ export class CommissionComponent {
 
     calculateTotalMinute(appointment : Appointment){
         let total = 0;
-        let emp = JSON.parse(localStorage.getItem('person_profil'));
+        let emp = getProfileStorage()
         appointment.services.forEach((srv)=>{
             if(srv.emp && srv.emp === emp.id){
                 total += srv.duration;
@@ -73,7 +75,7 @@ export class CommissionComponent {
 
     calculateCommittee(appointment : Appointment){
         let total = 0;
-        let emp = JSON.parse(localStorage.getItem('person_profil'));
+        let emp = getProfileStorage()
         appointment.services.forEach((srv)=>{
             if(srv.emp && srv.emp === emp.id){
                 total += (srv.committee/100) * srv.price;

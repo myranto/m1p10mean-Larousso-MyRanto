@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { AppointmentService } from 'src/app/utils/services/customer/appointment.service';
 import { Appointment } from 'src/app/utils/interfaces/appointment';
+import {getProfileStorage} from "../../../../../api-request";
 
 registerLocaleData(localeFr,'fr');
 @Component({
@@ -34,7 +35,7 @@ export class ConfirmComponent {
   }
 
   valid(){
-    const customer = JSON.parse(localStorage.getItem('person_profil'));
+    const customer = getProfileStorage()
     this.loading = true;
     let appointment : Appointment = {
       _id:undefined,

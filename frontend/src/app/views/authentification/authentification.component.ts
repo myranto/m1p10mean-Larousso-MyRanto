@@ -64,7 +64,7 @@ export class AuthentificationComponent {
       .then(async (data) => {
         // const expiryDate = new Date().getTime() + 12 * 60 * 60 * 1000;
         // localStorage.setItem('expiryDate', String(expiryDate));
-        localStorage.setItem('person_profil', JSON.stringify(data))
+        sessionStorage.setItem('person_profil', JSON.stringify(data))
         if (typeof data !== "string")
           switch (data.role) {
             case 'admin':

@@ -8,6 +8,7 @@ import { AppointmentService } from 'src/app/utils/services/customer/appointment.
 import { DetailComponent } from './detail/detail.component';
 import { host } from 'src/app/utils/services/host';
 import { AvatarModule } from 'primeng/avatar';
+import {getProfileStorage} from "../../../../api-request";
 
 @Component({
   selector: 'app-emp-appointment',
@@ -30,13 +31,13 @@ export class EmpAppointmentComponent {
 
   ngOnInit(): void {
     this.state = 'loading';
-    let customer = JSON.parse(localStorage.getItem('person_profil'));
+    let customer = getProfileStorage()
     this.service.byEmp(customer.id).subscribe((next)=>{
       this.appointments = next
     });
     this.service.countByEmp(customer.id).subscribe((next)=> {this.totalAppointments = next.count});
   }
-  
+
   showDetail(){
     console.log(this.selectAppointment);
     this.dialogService.open(DetailComponent,{
@@ -64,7 +65,7 @@ export class EmpAppointmentComponent {
 
   calculateTotalMinute(appointment : Appointment){
     let total = 0;
-    let emp = JSON.parse(localStorage.getItem('person_profil'));
+    let emp = getProfileStorage()
     appointment.services.forEach((srv)=>{
       if(srv.emp && srv.emp === emp.id){
         total += srv.duration;
@@ -75,7 +76,7 @@ export class EmpAppointmentComponent {
 
   calculateCommittee(appointment : Appointment){
     let total = 0;
-    let emp = JSON.parse(localStorage.getItem('person_profil'));
+    let emp = getProfileStorage()
     appointment.services.forEach((srv)=>{
       if(srv.emp && srv.emp === emp.id){
         total += (srv.committee/100) * srv.price;
@@ -85,7 +86,7 @@ export class EmpAppointmentComponent {
   }
 
   changePage(event){
-    let emp = JSON.parse(localStorage.getItem('person_profil'));
+    let emp = getProfileStorage()
     this.service.byEmp(emp.id,event.page).subscribe((next)=>{
       this.appointments = next
     });

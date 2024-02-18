@@ -11,6 +11,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {InputTextModule} from "primeng/inputtext";
+import {getProfileStorage} from "../../../../api-request";
 
 registerLocaleData(LocaleFr,'fr');
 
@@ -37,7 +38,7 @@ export class AppointmentComponent implements OnInit{
 
   ngOnInit(): void {
     this.state = 'loading';
-    let customer = JSON.parse(localStorage.getItem('person_profil'));
+    let customer = getProfileStorage()
     this.service.byCustomer(customer.id).subscribe((next)=>{
       this.appointments = next
     });
@@ -77,7 +78,7 @@ export class AppointmentComponent implements OnInit{
   }
 
   changePage(event){
-    let customer = JSON.parse(localStorage.getItem('person_profil'));
+    let customer = getProfileStorage()
     this.service.byCustomer(customer.id,event.page).subscribe((next)=>{
       this.appointments = next
     });

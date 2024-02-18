@@ -1,12 +1,12 @@
 export const MaxRows = 5
 export function getProfileStorage(auth:boolean = true){
-  const user = localStorage.getItem('person_profil')
+  const user = sessionStorage.getItem('person_profil')
   if (user==null && auth) throw new Error("Veuillez-vous connecter")
   if (user==null) return null
   return JSON.parse(user)
 }
 export function removeProfileStorage(){
-    localStorage.removeItem('person_profil')
+    sessionStorage.removeItem('person_profil')
 }
 // config nle header, afaka manampy header hafa via additionalHeaders
 function setConfig(method: string, token: string, role: string, body: any = null, additionalHeaders: object = {}) {

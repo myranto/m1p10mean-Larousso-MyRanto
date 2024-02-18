@@ -1,12 +1,15 @@
 <div class="card">
     <h1>Voir vos commissions</h1>
-    <p>{{date_com}}</p>
     <br>
+    <div style="display: flex; align-items: center; gap: 10px;">
     <span class="p-float-label">
         <p-calendar id="start" [showIcon]="true" [(ngModel)]="date_com" [touchUI]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" appendTo="body" [maxDate]="current_date" required></p-calendar>
-        <label for="start">Commission du </label>
+        <label for="start">Choisir une date</label>
     </span>
     <p-button (onClick)="changeValue()"> choisir </p-button>
+    </div>
+    <p></p>
+    <p>Commission du  <strong>{{date_com | date:'d MMMM yyyy':'':'fr'}} : {{commission}} Ar</strong></p>
     <br>
     <div class="card">
         <br>
