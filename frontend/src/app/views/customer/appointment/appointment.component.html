@@ -1,4 +1,11 @@
 <h2>Liste de vos rendez-vous </h2>
+<div class="card">
+<!--    <div class="col-12 mb-2 lg:col-4 lg:mb-0">-->
+<!--					<span class="p-input-icon-right">-->
+<!--						<input type="text" pInputText placeholder="Search"/>-->
+<!--						<i class="pi pi-search"></i>-->
+<!--					</span>-->
+<!--    </div>-->
 <p-table
     [value]="appointments"
     (onRowSelect)="showDetail()"
@@ -28,4 +35,5 @@
     </ng-template>
 </p-table>
 <p-paginator [first]="0" (onPageChange)="changePage($event)" rows="100" [totalRecords]="totalAppointments" ></p-paginator>
+</div>
 <p-confirmDialog></p-confirmDialog>

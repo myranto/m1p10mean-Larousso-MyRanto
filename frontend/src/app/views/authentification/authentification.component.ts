@@ -71,7 +71,7 @@ export class AuthentificationComponent {
               await this.router.navigate(['/views/admin/home'])
               break
             case 'employe':
-              await this.router.navigate(['/views/employe/employe-component'])
+              await this.router.navigate(['/views/employe/home'])
               break
             default:
               await this.router.navigate(['/views/customer/home-customer'])

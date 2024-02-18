@@ -32,40 +32,80 @@ router.post('/', async function(req,res){
         return res.status(400).send(error);
     }
 });
-
-router.get('/',async function(req,res){
+function getFirstAndLastWeek(date){
+    const firstDayOfWeek = new Date(
+        date.setDate(date.getDate() - date.getDay())
+    );
+    const lastDayOfWeek = new Date(
+        firstDayOfWeek.getFullYear(),
+        firstDayOfWeek.getMonth(),
+        firstDayOfWeek.getDate() + 6
+    );
+    return {
+        start:firstDayOfWeek,
+        end:lastDayOfWeek
+    }
+}
+router.get('/', async function (req, res) {
     try {
         let result = null;
-        if(req.query.customer){
-            result = appointment.find({'customer':req.query.customer}).sort({date:-1});
-        }else if(req.query.employe){
-            result = appointment.find({services : { $elemMatch: {'emp':req.query.employe}}}).sort({date:-1});
+        const week = getFirstAndLastWeek(new Date());
+        const AdParams = {
+            $gte: week.start,
+            $lte: week.end
+        };
+        let query = {};
+        if (req.query.customer) {
+            query = {
+                'customer': req.query.customer
+            };
+        } else if (req.query.employe) {
+            query = {
+                services: { $elemMatch: { 'emp': req.query.employe } }
+            };
         }
-        else{
-            result = appointment.find();
+        if (req.query.week && req.query.week!='null') {
+            query.date_end = AdParams;
         }
-        if(req.query.page){
+        console.log(query);
+        result = appointment.find(query).sort({ date: -1 });
+        if (req.query.page) {
             let page = parseInt(req.query.page);
-            result.skip(page*100).limit(100);
+            result = result.skip(page * 100).limit(100);
         }
-        result.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
-        result.populate({path:"customer",model:"User",select:"name profile"});
+        result.populate({ path: "services", populate: { path: "emp", model: "User", select: "name profile" } });
+        result.populate({ path: "customer", model: "User", select: "name profile" });
         return res.send(await result);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
         return res.sendStatus(500);
     }
 });
 
+
 router.get('/count',async function(req,res){
     try {
-        if(req.query.customer){
-            return res.send({count :await appointment.countDocuments({'customer':req.query.customer}).sort({date:-1}) });
-        }else if(req.query.employe){
-            return res.send({count :await appointment.countDocuments({services : { $elemMatch: {'emp':req.query.employe}}})});
+        const week = getFirstAndLastWeek(new Date());
+        const AdParams = {
+            $gte: week.start,
+            $lte: week.end
+        };
+        let query = {};
+        if (req.query.customer) {
+            query = {
+                'customer': req.query.customer
+            };
+        } else if (req.query.employe) {
+            query = {
+                services: { $elemMatch: { 'emp': req.query.employe } }
+            };
         }
-        return res.status(200).send(await appointment.countDocuments());
+        if (req.query.week && req.query.week!='null') {
+            query.date_end = AdParams;
+        }
+        return res.status(200).json(await appointment.countDocuments(query));
     } catch(error) {
+        console.log(error);
         return res.sendStatus(500);
     }
 });
@@ -158,8 +198,30 @@ router.get('/calendar',async function(req,res){
         return res.status(200).send(val);
     } catch (error) {
         console.log(error);
-        return res.status(400).send(error);
+        return res.status(400).json(error);
     }
 })
+router.get('/commission', async function(req, res) {
+    const pdate = req.query.date;
+    console.log(new Date(pdate));
+    if (pdate) {
+        const aplist = await appointment.find({date: new Date(pdate)});
+        let commission = 0;
+        for (const row of aplist) {
+            for (const key of row.services) {
+                if (key.emp === req.query.id) {
+                    commission += key.committee * key.price;
+                }
+            }
+        }
+        return res.status(200).json({
+            commission: commission,
+            listtask: aplist
+        });
+    } else {
+        return res.status(400).json("veuillez indiquer la date");
+    }
+});
+
 
 module.exports = router;

@@ -22,7 +22,8 @@ const appointmentSchema = mongoose.Schema({
     payment : {
         payment_date : { type: Date },
         amount : { type : Number }
-    }
+    },
+    isfinish:{type: Boolean, default:false}
 });
 
 module.exports = mongoose.model('appointment',appointmentSchema);

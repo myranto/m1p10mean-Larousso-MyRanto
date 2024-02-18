@@ -18,6 +18,8 @@ import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-app
 import {McalendarComponent} from "./demo/components/mcalendar/mcalendar.component";
 import { EmpProfileComponent } from './views/employe/emp-profile/emp-profile.component';
 import { CustomerProfileComponent } from './views/customer/customer-profile/customer-profile.component';
+import {HomeEmployeComponent} from "./views/employe/home-employe/home-employe.component";
+import {CommissionComponent} from "./views/employe/commission/commission.component";
 
 @NgModule({
     imports: [
@@ -37,6 +39,8 @@ import { CustomerProfileComponent } from './views/customer/customer-profile/cust
                     { path: 'customer/appointment',component: AppointmentComponent },
                     { path: 'customer/profile',component: CustomerProfileComponent },
                     { path: 'employe/appointment',component: EmpAppointmentComponent },
+                    { path: 'employe/home',component: HomeEmployeComponent },
+                    { path: 'employe/commission',component: CommissionComponent },
                     { path: 'employe/profile',component: EmpProfileComponent}
                 ]
             },

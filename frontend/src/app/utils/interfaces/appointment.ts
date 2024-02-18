@@ -14,4 +14,5 @@ export interface Appointment {
         payment_date : Date,
         amount : number
     } | null
+    isfinish?:Boolean
 }

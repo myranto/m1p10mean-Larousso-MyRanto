@@ -10,18 +10,20 @@ import { DetailsComponent } from './details/details.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import {InputTextModule} from "primeng/inputtext";
 
 registerLocaleData(LocaleFr,'fr');
 
 @Component({
   selector: 'app-appointment',
   standalone: true,
-  imports: [
-    CommonModule,
-    TableModule,
-    PaginatorModule,
-    ConfirmDialogModule
-  ],
+    imports: [
+        CommonModule,
+        TableModule,
+        PaginatorModule,
+        ConfirmDialogModule,
+        InputTextModule
+    ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss'
 })

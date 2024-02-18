@@ -1,5 +1,11 @@
 export const MenuCustomer =  [
     {
+        label: '',
+        items: [
+            { label: 'Accueil', icon: 'pi pi-fw pi-home', routerLink: ['customer/home-customer'] }
+        ]
+    },
+    {
         label :'Rendez-vous',
         items:[
             { label:'Prendre un rendez-vous',icon:'pi pi-calendar', routerLink:['customer/ask_appointment'] },
@@ -42,10 +48,17 @@ export const MenuAdmin= [
 
 export const MenuEmploye= [
     {
+        label: '',
+        items: [
+            { label: 'Accueil', icon: 'pi pi-fw pi-home', routerLink: ['admin/dashboard'] }
+        ]
+    },
+    {
         label :'Rendez-vous',
         items:[
             { label:'Historique des rendez-vous',icon:'pi pi-calendar', routerLink:['employe/appointment'] },
-            { label: 'Calendrier', icon: 'pi pi-fw pi-calendar', routerLink: ['admin/calendar'] }
+            { label: 'Calendrier', icon: 'pi pi-fw pi-calendar', routerLink: ['admin/calendar'] },
+            { label: 'Commission', icon: 'pi pi-fw pi-percentage', routerLink: ['employe/commission'] }
         ]
     },
     {

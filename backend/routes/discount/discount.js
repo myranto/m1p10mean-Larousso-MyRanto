@@ -4,19 +4,69 @@ const discount = require('../../models/discount/discount');
 const User = require('../../models/person/User');
 const { sendMail, HTML_TEMPLATE } = require('../../service/MailSender');
 
-router.get('/',async function (req,res){
+router.get('/', async function (req, res) {
     try {
+        const currentDate = new Date();
+        let futureDiscountsQuery = discount.find({ date_start: { $gte: currentDate } }).sort({ date_start: 1 });
+        let pastDiscountsQuery = discount.find({ date_start: { $lt: currentDate } }).sort({ date_start: -1 });
         if (req.query.page) {
             const page = parseInt(req.query.page);
             const row = parseInt(req.query.row);
-           return res.json(await discount.find().skip(page*row).limit(row));
+            futureDiscountsQuery = futureDiscountsQuery.skip(page * row).limit(row);
+            pastDiscountsQuery = pastDiscountsQuery.skip(page * row).limit(row);
         }
-      return res.json(await discount.find());
+        const futureDiscounts = await futureDiscountsQuery.exec();
+        const pastDiscounts = await pastDiscountsQuery.exec();
+        return res.json([...futureDiscounts, ...pastDiscounts]);
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
 });
+router.get('/week', async function (req, res) {
+    try {
+        const currentDate = new Date();
+        // Calcul du premier jour (Dimanche) de la semaine
+        const firstDayOfWeek = new Date(
+            currentDate.setDate(currentDate.getDate() - currentDate.getDay())
+        );
+        // Calcul du dernier jour (Samedi) de la semaine
+        const lastDayOfWeek = new Date(
+            firstDayOfWeek.getFullYear(),
+            firstDayOfWeek.getMonth(),
+            firstDayOfWeek.getDate() + 6
+        );
+        // maka aanze date end ao anatinle plage
+        let data = discount.find({
+            date_end: {
+                $gte: firstDayOfWeek,
+                $lte: lastDayOfWeek
+            }
+        }).sort({ date_start: 1 });
+
+        const totalDocuments = await discount.countDocuments({
+            date_end: {
+                $gte: firstDayOfWeek,
+                $lte: lastDayOfWeek
+            }
+        });
+
+        if (req.query.page) {
+            const page = parseInt(req.query.page);
+            const row = parseInt(req.query.row);
+            data = data.skip(page * row).limit(row);
+        }
+        return res.json({
+            data: await data,
+            total: totalDocuments
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
+
+
 router.get('/count',async function(req,res){
     try {
         return res.status(200).json(await discount.countDocuments());

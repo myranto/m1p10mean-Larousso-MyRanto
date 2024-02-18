@@ -19,4 +19,8 @@ export class Discountservice extends CrudService<Discount>{
         const uri = `${host}${this.url}?page=${page}&row=${row}`
         return this.http.get<Discount[]>(uri, { headers: this.getHeaders() });
     }
+    paginateWeekDiscount(page?:number,row?:number){
+        const uri = `${host}${this.url}/week?page=${page}&row=${row}`
+        return this.http.get<any>(uri, { headers: this.getHeaders() });
+    }
 }
