@@ -20,6 +20,7 @@ import { EmpProfileComponent } from './views/employe/emp-profile/emp-profile.com
 import { CustomerProfileComponent } from './views/customer/customer-profile/customer-profile.component';
 import {HomeEmployeComponent} from "./views/employe/home-employe/home-employe.component";
 import {CommissionComponent} from "./views/employe/commission/commission.component";
+import { SpentComponent } from './views/admin/spent/spent.component';
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import {CommissionComponent} from "./views/employe/commission/commission.compone
                     { path: 'admin/type_cost',component:TypeCostComponent},
                     { path: 'admin/calendar',component:McalendarComponent},
                     { path: 'admin/person',component: PersonListComponent },
+                    { path: 'admin/spent',component:SpentComponent},
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },
