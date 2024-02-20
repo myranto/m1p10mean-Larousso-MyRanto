@@ -1,4 +1,4 @@
-import {HasId} from "./hasId";
+import {HasId} from "../../interfaces/hasId";
 
 export interface Discount extends HasId{
   percent:number,

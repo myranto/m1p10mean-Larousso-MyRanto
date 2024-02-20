@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TypeCost } from '../../interfaces/type-cost';
+import { TypeCost } from '../../../interfaces/type-cost';
 import { CrudService } from '../CrudService';
 
 @Injectable({

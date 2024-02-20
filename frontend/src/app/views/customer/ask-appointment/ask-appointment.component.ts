@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { host } from 'src/app/utils/services/host';
 import { AvatarModule } from 'primeng/avatar';
+import { Discount } from 'src/app/utils/interfaces/discount';
+import { Discountservice } from 'src/app/utils/services/admin/discountservice';
 
 
 @Component({
@@ -37,12 +39,13 @@ export class AskAppointmentComponent implements OnInit{
   calendarDate : any;
   services : Service[]= [];
   empList : User[];
+  discount : Discount[] = [];
   selectedServices : any = [];
   state : string = 'idle';
   form : FormGroup;
 
   constructor(private serviceService : ServiceService,private messageService : MessageService,private dialogService : DialogService,
-    private personService : PersonService,private formBuilder : FormBuilder,private router : Router ){
+    private personService : PersonService,private formBuilder : FormBuilder,private router : Router,private discountService : Discountservice){
     this.personService.findInTheSession().subscribe((customer)=>{
       console.log(customer);
 
@@ -68,7 +71,15 @@ export class AskAppointmentComponent implements OnInit{
         this.state = 'idle';
         this.services = value;
       }
-    })
+    });
+    this.discountService.get().subscribe({
+      error:(err)=>{
+        this.messageService.add({summary:'Erreur',severity:"error",detail:err})
+      },
+      next:(value)=>{
+        this.discount = value;
+      }
+    });
   }
 
   removeFromSelected(model){

@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import {InputGroupModule} from 'primeng/inputgroup';
-import {TypeCost} from "../../../../utils/interfaces/type-cost";
+import {TypeCost} from "../../../../interfaces/type-cost";
 import {TypeCostService} from "../../../../utils/services/admin/type-cost.service";
 
 @Component({

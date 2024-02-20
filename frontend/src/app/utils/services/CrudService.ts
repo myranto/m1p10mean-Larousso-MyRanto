@@ -17,7 +17,6 @@ export class CrudService<T> {
             'role': profile?.role
         });
     }
-
     get() : Observable<T[]> {
       return this.http.get<T[]>(host+this.url, { headers: this.getHeaders() });
     }

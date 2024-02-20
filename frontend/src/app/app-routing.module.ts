@@ -21,6 +21,7 @@ import { CustomerProfileComponent } from './views/customer/customer-profile/cust
 import {HomeEmployeComponent} from "./views/employe/home-employe/home-employe.component";
 import {CommissionComponent} from "./views/employe/commission/commission.component";
 import { SpentComponent } from './views/admin/spent/spent.component';
+import { AdminDashboardComponent } from './views/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { SpentComponent } from './views/admin/spent/spent.component';
                     { path: 'admin/calendar',component:McalendarComponent},
                     { path: 'admin/person',component: PersonListComponent },
                     { path: 'admin/spent',component:SpentComponent},
+                    { path: 'admin/dashboard',component:AdminDashboardComponent},
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },

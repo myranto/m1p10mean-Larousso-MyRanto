@@ -5,9 +5,9 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
+import { TypeCost } from 'src/app/interfaces/type-cost';
 import { CrudFormComponent } from 'src/app/public/CrudFormComponent';
 import { Spent } from 'src/app/utils/interfaces/spent';
-import { TypeCost } from 'src/app/utils/interfaces/type-cost';
 import { SpentService } from 'src/app/utils/services/admin/spent.service';
 import { TypeCostService } from 'src/app/utils/services/admin/type-cost.service';
 

@@ -13,11 +13,12 @@ require('./db')
 // console.log(process.env.TOKEN_SECRET);
 const serviceRouter = require('./routes/service');
 const typeCostRouter = require('./routes/type_cost');
-const userRouter = require('./routes/person/User');
-const discountRouter  = require('./routes/discount/discount');
+const userRouter = require('./routes/User');
+const discountRouter  = require('./routes/discount');
 const appointment = require('./routes/appointment');
 const payment = require('./routes/payment');
 const spent = require("./routes/spent");
+const adminDashboard = require('./routes/admin');
 
 var app = express();
 const { authenticateToken } = require('./jwt');
@@ -36,7 +37,7 @@ app.use('/discount',discountRouter);
 app.use('/appointment',appointment);
 app.use('/payment',payment);
 app.use('/spent',spent);
-
+app.use('/admin',adminDashboard);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

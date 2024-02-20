@@ -18,6 +18,19 @@ router.get('/', async function (req, res) {
         const futureDiscounts = await futureDiscountsQuery.exec();
         const pastDiscounts = await pastDiscountsQuery.exec();
         return res.json([...futureDiscounts, ...pastDiscounts]);
+        // if(req.query.valid){
+        //     return res.json(await discount.find({
+        //         $and:{
+        //             start_date:{
+        //                 $lte : new Date()
+        //             },
+        //             end_date:{
+        //                 $gte : new Date()
+        //             }
+        //         }
+        //     }));
+        // }
+        // return res.json(await discount.find());
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

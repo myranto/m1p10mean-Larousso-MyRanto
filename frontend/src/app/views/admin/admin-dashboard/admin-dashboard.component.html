@@ -1,0 +1,176 @@
+<h2>Temps de travail moyen des employés</h2>
+<p-progressSpinner class="loading" *ngIf="this.isLoading('emp-avg')" aria-label="emp-avg-loading"></p-progressSpinner>
+<p-table *ngIf="!this.isLoading('emp-avg')" [value]="empAvg" >
+    <ng-template pTemplate="header" >
+        <tr>
+            <th>Avatar</th>
+            <th>Nom</th>
+            <th>Temps</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-emp>
+        <tr>
+            <td><p-avatar size="x-large" [image]="getProfile(emp.emp)" shape="circle" ></p-avatar></td>
+            <td>{{ emp.emp.name }}</td>
+            <td>{{ emp.avgDuration }}</td>
+        </tr>
+    </ng-template>
+</p-table>
+<h2>Nombre de rendez-vous par jour</h2>
+<form [formGroup]="appointmentDayFiter" class="flex p-fluid gap-3">
+    <div class="flex-auto">
+        <label for="start" class="font-bold block mb-2">Début</label>
+        <p-calendar formControlName="start" [showIcon]="true" inputId="start"></p-calendar>
+    </div>
+    <div class="flex-auto">
+        <label for="end" class="font-bold block mb-2">Fin</label>
+        <p-calendar formControlName="end" [showIcon]="true" inputId="start"></p-calendar>
+    </div>
+    <div class="flex-auto">
+        <label for="valid" class="font-bold block mb-2">Valider</label>
+        <p-button id="valid" label="Valider" (onClick)="filterAppointmentDay()" ></p-button>
+    </div>
+    <div class="flex-auto">
+        <label for="clear" class="font-bold block mb-2">Effacer le filtre</label>
+        <p-button id="clear" label="Effacer le filtre" (onClick)="clearAppointmentDay()" ></p-button>
+    </div>
+</form>
+<p-progressSpinner class="loading" *ngIf="this.isLoading('app-day')" aria-label="app-day-loading"></p-progressSpinner>
+<div class="flex" *ngIf="!this.isLoading('app-day')">
+    <p-table class="card item" [value]="appointmentDay" >
+        <ng-template pTemplate="header" >
+            <tr>
+                <th>Date</th>
+                <th>Nombre</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-appointment>
+            <tr>
+                <td>{{ appointment._id }}</td>
+                <td>{{ appointment.count}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="card item">
+        <p-chart type="line" [data]="appointmentDayChart"></p-chart>
+    </div>
+</div>
+<h2>Le nombre de rendez-vous par mois</h2>
+<p-progressSpinner class="loading" *ngIf="this.isLoading('app-month')" aria-label="app-month-loading"></p-progressSpinner>
+<div class="flex"*ngIf="!this.isLoading('app-month')" >
+    <p-table class="card item" [value]="appointmentMonth" >
+        <ng-template pTemplate="header" >
+            <tr>
+                <th>Mois</th>
+                <th>Année</th>
+                <th>Nombre</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-appointment>
+            <tr>
+                <td>{{ formatMonth(appointment._id.month) }}</td>
+                <td>{{ appointment._id.year }}</td>
+                <td>{{ appointment.count}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="card item">
+        <p-chart type="line" [data]="appointmentMonthChart"></p-chart>
+    </div>
+</div>
+<h2>Chiffre d'affaire par jour</h2>
+<form [formGroup]="sellDayFilter" class="flex p-fluid gap-3">
+    <div class="flex-auto">
+        <label for="start" class="font-bold block mb-2">Début</label>
+        <p-calendar formControlName="start" [showIcon]="true" inputId="start"></p-calendar>
+    </div>
+    <div class="flex-auto">
+        <label for="end" class="font-bold block mb-2">Fin</label>
+        <p-calendar formControlName="end" [showIcon]="true" inputId="start"></p-calendar>
+    </div>
+    <div class="flex-auto">
+        <label for="valid" class="font-bold block mb-2">Valider</label>
+        <p-button id="valid" label="Valider" (onClick)="filterSellPerDay()" ></p-button>
+    </div>
+    <div class="flex-auto">
+        <label for="clear" class="font-bold block mb-2">Effacer le filtre</label>
+        <p-button id="clear" label="Effacer le filtre" (onClick)="clearSellPerDay()" ></p-button>
+    </div>
+</form>
+<p-progressSpinner class="loading" *ngIf="this.isLoading('sell-day')" aria-label="sell-day-loading"></p-progressSpinner>
+<div class="flex" *ngIf="!this.isLoading('sell-day')">
+    <p-table class="card item" [value]="sellDay" >
+        <ng-template pTemplate="header" >
+            <tr>
+                <th>Date</th>
+                <th>vente</th>
+                <th>commission</th>
+                <th>Total</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-appointment>
+            <tr>
+                <td>{{ appointment._id }}</td>
+                <td>{{ appointment.balance}}</td>
+                <td>{{ appointment.committee}}</td>
+                <td>{{ appointment.total}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="card item">
+        <p-chart type="line" [data]="sellDayChart"></p-chart>
+    </div>
+</div>
+<h2>Chiffre d'affaire par mois</h2>
+<p-progressSpinner class="loading" *ngIf="this.isLoading('sell-month')" aria-label="sell-month-loading"></p-progressSpinner>
+<div class="flex"*ngIf="!this.isLoading('sell-month')" >
+    <p-table class="card item" [value]="sellMonth" >
+        <ng-template pTemplate="header" >
+            <tr>
+                <th>Mois</th>
+                <th>Année</th>
+                <th>Vente</th>
+                <th>Commission</th>
+                <th>Total</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sell>
+            <tr>
+                <td>{{ formatMonth(sell._id.month) }}</td>
+                <td>{{ sell._id.year }}</td>
+                <td>{{ sell.balance}}</td>
+                <td>{{ sell.committee}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="card item">
+        <p-chart type="line" [data]="sellMonthChart"></p-chart>
+    </div>
+</div>
+<h2>Bénéfice</h2>
+<p-progressSpinner class="loading" *ngIf="this.isLoading('bonus-month')" aria-label="bonus-month-loading"></p-progressSpinner>
+<div class="flex"*ngIf="!this.isLoading('bonus-month')" >
+    <p-table class="card item" [value]="bonusMonth" >
+        <ng-template pTemplate="header" >
+            <tr>
+                <th>Mois</th>
+                <th>Année</th>
+                <th>Dépense</th>
+                <th>Chiffre d'affaire</th>
+                <th>Bénéfice</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-sell>
+            <tr>
+                <td>{{ formatMonth(sell._id.month) }}</td>
+                <td>{{ sell._id.year }}</td>
+                <td>{{ sell.spent}}</td>
+                <td>{{ sell.sell}}</td>
+                <td>{{ sell.balance}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div class="card item">
+        <p-chart type="line" [data]="bonusMonthChart"></p-chart>
+    </div>
+</div>
