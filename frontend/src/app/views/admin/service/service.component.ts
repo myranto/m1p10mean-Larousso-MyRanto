@@ -8,18 +8,22 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CrudComponent } from '../../../public/CrudComponent';
 import {ServiceService} from "../../../utils/services/admin/service.service";
 import {Service} from "../../../utils/interfaces/service";
+import {InputTextModule} from "primeng/inputtext";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-service',
   standalone: true,
-  imports: [
-    FormComponent,
-    HttpClientModule,
-    CommonModule,
-    TableModule,
-    ButtonModule,
-    ConfirmDialogModule
-  ],
+    imports: [
+        FormComponent,
+        HttpClientModule,
+        CommonModule,
+        TableModule,
+        ButtonModule,
+        ConfirmDialogModule,
+        InputTextModule,
+        FormsModule
+    ],
   templateUrl: './service.component.html',
   styleUrl: './service.component.scss'
 })

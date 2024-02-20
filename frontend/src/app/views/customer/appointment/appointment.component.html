@@ -1,39 +1,40 @@
 <h2>Liste de vos rendez-vous </h2>
 <div class="card">
-<!--    <div class="col-12 mb-2 lg:col-4 lg:mb-0">-->
-<!--					<span class="p-input-icon-right">-->
-<!--						<input type="text" pInputText placeholder="Search"/>-->
-<!--						<i class="pi pi-search"></i>-->
-<!--					</span>-->
-<!--    </div>-->
-<p-table
-    [value]="appointments"
-    (onRowSelect)="showDetail()"
-    selectionMode="single"
-    [(selection)]="selectedAppointment"
->
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Date</th>
-            <th>Heure</th>
-            <th>Nombre de service</th>
-            <th>Estimation de la durrée du rendez-vous</th>
-            <th>Total à payer</th>
-            <th>Payé</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-appointment>
-        <tr [pSelectableRow]="appointment">
-            <td>{{ appointment.date | date:'d MMMM yyyy':'':'fr' }}</td>
-            <td>{{ appointment.date | date:'HH:mm':'':'fr' }}</td>
-            <td>{{ appointment.services.length}} service(s) </td>
-            <td>{{ calculateTotalMinutes(appointment) }} Mn.</td>
-            <td>{{ calculateTotal(appointment) }} Ar.</td>
-            <td><span *ngIf="!!appointment.payment" class="pi pi-check"></span><span *ngIf="!appointment.payment" class="pi pi-times"></span></td>
-            <td><p-button *ngIf="!appointment.payment" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="delete(appointment)" ></p-button></td>
-        </tr>
-    </ng-template>
-</p-table>
-<p-paginator [first]="0" (onPageChange)="changePage($event)" rows="100" [totalRecords]="totalAppointments" ></p-paginator>
+    <div class="col-12 mb-2 lg:col-12 lg:mb-0 d-flex justify-content-end" style="display: flex; justify-content: flex-end;">
+                    <span class="p-input-icon-right">
+                        <input type="text" pInputText placeholder="Rechercher..."/>
+                        <i class="pi pi-search"></i>
+                    </span>
+    </div>
+    <p-table
+        [value]="appointments"
+        (onRowSelect)="showDetail()"
+        selectionMode="single"
+        [(selection)]="selectedAppointment"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Nombre de service</th>
+                <th>Estimation de la durrée du rendez-vous</th>
+                <th>Total à payer</th>
+                <th>Payé</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-appointment>
+            <tr [pSelectableRow]="appointment">
+                <td>{{ appointment.date | date:'d MMMM yyyy':'':'fr' }}</td>
+                <td>{{ appointment.date | date:'HH:mm':'':'fr' }}</td>
+                <td>{{ appointment.services.length}} service(s) </td>
+                <td>{{ calculateTotalMinutes(appointment) }} Mn.</td>
+                <td>{{ calculateTotal(appointment) }} Ar.</td>
+                <td><span *ngIf="!!appointment.payment" class="pi pi-check"></span><span *ngIf="!appointment.payment" class="pi pi-times"></span></td>
+                <td><p-button *ngIf="!appointment.payment" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="delete(appointment)" ></p-button></td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-paginator [first]="0" (onPageChange)="changePage($event)" rows="100" [totalRecords]="totalAppointments" ></p-paginator>
+
 </div>
 <p-confirmDialog></p-confirmDialog>

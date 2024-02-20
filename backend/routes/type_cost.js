@@ -5,7 +5,17 @@ var typeCost = require('../models/type_cost');
 
 router.get('/',async function (req,res,next){
     try {
-        res.json(await typeCost.find());
+        let params = {}
+        if (req.query.text) {
+            let regex = new RegExp(req.query.text, 'i'); 
+
+            params = {
+                $or: [
+                    { name: { $regex: regex } },
+                ]
+            };
+        }
+        res.json(await typeCost.find(params));
     } catch (error) {
         res.status(500).json(error);
     }

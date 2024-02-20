@@ -11,6 +11,7 @@ import {ToolbarModule} from "primeng/toolbar";
 import {RippleModule} from "primeng/ripple";
 import {Base} from "../base";
 import {PaginatorModule} from "primeng/paginator";
+import {InputTextModule} from "primeng/inputtext";
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -25,7 +26,8 @@ import {PaginatorModule} from "primeng/paginator";
         ModalComponent,
         ToolbarModule,
         RippleModule,
-        PaginatorModule
+        PaginatorModule,
+        InputTextModule
     ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'

@@ -9,6 +9,7 @@ import {RefreshService} from "../views/utils/refresh-service";
 export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends CrudFormComponent<T,S>> {
   models : T[] = [];
   modelName: string;
+  text:string = ''
   protected service : S;
   protected dialogService : DialogService = inject(DialogService);
   protected confirmationService : ConfirmationService = inject(ConfirmationService);
@@ -28,6 +29,16 @@ export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends C
                 this.models = list
             }
         });
+    }
+    searchBar(){
+        this.service.searchBar(this.text)
+            .subscribe({
+                next: result => {
+                    if (result?.data) this.models = result.data
+                    else this.models = result
+                    // if (result?.total) tot
+                }
+            })
     }
   showAddElement(){
     let ref = this.dialogService.open(this.formType,{

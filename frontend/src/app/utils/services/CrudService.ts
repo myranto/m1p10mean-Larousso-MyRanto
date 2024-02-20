@@ -31,4 +31,8 @@ export class CrudService<T> {
     drop(id : string){
       return this.http.delete(host+this.url+`/${id}`,{ headers: this.getHeaders() });
     }
+    searchBar(text:string):Observable<any>{
+        const uri = `${host+this.url}?text=${text}`
+        return  this.http.get(uri,{ headers: this.getHeaders() })
+    }
 }

@@ -8,18 +8,22 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 import {TypeCostService} from "../../../utils/services/admin/type-cost.service";
 import {TypeCost} from "../../../utils/interfaces/type-cost";
+import {FormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-type-cost',
   standalone: true,
-  imports: [
-    FormComponent,
-    HttpClientModule,
-    CommonModule,
-    TableModule,
-    ButtonModule,
-    ConfirmDialogModule
-  ],
+    imports: [
+        FormComponent,
+        HttpClientModule,
+        CommonModule,
+        TableModule,
+        ButtonModule,
+        ConfirmDialogModule,
+        FormsModule,
+        InputTextModule
+    ],
   templateUrl: './type-cost.component.html',
   styleUrl: './type-cost.component.scss'
 })

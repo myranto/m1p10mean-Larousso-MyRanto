@@ -10,19 +10,23 @@ import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 import localeFr from '@angular/common/locales/fr';
+import {FormsModule} from "@angular/forms";
+import {InputTextModule} from "primeng/inputtext";
 registerLocaleData(localeFr,'fr');
 
 @Component({
   selector: 'app-spent',
   standalone: true,
-  imports: [
-    FormComponent,
-    HttpClientModule,
-    CommonModule,
-    ButtonModule,
-    ConfirmDialogModule,
-    TableModule
-  ],
+    imports: [
+        FormComponent,
+        HttpClientModule,
+        CommonModule,
+        ButtonModule,
+        ConfirmDialogModule,
+        TableModule,
+        FormsModule,
+        InputTextModule
+    ],
   templateUrl: './spent.component.html',
   styleUrl: './spent.component.scss'
 })

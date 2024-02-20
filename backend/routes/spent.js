@@ -1,12 +1,29 @@
 var express = require('express');
 var router = express.Router();
 var spent = require('../models/spent');
+var typeCost = require('../models/type_cost');
 
 router.get('/',async function (req,res){
     try {
-        let data = spent.find().populate({path:"type",model:"typeCost"});
+        let params = {}
+        if (req.query.text) {
+            let regex = new RegExp(req.query.text, 'i'); 
+            let number = Number(req.query.text);
+            let isNumber = !isNaN(number);
+            let matchingTypes = await typeCost.find({ name: { $regex: regex } });
+            let matchingTypeIds = matchingTypes.map(type => type._id);
+            params = {
+                $or: [
+                    { label: { $regex: regex } },
+                    { type: { $in: matchingTypeIds } },
+                    ...(isNumber ? [{ amount: number }] : [])
+                ]
+            };
+        }
+        let data = spent.find(params).populate({path:"type",model:"typeCost"});
         res.json(await data);
     } catch (error) {
+        console.log(error);
         res.status(500).json(error);
     }
 });

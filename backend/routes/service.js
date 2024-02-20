@@ -5,7 +5,20 @@ var service = require('../models/service');
 
 router.get('/',async function (req,res,next){
     try {
-        const result = service.find().populate({path:"discount",model:"Discount",select:"name percent date_end date_start"});
+        let params = {}
+        if (req.query.text) {
+            let regex = new RegExp(req.query.text, 'i'); 
+            let number = Number(req.query.text);
+            let isNumber = !isNaN(number);
+
+            params = {
+                $or: [
+                    { name: { $regex: regex } },
+                    ...(isNumber ? [{ price: number }, { committee: number }, { duration: number }] : [])
+                ]
+            };
+        }
+        const result = service.find(params).populate({path:"discount",model:"Discount",select:"name percent date_end date_start"});
         res.json(await result);
     } catch (error) {
         console.log(error);
