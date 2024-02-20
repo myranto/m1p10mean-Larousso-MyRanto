@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { inject } from '@angular/core';
 import {HasId} from "../utils/interfaces/hasId";
 import {CrudService} from "../utils/services/CrudService";
+import {RefreshService} from "../views/utils/refresh-service";
 
 export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{
   model! : T;
@@ -14,6 +15,7 @@ export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{
   protected ref : DynamicDialogRef = inject(DynamicDialogRef);
   protected config : DynamicDialogConfig = inject(DynamicDialogConfig);
   protected messageService : MessageService = inject(MessageService);
+    protected refreshService: RefreshService = inject(RefreshService)
   protected service : S;
   form! : FormGroup;
 
@@ -41,6 +43,7 @@ export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{
         next : () =>{
           this.loading = false;
           this.messageService.add({severity:'success',summary:'Succés',detail:'Modification réussie'});
+          this.refreshService.triggerRefresh();
           this.ref.close(temp);
         }
       })
@@ -54,6 +57,7 @@ export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{
         next: (created) => {
           this.loading = false;
           this.messageService.add({severity:'success',summary:'Succés',detail:'Création réussie'});
+          this.refreshService.triggerRefresh();
           this.ref.close(created);
         }
       });

@@ -8,7 +8,7 @@ const discountSchema = new mongoose.Schema({
         validator: function(value) {
             return this.date_end > value;
         },
-        message: 'date_start doit être dans le passé par rapport à date_end'
+        message: 'date début doit être dans le passé par rapport à date fin'
     }},
     date_end:{type:Date,require:true},
 })

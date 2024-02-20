@@ -23,6 +23,18 @@ router.get('/', async function (req, res) {
         res.status(500).json(error);
     }
 });
+router.get('/byservice',async function(req,res){
+    try {
+       const result =  await discount.find({
+            date_end: { $gte: new Date() },
+            is_service: true
+        }).sort({name: 1})
+        res.status(200).json(result)
+    } catch (error) {
+        console.log(error);
+        res.status(400).json(error.message);
+    }
+})
 router.get('/week', async function (req, res) {
     try {
         const currentDate = new Date();

@@ -23,4 +23,8 @@ export class Discountservice extends CrudService<Discount>{
         const uri = `${host}${this.url}/week?page=${page}&row=${row}`
         return this.http.get<any>(uri, { headers: this.getHeaders() });
     }
+    getAllByService():Observable<Discount[]>{
+      return this.http.get<Discount[]>(`${host}${this.url}/byservice`, { headers: this.getHeaders() })
+    }
+
 }

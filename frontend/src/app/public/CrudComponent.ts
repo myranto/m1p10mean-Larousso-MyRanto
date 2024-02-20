@@ -4,6 +4,7 @@ import { Type, inject } from '@angular/core';
 import { CrudFormComponent } from './CrudFormComponent';
 import {CrudService} from "../utils/services/CrudService";
 import {HasId} from "../utils/interfaces/hasId";
+import {RefreshService} from "../views/utils/refresh-service";
 
 export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends CrudFormComponent<T,S>> {
   models : T[] = [];
@@ -13,16 +14,21 @@ export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends C
   protected confirmationService : ConfirmationService = inject(ConfirmationService);
   protected messageService : MessageService = inject(MessageService);
   protected formType;
-
+    protected refreshService: RefreshService = inject(RefreshService)
   constructor (service : S,modelName:string,formType : Type<F>){
     this.modelName = modelName;
     this.service = service;
-    this.service.get().subscribe({
-      next:list => this.models = list
-    });
+    this.findAll()
     this.formType = formType;
+      this.refreshService.refresh.subscribe(()=>this.findAll())
   }
-
+    findAll(){
+        this.service.get().subscribe({
+            next:list => {
+                this.models = list
+            }
+        });
+    }
   showAddElement(){
     let ref = this.dialogService.open(this.formType,{
       header:'Modification de l\' entité '+this.modelName,

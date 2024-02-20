@@ -19,6 +19,12 @@
         <input pInputText required id="duration" formControlName="duration" />
         <small id="duration-help" >La durée doit être un nombre supérieur ou égal à 0</small>
     </div>
-    <p-button [loading]="loading" [style]="{width:'100%'}" severity="success" class="button" label="Valider" type="submit"></p-button>
-    <p-button type="button" (onClick)="onCancel()" [style]="{width:'100%'}" severity="danger" label="Annuler" class="button" ></p-button>
+    <div class="field full-width">
+        <label class="block" for="in">Durée en minute</label>
+        <p-dropdown id="in"  [style]="{width:'100%'}" appendTo="body" formControlName="discount" [options]="options" />
+    </div>
+    <div class="button-container">
+    <p-button [loading]="loading" [style]="{width:'100%'}" severity="success" class="button half-width" label="Valider" type="submit"></p-button>
+    <p-button type="button" (onClick)="onCancel()" [style]="{width:'100%'}" severity="danger" label="Annuler" class="button half-width" ></p-button>
+    </div>
 </form>

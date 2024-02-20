@@ -25,6 +25,27 @@ const serviceSchema = new mongoose.Schema({
     },
     message:"La durrée doit être supérieur à 0"
   }},
-});
+  discount: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'discount',
+    validate: {
+      isAsync: true,
+      validator: async function(value) {
+        try {
+          if (value===null) {
+            return true
+          }
+          const discount = await mongoose.model('Discount').findById(value);
+          return discount && (discount.is_service === true || discount.is_service === 'true');
+        } catch (err) {
+          console.log(err);
+          return false;
+        }
+      },
+      message: 'L\' offre est uniquement pour les services'
+    }
+  },
+}
+);
 
 module.exports = mongoose.model("Service", serviceSchema);

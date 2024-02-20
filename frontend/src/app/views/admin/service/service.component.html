@@ -1,12 +1,15 @@
 <h2>Liste des services</h2>
 <p-button label="Ajouter un service" (onClick)="showAddElement()" icon="pi pi-plus"></p-button>
-<p-table [value]="models">
+<p-table
+    [value]="models"
+>
 	<ng-template pTemplate="header">
 		<tr>
 			<th>Nom</th>
 			<th>Prix</th>
 			<th>Commission</th>
 			<th>Durée (minute)</th>
+			<th>Offre Spécial</th>
 		</tr>
 	</ng-template>
 	<ng-template pTemplate="body" let-product>
@@ -15,6 +18,7 @@
 			<td>{{ product.price }}</td>
 			<td>{{ product.committee }}</td>
 			<td>{{ product.duration }}</td>
+			<td>{{ product?.discount?.name }} {{ product?.discount ? product?.discount?.percent + '% fin: '  : ''}} {{ product?.discount ? (product?.discount?.date_end  | date:'d MMMM yyyy':'':'fr') : '' }}</td>
 			<td>
 				<p-button icon="pi pi-pencil" [text]="true" [rounded]="true" (onClick)="showUpdateElement(product)" ></p-button>
 				<p-button icon="pi pi-trash" [text]="true" [rounded]="true" (onClick)="dropElement(product)" severity="danger"></p-button>
