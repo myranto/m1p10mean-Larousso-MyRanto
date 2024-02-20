@@ -6,8 +6,8 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CrudComponent } from '../../../public/CrudComponent';
-import {Service} from "../../../interfaces/service";
 import {ServiceService} from "../../../utils/services/admin/service.service";
+import {Service} from "../../../utils/interfaces/service";
 
 @Component({
   selector: 'app-service',

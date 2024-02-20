@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const discount = require('../../models/discount/discount');
-const User = require('../../models/person/User');
-const { sendMail, HTML_TEMPLATE } = require('../../service/MailSender');
+const discount = require('../models/discount/discount');
+const User = require('../models/person/User');
+const { sendMail, HTML_TEMPLATE } = require('../service/MailSender');
 
 router.get('/', async function (req, res) {
     try {
