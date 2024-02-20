@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const user = require('../../models/person/User');
-const User = require('../../models/person/User');
-const { generateAccessToken } = require('../../jwt');
+const user = require('../models/person/User');
+const User = require('../models/person/User');
+const { generateAccessToken } = require('../jwt');
 const bcrypt = require('bcryptjs');
 const { model } = require('mongoose');
 const saltRounds = 10;

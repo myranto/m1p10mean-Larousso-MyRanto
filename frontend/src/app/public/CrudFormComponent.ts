@@ -2,7 +2,7 @@ import { FormBuilder,FormGroup } from '@angular/forms';
 import {DynamicDialogRef,DynamicDialogConfig} from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { inject } from '@angular/core';
-import {HasId} from "../utils/interfaces/hasId";
+import {HasId} from "../interfaces/hasId";
 import {CrudService} from "../utils/services/CrudService";
 
 export class CrudFormComponent<T extends HasId,S extends CrudService<T>>{

@@ -3,7 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Type, inject } from '@angular/core';
 import { CrudFormComponent } from './CrudFormComponent';
 import {CrudService} from "../utils/services/CrudService";
-import {HasId} from "../utils/interfaces/hasId";
+import {HasId} from "../interfaces/hasId";
 
 export class CrudComponent <T extends HasId,S extends CrudService<T>,F extends CrudFormComponent<T,S>> {
   models : T[] = [];

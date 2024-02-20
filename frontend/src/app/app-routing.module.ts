@@ -18,6 +18,7 @@ import { EmpAppointmentComponent } from './views/employe/emp-appointment/emp-app
 import { EmpProfileComponent } from './views/employe/emp-profile/emp-profile.component';
 import { CustomerProfileComponent } from './views/customer/customer-profile/customer-profile.component';
 import { SpentComponent } from './views/admin/spent/spent.component';
+import { AdminDashboardComponent } from './views/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { SpentComponent } from './views/admin/spent/spent.component';
                     { path: 'admin/home', component: HomeComponent },
                     { path: 'admin/type_cost',component:TypeCostComponent},
                     { path: 'admin/spent',component:SpentComponent},
+                    { path: 'admin/dashboard',component:AdminDashboardComponent},
                     { path: 'customer/home-customer',component: HomeCustomerComponent },
                     { path: 'customer/ask_appointment',component: AskAppointmentComponent },
                     { path: 'customer/appointment',component: AppointmentComponent },

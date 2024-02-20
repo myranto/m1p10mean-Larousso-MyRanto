@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
-import {TypeCost} from "../../../utils/interfaces/type-cost";
+import {TypeCost} from "../../../interfaces/type-cost";
 import {TypeCostService} from "../../../utils/services/admin/type-cost.service";
 
 @Component({

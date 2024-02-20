@@ -1,10 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const discount = require('../../models/discount/discount')
+const discount = require('../models/discount/discount')
 
 router.get('/',async function (req,res){
     try {
-        res.json(await discount.find());
+        if(req.query.valid){
+            return res.json(await discount.find({
+                $and:{
+                    start_date:{
+                        $lte : new Date()
+                    },
+                    end_date:{
+                        $gte : new Date()
+                    }
+                }
+            }));
+        }
+        return res.json(await discount.find());
     } catch (error) {
         res.status(500).json(error);
     }
