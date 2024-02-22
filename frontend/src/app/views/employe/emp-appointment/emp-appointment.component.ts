@@ -9,16 +9,28 @@ import { DetailComponent } from './detail/detail.component';
 import { host } from 'src/app/utils/services/host';
 import { AvatarModule } from 'primeng/avatar';
 import {getProfileStorage} from "../../../../api-request";
+import {ButtonModule} from "primeng/button";
+import {CalendarModule} from "primeng/calendar";
+import {MultiSelectModule} from "primeng/multiselect";
+import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {Service} from "../../../utils/interfaces/service";
+import {ServiceService} from "../../../utils/services/admin/service.service";
 
 @Component({
   selector: 'app-emp-appointment',
   standalone: true,
-  imports: [
-    TableModule,
-    PaginatorModule,
-    CommonModule,
-    AvatarModule
-  ],
+    imports: [
+        TableModule,
+        PaginatorModule,
+        CommonModule,
+        AvatarModule,
+        ButtonModule,
+        CalendarModule,
+        MultiSelectModule,
+        ReactiveFormsModule,
+        ToggleButtonModule
+    ],
   templateUrl: './emp-appointment.component.html',
   styleUrl: './emp-appointment.component.scss'
 })
@@ -27,8 +39,35 @@ export class EmpAppointmentComponent {
   totalAppointments : number;
   selectAppointment : Appointment;
   state : string = 'idle';
-  constructor(private service : AppointmentService,private dialogService : DialogService){}
+    displayForm=false
+    service_list:Service[] = []
+    form: FormGroup;
+  constructor(private srv: ServiceService,private service : AppointmentService,private dialogService : DialogService){
+      this.form = new FormGroup({
+          'services': new FormControl(''),
+          'min': new FormControl(''),
+          'max': new FormControl('',  this.minMaxValidator.bind(this)),
+          'start': new FormControl(''),
+          'end': new FormControl('',  this.startDateValidator.bind(this))
+      });
+      this.srv.get()
+          .subscribe({
+              next: list => this.service_list = list
+          })
+  }
+    minMaxValidator(control: FormControl): {[s: string]: boolean} {
+        if (this.form && control.value !== '' && (control.value <= this.form.controls['min'].value)) {
+            return {'maxLessThanMin': true};
+        }
+        return null;
+    }
 
+    startDateValidator(control: FormControl): {[s: string]: boolean} {
+        if (this.form && control.value !== '' && (new Date(control.value) < new Date(this.form.controls['start'].value))) {
+            return {'endDateBeforeStartDate': true};
+        }
+        return null;
+    }
   ngOnInit(): void {
     this.state = 'loading';
     let customer = getProfileStorage()
@@ -94,4 +133,14 @@ export class EmpAppointmentComponent {
   getProfile(customer){
     return host+"/profiles/"+customer?.profile;
   }
+    onSearch(){
+        const form = this.form.value
+        form.emp = getProfileStorage().id
+        console.log(form)
+        this.service.filterCLI(form)
+            .subscribe({
+                next:list=>this.appointments = list,
+                error:e=>console.log(e)
+            })
+    }
 }

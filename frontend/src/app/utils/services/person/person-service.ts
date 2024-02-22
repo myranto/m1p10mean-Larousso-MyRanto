@@ -13,6 +13,9 @@ export class PersonService extends AuthService{
   constructor(private http : HttpClient){
     super();
   }
+  async searchBar(text:string,role){
+      return await getCall(`${this.url}/find/${role}?text=${text}`,true)
+  }
     async countByrole(role: string): Promise<number> {
         return await getCall(this.url + '/count/' + role,false)
     }

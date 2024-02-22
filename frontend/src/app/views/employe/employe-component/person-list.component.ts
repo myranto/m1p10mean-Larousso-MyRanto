@@ -30,6 +30,7 @@ export class PersonListComponent {
       this.user.countByrole(this.role)
           .then((count)=> this.totalrow = count)
     this.findAllEmploye()
+      this.searchBar =  this.searchBar.bind(this)
     this.refreshService.refresh.subscribe(() => this.findAllEmploye());
   }
   updatePage(newPage,row){
@@ -45,7 +46,20 @@ export class PersonListComponent {
       })
       .catch((error)=>console.log('ito le message'+error.message))
   }
-
+    searchBar(text){
+        console.log(text)
+        if (text) {
+            this.totalrow = 1
+            this.user.searchBar(text,this.role)
+                .then((list)=> {
+                    this.person_list = list
+                })
+        }else {
+            this.user.countByrole(this.role)
+                .then((count)=> this.totalrow = count)
+            this.refreshService.triggerRefresh()
+        }
+    }
   getPersonneLink(row:any) {
     return `/element/personne/${row._id}`;
   }

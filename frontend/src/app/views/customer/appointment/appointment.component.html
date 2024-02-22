@@ -1,5 +1,38 @@
 <h2>Liste de vos rendez-vous </h2>
 <div class="card">
+    <p-toggleButton [(ngModel)]="displayForm" onLabel="Fermer" offLabel="Filtrer"></p-toggleButton>
+
+    <div *ngIf="displayForm">
+        <form [formGroup]="form" style="margin-top: 1.5em" class="service-form">
+
+            <div class="field">
+                <label class="block" for="select">Service(s)</label>
+                <p-multiSelect [style]="{width:'100%'}" id="select" formControlName="services" [options]="service_list" optionLabel="name" optionValue="_id" placeholder="choisir un ou plusieur services" ></p-multiSelect>
+            </div>
+            <div class="number">
+                <label class="block" for="integeronly">Prix min</label>
+                <p-inputNumber id="integeronly"  formControlName="min" > </p-inputNumber>
+            </div>
+            <div class="number">
+                <label class="block" for="integeronlymax">Prix max</label>
+                <p-inputNumber id="integeronlymax" formControlName="max" > </p-inputNumber>
+            </div>
+            <div class="field">
+                <label class="block" for="start">Début</label>
+                <p-calendar [touchUI]="true" id="start" [readonlyInput]="true" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body" formControlName="start" required></p-calendar>
+            </div>
+            <div class="field">
+                <label class="block" for="end">fin</label>
+                <p-calendar [touchUI]="true" id="end" [readonlyInput]="true" [showIcon]="true" dateFormat="dd/mm/yy" appendTo="body" formControlName="end" required></p-calendar>
+            </div>
+            <div class="field-button">
+                <label class="block" for="butt">  </label>
+                <p-button  severity="success" id="butt" (onClick)="onSearch()" class="button half-width" label="Valider" type="submit"></p-button>
+            </div>
+        </form>
+
+    </div>
+
     <div class="col-12 mb-2 lg:col-12 lg:mb-0 d-flex justify-content-end" style="display: flex; justify-content: flex-end;">
                     <span class="p-input-icon-right">
                         <input type="text" pInputText placeholder="Rechercher..."/>

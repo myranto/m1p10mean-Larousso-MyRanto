@@ -45,6 +45,8 @@ export class ListComponent {
     @Input() updatePage!:any
     @Input() totalRow!:number
     @Input() acceptNew:boolean = true
+    @Input() searchBar:any
+    text:string=''
   constructor(private router: Router) {}
 
   async onRowClick(rowData: any) {
@@ -56,7 +58,6 @@ export class ListComponent {
     else this.clicked(rowData)
   }
   changePage(event){
-      console.log(event)
       if (this.updatePage)
           this.updatePage(event.page,event.rows)
   }

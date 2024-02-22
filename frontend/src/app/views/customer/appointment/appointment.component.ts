@@ -12,6 +12,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import {InputTextModule} from "primeng/inputtext";
 import {getProfileStorage} from "../../../../api-request";
+import {AccordionModule} from "primeng/accordion";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {CalendarModule} from "primeng/calendar";
+import {MultiSelectModule} from "primeng/multiselect";
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Service, ServiceService} from "../../../utils/services/admin/service.service";
 
 registerLocaleData(LocaleFr,'fr');
 
@@ -23,18 +29,50 @@ registerLocaleData(LocaleFr,'fr');
         TableModule,
         PaginatorModule,
         ConfirmDialogModule,
-        InputTextModule
+        InputTextModule,
+        AccordionModule,
+        ToggleButtonModule,
+        CalendarModule,
+        MultiSelectModule,
+        ReactiveFormsModule
     ],
   templateUrl: './appointment.component.html',
   styleUrl: './appointment.component.scss'
 })
 export class AppointmentComponent implements OnInit{
   appointments : Appointment[];
-  totalAppointments : number;
-  selectedAppointment : Appointment;
-  state : string = 'idle';
+    totalAppointments : number;
+    selectedAppointment : Appointment;
+    service_list:Service[] = []
+    form: FormGroup;
+    state : string = 'idle';
+    displayForm=false
+  constructor(private srv: ServiceService,private service : AppointmentService,private dialogService : DialogService,private confirmationService : ConfirmationService,private messageService : MessageService){
+      this.form = new FormGroup({
+          'services': new FormControl(''),
+          'min': new FormControl(''),
+          'max': new FormControl('',  this.minMaxValidator.bind(this)),
+          'start': new FormControl(''),
+          'end': new FormControl('',  this.startDateValidator.bind(this))
+      });
+      this.srv.get()
+          .subscribe({
+            next: list => this.service_list = list
+          })
+  }
+    minMaxValidator(control: FormControl): {[s: string]: boolean} {
+        if (this.form && control.value !== '' && (control.value <= this.form.controls['min'].value)) {
+            return {'maxLessThanMin': true};
+        }
+        return null;
+    }
 
-  constructor(private service : AppointmentService,private dialogService : DialogService,private confirmationService : ConfirmationService,private messageService : MessageService){}
+    startDateValidator(control: FormControl): {[s: string]: boolean} {
+        if (this.form && control.value !== '' && (new Date(control.value) < new Date(this.form.controls['start'].value))) {
+            return {'endDateBeforeStartDate': true};
+        }
+        return null;
+    }
 
   ngOnInit(): void {
     this.state = 'loading';
@@ -101,6 +139,16 @@ export class AppointmentComponent implements OnInit{
       rejectLabel:"Annuler",
       acceptButtonStyleClass:"p-button-danger"
     });
+  }
+  onSearch(){
+      const form = this.form.value
+      form.customer = getProfileStorage().id
+      console.log(form)
+      this.service.filterCLI(form)
+          .subscribe({
+              next:list=>this.appointments = list,
+              error:e=>console.log(e)
+          })
   }
 
 }

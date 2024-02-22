@@ -6,6 +6,14 @@ const { sendMail, HTML_TEMPLATE } = require('../service/MailSender');
 
 router.get('/', async function (req, res) {
     try {
+        if(req.query.text){
+            let regex = new RegExp(req.query.text, 'i'); 
+            return res.json(await discount.find({
+                $or: [
+                    { name: { $regex: regex } },
+                ]
+            }))
+        }
         const currentDate = new Date();
         let futureDiscountsQuery = discount.find({ date_start: { $gte: currentDate } }).sort({ date_start: 1 });
         let pastDiscountsQuery = discount.find({ date_start: { $lt: currentDate } }).sort({ date_start: -1 });
@@ -18,19 +26,6 @@ router.get('/', async function (req, res) {
         const futureDiscounts = await futureDiscountsQuery.exec();
         const pastDiscounts = await pastDiscountsQuery.exec();
         return res.json([...futureDiscounts, ...pastDiscounts]);
-        // if(req.query.valid){
-        //     return res.json(await discount.find({
-        //         $and:{
-        //             start_date:{
-        //                 $lte : new Date()
-        //             },
-        //             end_date:{
-        //                 $gte : new Date()
-        //             }
-        //         }
-        //     }));
-        // }
-        // return res.json(await discount.find());
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

@@ -3,6 +3,7 @@ import { CrudService } from '../CrudService';
 import { Appointment } from '../../interfaces/appointment';
 import { HttpClient } from '@angular/common/http';
 import { host } from '../host';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,8 @@ export class AppointmentService extends CrudService<Appointment> {
   }
   findTaskByDay(day:any, id:string){
       return this.http.get<any>(host+this.url+'/commission',{params:{ id:id,  date: day},headers: this.getHeaders()})
+  }
+  filterCLI(object):Observable<Appointment[]>{
+      return this.http.post<Appointment[]>(host+this.url+'/filter',object,{headers: this.getHeaders()})
   }
 }

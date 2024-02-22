@@ -38,7 +38,7 @@ function validMail(email) {
 }
 
 
-async function register(req,res) {
+async function register(req,res) { 
     try {
         // const person =  new User(req.body)
         if (!validMail(req.body.mail)) {
@@ -129,6 +129,17 @@ router.get('/count/:role',async function(req,res){
 // find by role
 router.get('/find/:role',async function(req,res) {
     try {
+        if(req.query.text){
+            let regex = new RegExp(req.query.text, 'i'); 
+            return res.json(await user.find({
+                role: req.params.role,
+                $or: [
+                    { name: { $regex: regex } },
+                    { mail: { $regex: regex } },
+                    { role: { $regex: regex } },
+                ]
+            },{password:0}))
+        }
         let model = null
         if (req.query.page) {
             const page = parseInt(req.query.page);
@@ -142,7 +153,7 @@ router.get('/find/:role',async function(req,res) {
         if(!model){
             throw {message:'not found',status:404};
         } 
-        res.json(model);
+        return res.json(model);
     } catch (error) {
         if(error.status){
            return res.status(error.status).json(error.message);

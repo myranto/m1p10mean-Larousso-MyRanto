@@ -232,6 +232,51 @@ router.get('/commission', async function(req, res) {
         return res.status(400).json("veuillez indiquer la date");
     }
 });
+router.post('/filter',async function (req,res) {
+    try {
+                
+        let searchObj = {};
+        if (req.body.services) {
+            searchObj["services.id"] = { $in: req.body.services };
+        }
 
+        if (req.body.min) {
+            searchObj["services.price"] = { $gte: req.body.min };
+        }
+
+        if (req.body.max) {
+            if (!searchObj["services.price"]) {
+                searchObj["services.price"] = {};
+            }
+            searchObj["services.price"]["$lte"] = req.body.max;
+        }
+
+        if (req.body.start) {
+            searchObj["date"] = { $gte: new Date(req.body.start) };
+        }
+
+        if (req.body.end) {
+            if (!searchObj["date"]) {
+                searchObj["date"] = {};
+            }
+            searchObj["date"]["$lte"] = new Date(req.body.end);
+        }
+        if (req.body.emp) {
+            searchObj["services.emp"] = req.body.emp;
+        }
+        
+        if (req.body.customer) {
+            searchObj["customer"] = req.body.customer;
+        }
+        console.log(searchObj);
+        const result = appointment.find(searchObj)
+        result.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
+        result.populate({path:"customer",model:"User",select:"name profile"});
+        return res.send(await result)
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json("Erreur d'entrée");
+    }
+})
 
 module.exports = router;

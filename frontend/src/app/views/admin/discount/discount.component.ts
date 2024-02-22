@@ -8,6 +8,8 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import {formatDate} from "@angular/common";
 import {MaxRows} from "../../../../api-request";
+import {log} from "@angular-devkit/build-angular/src/builders/ssr-dev-server";
+import {MessageService} from "primeng/api";
 @Component({
   selector: 'app-discount',
   standalone: true,
@@ -22,13 +24,14 @@ export class DiscountComponent {
     row:number = MaxRows
     totalrow:number
   discount_list:Discount[] = []
-  constructor(private discount:Discountservice, private refreshService: RefreshService) {
+  constructor(private discount:Discountservice, private refreshService: RefreshService, private mess:MessageService) {
       this.findAll()
       this.drop = this.drop.bind(this)
       this.discount.count()
           .subscribe({
               next:total => this.totalrow = total
           })
+     this.searchBar =  this.searchBar.bind(this)
       this.updatePage = this.updatePage.bind(this)
     this.refreshService.refresh.subscribe(()=>this.findAll())
   }
@@ -40,8 +43,27 @@ export class DiscountComponent {
     }
   findAll(){
     this.discount.getPaginate(this.page,this.row).subscribe({
-      next:list => this.discount_list = list
+      next:list => this.discount_list = list,
+      error: e => this.mess.add({ severity: 'error', summary: "Erreur d'entrée", detail: e.error })
     })
+  }
+  searchBar(text){
+      console.log(text)
+      if (text) {
+          this.totalrow = 1
+          this.discount.searchBar(text)
+              .subscribe({
+                  next: list => {
+                      this.discount_list = list
+                  }
+              })
+      }else {
+          this.discount.count()
+              .subscribe({
+                  next:total => this.totalrow = total
+              })
+          this.refreshService.triggerRefresh()
+      }
   }
   async drop(row:any){
     if (this.discount){
