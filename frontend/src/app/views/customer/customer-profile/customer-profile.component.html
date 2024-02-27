@@ -1,0 +1,25 @@
+<p>Photo de profil</p>
+<p-fileUpload name="file" (onUpload)="onUpload($event)" [url]="getUrl()" accept="image/*">
+    <ng-template pTemplate="content">
+        <p-avatar [image]="selectedPicture ? selectedPicture : getProfile()" shape="circle" size="xlarge"></p-avatar>
+    </ng-template>
+</p-fileUpload>
+<form *ngIf="fb" [formGroup]="fb">
+    <div class="flex flex-column gap-2">
+        <label for="mail">E-mail</label>
+        <input pInputText id="mail" formControlName="mail" [style]="{width:'100%'}" />
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="name">Nom</label>
+        <input pInputText id="name" formControlName="name" [style]="{width:'100%'}" />
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="prefered_emp">Employé préféré</label>
+        <p-dropdown [options]="employes" formControlName="prefered_emp" optionLabel="name" id="prefered_emp" [style]="{width:'100%'}" />
+    </div>
+    <div class="flex flex-column gap-2">
+        <label for="prefered_service">Service préféré</label>
+        <p-dropdown [options]="services" formControlName="prefered_service" optionLabel="name" id="prefered_service" [style]="{width:'100%'}" />
+    </div>
+    <p-button [style]="{width:'100%'}" (onClick)="updateProfile()" label="Valider"></p-button>
+</form>

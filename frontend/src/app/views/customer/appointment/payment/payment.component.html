@@ -1,0 +1,6 @@
+<p>Confirmer le paiement du montant de {{calculateTotal()}} Ar. pour le rendez-vous du {{appointment.date | date:'d MMMM yyyy':'':'fr'}}</p>
+<form [formGroup]="fb" >
+    <p-inputMask [style]="{width:'100%'}" mask="9999-9999-9999-9999" placeholder="Numéro de carte" formControlName="cardNumber"></p-inputMask>
+    <p-inputMask [style]="{width:'100%'}" mask="99/99" placeholder="Expire le" formControlName="expiredIn"></p-inputMask>
+    <p-button (onClick)="validate()" [style]="{width:'100%'}" severity="success" label="Valider" ></p-button>
+</form>

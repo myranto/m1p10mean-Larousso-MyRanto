@@ -1,0 +1,34 @@
+<h2>Liste des dépenses</h2>
+<div class="card">
+    <p-button label="Ajouter une dépense" (onClick)="showAddElement()" icon="pi pi-plus"></p-button>
+    <div class="col-12 mb-2 lg:col-12 lg:mb-0 d-flex justify-content-end" style="display: flex; justify-content: flex-end;">
+            <span class="p-input-icon-right">
+                <input type="text" [(ngModel)]="text" (ngModelChange)="searchBar()" pInputText placeholder="Rechercher..."/>
+                <i class="pi pi-search"></i>
+            </span>
+    </div>
+    <p-table [value]="models">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Étiquette</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Montant</th>
+                <th>action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.label }}</td>
+                <td>{{ product.date | date:'d MMMM yyyy':'':'fr'}}</td>
+                <td>{{ product.type.name }}</td>
+                <td>{{ product.amount }} Ar.</td>
+                <td>
+                    <p-button icon="pi pi-pencil" [text]="true" [rounded]="true" (onClick)="showUpdateElement(product)" ></p-button>
+                    <p-button icon="pi pi-trash" [text]="true" [rounded]="true" (onClick)="dropElement(product)" severity="danger"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<p-confirmDialog></p-confirmDialog>

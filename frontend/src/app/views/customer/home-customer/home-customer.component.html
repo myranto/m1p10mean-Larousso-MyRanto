@@ -1,0 +1,78 @@
+<div class="card">
+<h1>Bienvenue dans Coiffure Service!</h1>
+<h4>voici quelques informations pour la semaine du  {{current_date}}</h4>
+<!--    <div class="col-12 mb-2 lg:col-4 lg:mb-0">-->
+<!--					<span class="p-input-icon-right">-->
+<!--						<input type="text" pInputText placeholder="Search"/>-->
+<!--						<i class="pi pi-search"></i>-->
+<!--					</span>-->
+<!--    </div>-->
+    <div class="grid">
+        <div class="col-12">
+                <h5>Offres spéciales pour cette semaine</h5>
+                <p-dataView #dv [value]="discount_list"  [rows]="9" layout="grid">
+                    <ng-template let-discount_list pTemplate="gridItem">
+                        <div class="grid grid-nogutter">
+                            <div class="col-12 md:col-4" *ngFor="let discount of discount_list">
+                                <div class="card m-3 border-1 surface-border">
+                                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                                        <div class="flex align-items-center">
+                                            <i class="pi pi-tag mr-2"></i>
+                                            <span class="font-semibold">{{formatDate(discount?.date_start)}}</span>
+                                        </div>
+                                        au
+                                        <span [class]="'discount-badge'" style="color:red">{{
+                                            formatDate(discount?.date_end)
+                                            }}</span>
+                                    </div>
+                                    <br>
+                                    <div class="flex flex-column align-items-center text-center mb-3">
+                                        <div class="text-2xl font-bold">{{discount?.name}}</div>
+                                        <div class="mb-3">{{discount?.is_service === 'true' ? 'Valide par Service ' : 'Valide pour un rendez-vous'}}</div>
+                                    </div>
+                                    <div class="flex align-items-center justify-content-center">
+                                        <span class="text-2xl font-semibold">Remise -{{discount?.percent+'%'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dataView>
+                    <p-paginator  [first]="0" (onPageChange)="updatePage($event)" [rowsPerPageOptions]="[5, 10, 20]" [rows]="5" [totalRecords]="totalrow" ></p-paginator>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col-12">
+            <h5>Liste des rendez-vous pour cette semaine</h5>
+            <p-table
+                [value]="appointment_list"
+                (onRowSelect)="showDetail()"
+                selectionMode="single"
+                [(selection)]="selectedAppointment"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Date</th>
+                        <th>Heure</th>
+                        <th>Nombre de service</th>
+                        <th>Estimation de la durrée du rendez-vous</th>
+                        <th>Total à payer</th>
+                        <th>Payé</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-appointment>
+                    <tr [pSelectableRow]="appointment">
+                        <td>{{ appointment.date | date:'d MMMM yyyy':'':'fr' }}</td>
+                        <td>{{ appointment.date | date:'HH:mm':'':'fr' }}</td>
+                        <td>{{ appointment.services.length}} service(s) </td>
+                        <td>{{ calculateTotalMinutes(appointment) }} Mn.</td>
+                        <td>{{ calculateTotal(appointment) }} Ar.</td>
+                        <td><span *ngIf="!!appointment.payment" class="pi pi-check"></span><span *ngIf="!appointment.payment" class="pi pi-times"></span></td>
+                        <td><p-button *ngIf="!appointment.payment" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (click)="delete(appointment)" ></p-button></td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-paginator [first]="0" (onPageChange)="changePage($event)" rows="100" [totalRecords]="totalAppointments" ></p-paginator>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<form (submit)="onSubmit()" [formGroup]="form" class="service-form">
+    <div class="field">
+        <label class="block" for="name">Nom</label>
+        <input pInputText required id="name" formControlName="name" />
+        <small id="name-help">Le nom est requis</small>
+    </div>
+    <div class="field">
+        <label class="block" for="price">Prix</label>
+        <input pInputText required id="price" formControlName="price" />
+        <small id="price-help">Le prix doit être un nombre positif</small>
+    </div>
+    <div class="field">
+        <label class="block" for="committee">Commission</label>
+        <input pInputText required id="committee" formControlName="committee" />
+        <small id="committee-help">La comission doit être un nombre entre 0 et 100</small>
+    </div>
+    <div class="field">
+        <label class="block" for="duration">Durée en minute</label>
+        <input pInputText required id="duration" formControlName="duration" />
+        <small id="duration-help" >La durée doit être un nombre supérieur ou égal à 0</small>
+    </div>
+<!--    <div class="field full-width">-->
+<!--        <label class="block" for="in">Offre spécial</label>-->
+<!--        <p-dropdown id="in"  [style]="{width:'100%'}" appendTo="body" formControlName="discount" [options]="options" />-->
+<!--    </div>-->
+    <div class="button-container">
+    <p-button [loading]="loading" [style]="{width:'100%'}" severity="success" class="button half-width" label="Valider" type="submit"></p-button>
+    <p-button type="button" (onClick)="onCancel()" [style]="{width:'100%'}" severity="danger" label="Annuler" class="button half-width" ></p-button>
+    </div>
+</form>

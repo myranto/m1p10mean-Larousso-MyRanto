@@ -1,0 +1,46 @@
+<div class="card">
+    <h1>Voir vos commissions</h1>
+    <br>
+    <div style="display: flex; align-items: center; gap: 10px;">
+    <span class="p-float-label">
+        <p-calendar id="start" [showIcon]="true" [(ngModel)]="date_com" [touchUI]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" appendTo="body" [maxDate]="current_date" required></p-calendar>
+        <label for="start">Choisir une date</label>
+    </span>
+    <p-button (onClick)="changeValue()"> choisir </p-button>
+    </div>
+    <p></p>
+    <p>Commission du  <strong>{{date_com | date:'d MMMM yyyy':'':'fr'}} : {{commission}} Ar</strong></p>
+    <br>
+    <div class="card">
+        <br>
+        <h2>Liste de vos rendez-vous effectuer </h2>
+        <p-table
+            [value]="appointments"
+            (onRowSelect)="showDetail()"
+            selectionMode="single"
+            [(selection)]="selectAppointment"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th>Nom du client</th>
+                    <th>Date du rendez-vous</th>
+                    <th>La durée de vos services</th>
+                    <th>Montant total de la commission</th>
+                    <th>Montant à payer</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-appointment>
+                <tr [pSelectableRow]="appointment">
+                    <td><p-avatar [image]="getProfile(appointments.customer)" shape="circle" size="xlarge" ></p-avatar></td>
+                    <td>{{ appointment.customer.name}}</td>
+                    <td>{{ appointment.date | date:'d MMMM yyyy':'':'fr' }}</td>
+                    <td>{{ calculateTotalMinute(appointment) }} Mn.</td>
+                    <td>{{ calculateCommittee(appointment) }} Ar.</td>
+                    <td>{{ calculateTotal(appointment) }} Ar.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+<!--        <p-paginator [first]="0" (onPageChange)="changePage($event)" rows="100" [totalRecords]="totalAppointments" ></p-paginator>-->
+    </div>
+</div>
