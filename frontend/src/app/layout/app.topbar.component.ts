@@ -26,4 +26,11 @@ export class AppTopBarComponent {
         this.message.add({ severity: 'success', summary: 'Succès', detail: 'déconnexion réussi' });
         await this.router.navigate(['/'])
     }
+    async updateProfile() {
+        const link = this.profile.role === 'employe' ? '/views/employe/profile' : '/views/customer/profile'
+        await this.router.navigate([link])
+    }
+    async calendar(){
+        await this.router.navigate(['/views/admin/calendar'])
+    }
 }
