@@ -3,6 +3,7 @@ const router = express.Router();
 const discount = require('../models/discount/discount');
 const User = require('../models/person/User');
 const { sendMail, HTML_TEMPLATE } = require('../service/MailSender');
+var service = require('../models/service');
 
 router.get('/', async function (req, res) {
     try {
@@ -116,6 +117,11 @@ router.post('/',async function (req,res){
         // validator(req.body);
         const user_list = await User.find({role:'customer'})
         let document =  await discount.create(req.body);
+        if(req.body.ids){
+            const srv =  await service.findById(req.body.ids);
+            srv.discount = document._id
+            await srv.save()
+        }
         const message = 'Voici un nouvel offre que vous ne pouvez laisser passer '+req.body.name+', avec une remise de <strong>'+req.body.percent+'%'
             user_list.forEach(async p => {
                 const msg = {
@@ -141,6 +147,11 @@ router.put('/',async function(req,res){
     try {
         // validator(req.body);
         await discount.findByIdAndUpdate(req.body._id,req.body);
+        if(req.body.ids){
+            const srv =  await service.findById(req.body.ids);
+            srv.discount = req.body._id
+            await srv.save()
+        }
         res.status(200).json();
     } catch (error) {
         console.log(error);

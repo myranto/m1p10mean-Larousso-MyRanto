@@ -12,6 +12,20 @@ export class Discountservice extends CrudService<Discount>{
   constructor(http : HttpClient ){
     super(http,"/discount");
   }
+    save(body,id){
+        const data = {
+            ...body,
+            ids: id
+        };
+        return this.http.post<any>(host+this.url,data,{ headers: this.getHeaders() });
+    }
+    modification(body,id){
+        const data = {
+            ...body,
+            ids: id
+        };
+        return this.http.put(host+this.url,data,{ headers: this.getHeaders() });
+    }
     count():Observable<any>{
       return this.http.get(`${host}${this.url}/count`, { headers: this.getHeaders() })
     }

@@ -24,28 +24,27 @@ import {Discountservice} from "../../../../utils/services/admin/discountservice"
   styleUrl: './form.component.scss'
 })
 export class FormComponent extends CrudFormComponent<Service,ServiceService>{
-    options = []
-  constructor(service : ServiceService, private discount:Discountservice){
+    // options = []
+  constructor(service : ServiceService){
     super(service);
     this.form = this.formBuilder.group({
       name:[this.model ? this.model.name : null,[Validators.required]],
       price:[this.model ? this.model.price : null,[Validators.min(1)]],
       committee : [this.model ? this.model.committee : null,[Validators.min(0),Validators.max(100)]],
       duration:[this.model ? this.model.duration : null,[Validators.min(0)]],
-        discount: [this.model ? this.model?.discount?._id : null]
+      // discount: [this.model ? this.model?.discount?._id : null]
     });
-    this.discount.getAllByService()
-          .subscribe({
-              next: discounts => {
-                  console.log(discounts)
-                  let options = discounts.map(discount => ({
-                      label: discount.name,
-                      value: discount._id.toString()
-                  }));
-                  options.unshift({ label: 'Choisir une offre', value: null });
-                  this.options = options
-              }
-          });
+    // this.discount.getAllByService()
+    //       .subscribe({
+    //           next: discounts => {
+    //               let options = discounts.map(discount => ({
+    //                   label: discount.name,
+    //                   value: discount._id.toString()
+    //               }));
+    //               options.unshift({ label: 'Choisir une offre', value: null });
+    //               this.options = options
+    //           }
+    //       });
 
   }
 

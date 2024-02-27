@@ -26,7 +26,7 @@ const serviceSchema = new mongoose.Schema({
     message:"La durrée doit être supérieur à 0"
   }},
   discount: { 
-    type: mongoose.Schema.Types.ObjectId, 
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'discount',
     validate: {
       isAsync: true,

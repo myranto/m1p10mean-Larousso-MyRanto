@@ -1,5 +1,5 @@
 <p>Photo de profil</p>
-<p-fileUpload name="file" (onUpload)="onUpload($event)" [url]="getUrl()" accept="image/*">
+<p-fileUpload name="file" (onUpload)="onUpload($event)" [url]="getUrl()"  accept="image/*">
     <ng-template pTemplate="content">
         <p-avatar [image]="selectedPicture ? selectedPicture : getProfile()" shape="circle" size="xlarge"></p-avatar>
     </ng-template>

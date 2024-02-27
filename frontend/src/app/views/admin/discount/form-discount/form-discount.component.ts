@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, model} from '@angular/core';
 import {Base} from "../../../utils/base";
 import {Discountservice} from "../../../../utils/services/admin/discountservice";
-import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig} from "primeng/dynamicdialog";
 import {Discount} from "../../../../utils/interfaces/discount";
 import {InputTextModule} from "primeng/inputtext";
 import {RadioButtonModule} from "primeng/radiobutton";
@@ -9,7 +9,9 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
 import {InputNumberModule} from "primeng/inputnumber";
 import {CheckboxModule} from "primeng/checkbox";
-import {ModalComponent} from "../../../utils/modal/modal.component";
+import {ServiceService} from "../../../../utils/services/admin/service.service";
+import {DropdownModule} from "primeng/dropdown";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-form-discount',
@@ -21,7 +23,9 @@ import {ModalComponent} from "../../../utils/modal/modal.component";
         CalendarModule,
         InputNumberModule,
         CheckboxModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DropdownModule,
+        NgIf
     ],
   templateUrl: './form-discount.component.html',
   styleUrl: './form-discount.component.scss'
@@ -29,6 +33,7 @@ import {ModalComponent} from "../../../utils/modal/modal.component";
 export class FormDiscountComponent extends Base{
   update: boolean = false
   model!: Discount
+  options = []
   discount={
     _id:undefined,
     name:'',
@@ -38,19 +43,38 @@ export class FormDiscountComponent extends Base{
     date_end:new Date(),
   }
   discount_srv = inject(Discountservice)
-
-  constructor(private config: DynamicDialogConfig) {
+    selected=''
+  constructor(private config: DynamicDialogConfig, private srv:ServiceService) {
     super()
     this.model = this.config?.data?.model ? this.config.data.model : this.discount
       if (this.config?.data?.model)
           this.model.date_start = new Date(this.model.date_start)
           this.model.date_end = new Date(this.model.date_end)
     this.update = this.config?.data?.update
+      srv.get()
+          .subscribe({
+              next: value => {
+                  this.options = value.map(s => ({
+                      label: s.name,
+                      value: s._id.toString()
+                  }))
+              }
+          })
+      console.log(this.model)
+      if (this.model._id){
+          srv.findByDiscount(this.model._id)
+              .subscribe({
+                  next:one=>{
+                      this.selected = one ? one._id : ''
+                  }
+              })
+      }
   }
 
   create(){
     console.log(this.model)
-    return this.discount_srv.create(this.model).subscribe({
+      console.log(this.selected)
+    return this.discount_srv.save(this.model,this.selected).subscribe({
       error:e=> {
         return Promise.reject(new Error(e?.error ? e.error : e.message))
       },
@@ -68,7 +92,8 @@ export class FormDiscountComponent extends Base{
   }
   updateModel(){
     console.log(this.model)
-    return this.discount_srv.update(this.model).subscribe({
+      console.log(this.selected)
+    return this.discount_srv.modification(this.model,this.selected).subscribe({
       error:e=> {
         return Promise.reject(new Error(e?.error ? e.error : e.message))
       },

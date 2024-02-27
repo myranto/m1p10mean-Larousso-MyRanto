@@ -18,7 +18,13 @@ router.get('/',async function (req,res,next){
                 ]
             };
         }
-        const result = service.find(params).populate({path:"discount",model:"Discount",select:"name percent date_end date_start"});
+        const result = service.find(params).populate({
+            path:"discount",
+            model:"Discount",
+            select:"name percent date_end date_start",
+             match: { date_end: { $gt: new Date() } },
+            options: { limit: 1 }
+        });
         res.json(await result);
     } catch (error) {
         console.log(error);
@@ -28,7 +34,12 @@ router.get('/',async function (req,res,next){
 
 router.get('/:id',async function (req,res,next){
     try {
-        let model = await service.findById(req.params.id).populate({path:"discount",model:"Discount",select:"name percent date_end date_start"});
+        let model = await service.findById(req.params.id).populate({
+            path:"discount",model:"Discount",
+            select:"name percent date_end date_start",
+            match: { date_end: { $gt: new Date() } },
+            options: { limit: 1 }
+        });
         if(!model){
             throw {message:'not found',status:404};
         } 
@@ -52,6 +63,28 @@ router.post('/',async function (req,res,next){
         res.status(400).json(error);
     }
 });
+
+router.get('/discount/:id',async function(req, res){
+    try {
+        const servicess = await service.find({ 'discount': req.params.id }).exec();
+        if(!servicess){
+            throw {message:'not found',status:404};
+        } 
+        if (Array.isArray(servicess)) {
+            res.json(servicess[0]);
+        }else{
+            res.json(servicess)
+        }
+    } catch (error) {
+        console.log(error);
+        if(error.status){
+            res.status(error.status).json(error.message);
+        }
+        else{
+            res.status(500).json(error);
+        }
+    }
+})
 
 router.put('/',async function(req,res,next){
     try {

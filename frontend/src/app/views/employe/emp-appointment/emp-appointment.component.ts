@@ -16,6 +16,7 @@ import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {Service} from "../../../utils/interfaces/service";
 import {ServiceService} from "../../../utils/services/admin/service.service";
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-emp-appointment',
@@ -29,7 +30,8 @@ import {ServiceService} from "../../../utils/services/admin/service.service";
         CalendarModule,
         MultiSelectModule,
         ReactiveFormsModule,
-        ToggleButtonModule
+        ToggleButtonModule,
+        InputTextModule
     ],
   templateUrl: './emp-appointment.component.html',
   styleUrl: './emp-appointment.component.scss'

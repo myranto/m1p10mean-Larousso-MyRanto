@@ -32,7 +32,12 @@
         </form>
 
     </div>
-
+    <div class="col-12 mb-2 lg:col-12 lg:mb-0 d-flex justify-content-end" style="display: flex; justify-content: flex-end;">
+                    <span class="p-input-icon-right">
+                        <input type="text" pInputText placeholder="Rechercher..."/>
+                        <i class="pi pi-search"></i>
+                    </span>
+    </div>
     <p-table
     [value]="appointments"
     (onRowSelect)="showDetail()"

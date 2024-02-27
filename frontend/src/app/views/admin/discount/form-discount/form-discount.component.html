@@ -34,10 +34,17 @@
             <label for="end">Fin</label>
         </span>
     </div>
-    <div class="col-12 md:col-2">
-        <p-button (onClick)="close()" severity="secondary" label="annuler" />
+    <div *ngIf="model.is_service.toString() === 'true'" class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <span class="p-float-label">
+        <p-dropdown id="in"  [style]="{width:'100%'}" appendTo="body" [options]="options" [(ngModel)]="selected" />
+            <label for="in">Choisir un service</label>
+        </span>
+        <br>
     </div>
     <div class="col-12 md:col-2">
         <p-button (onClick)="submit()"  severity="success" label="valider" />
+    </div>
+    <div class="col-12 md:col-2">
+        <p-button (onClick)="close()" severity="secondary" label="annuler" />
     </div>
 </div>
