@@ -37,6 +37,7 @@ export class FormComponent extends CrudFormComponent<Service,ServiceService>{
     this.discount.getAllByService()
           .subscribe({
               next: discounts => {
+                  console.log(discounts)
                   let options = discounts.map(discount => ({
                       label: discount.name,
                       value: discount._id.toString()
