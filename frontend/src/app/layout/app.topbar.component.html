@@ -13,14 +13,16 @@
     </button>
     <div><p> Utilisateur : {{profile?.name?.toUpperCase()}}, rôle: {{profile?.role}}</p></div>
     <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button">
+        <button class="p-link layout-topbar-button" (click)="calendar()">
             <i class="pi pi-calendar"></i>
             <span>Calendrier</span>
         </button>
-        <button class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-        </button>
+        <span *ngIf="profile.role!=='admin'">
+            <button class="p-link layout-topbar-button" (click)="updateProfile()">
+                <i class="pi pi-user"></i>
+                <span>Profile</span>
+            </button>
+        </span>
         <button class="p-link layout-topbar-button" (click)="logOut()" >
             <i class="pi pi-sign-out"></i>
             <span>Se déconnecter</span>
