@@ -43,7 +43,6 @@ export const MenuAdmin= [
                 { label: 'Employées', icon: 'pi pi-fw pi-user-edit', routerLink: ['admin/home'] },
                 { label: 'Clients', icon: 'pi pi-fw pi-user', routerLink: ['admin/person'], queryParams:{role: 'customer'} },
                 { label: 'Dépenses', icon: 'pi pi-fw pi-chart-bar', routerLink: ['admin/spent'] },
-                { label: 'Button', icon: 'pi pi-fw pi-box', routerLink: ['/uikit/button'] }
             ]
         },
     ]
