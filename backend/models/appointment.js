@@ -14,7 +14,7 @@ const appointmentSchema = mongoose.Schema({
             price:{type: Number, required: true, min:0},
             committee:{type: Number, required: true, min:0,max:100},
             duration:{type:Number, required:true,min:0},
-            dicount: { type : Number},
+            discount: { type : Number},
             emp : { type : mongoose.Schema.Types.ObjectId , required: false,ref:"user"}
         }
     ],

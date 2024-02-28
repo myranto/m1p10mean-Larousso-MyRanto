@@ -22,7 +22,7 @@ router.get('/',async function (req,res,next){
             path:"discount",
             model:"Discount",
             select:"name percent date_end date_start",
-             match: { date_end: { $gt: new Date() } },
+            match: { date_end: { $gt: req.query.date ? new Date(req.query.date) : new Date() } },
             options: { limit: 1 }
         });
         res.json(await result);

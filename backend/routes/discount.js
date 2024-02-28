@@ -33,6 +33,20 @@ router.get('/', async function (req, res) {
         res.status(500).json(error);
     }
 });
+router.get('/date',async function (req,res){
+    try {
+        let discount_of_day = await discount.findOne(
+            {
+                date_end : { $gte:req.query.date ? new Date(req.query.date) : new Date() },
+                is_service : false
+            }
+        );
+        return res.json(discount_of_day);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error);
+    }
+});
 router.get('/byservice',async function(req,res){
     try {
        const result =  await discount.find({

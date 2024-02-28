@@ -6,7 +6,10 @@ router.post('/', async function(req,res){
     try {
         let model = await appointment.findById(req.body.appointment);
         let totalToPay = 0;
-        model.services.forEach((service)=> totalToPay+= service.price);
+        model.services.forEach((service)=>{
+            totalToPay+= service.discount ? (service.price - (service.price*(service.discount/100))) : service.price
+        });
+        totalToPay -= model.discount ? totalToPay*(model.discount/100) : 0;
         model.payment = {
             amount : totalToPay,
             payment_date : new Date()
