@@ -76,9 +76,11 @@ export class FormDiscountComponent extends Base{
       console.log(this.selected)
     return this.discount_srv.save(this.model,this.selected).subscribe({
       error:e=> {
+          this.loading = false
         return Promise.reject(new Error(e?.error ? e.error : e.message))
       },
       next:value=>{
+          this.loading = false
         this.model = {
           _id:undefined,
           name:'',
@@ -87,18 +89,23 @@ export class FormDiscountComponent extends Base{
           date_start:null,
           date_end:null,
         }
+          this.data = 'Création effectuée avec succès'
+          super.submit()
       }
     })
   }
   updateModel(){
-    console.log(this.model)
-      console.log(this.selected)
+    // console.log(this.model)
+    //   console.log(this.selected)
     return this.discount_srv.modification(this.model,this.selected).subscribe({
       error:e=> {
+          this.loading = false
         return Promise.reject(new Error(e?.error ? e.error : e.message))
       },
       next:value=>{
-        console.log('modification réussi!')
+          this.loading = false
+          this.data = 'modification effectué, ' + this.model?.name
+          super.submit()
       }
     })
   }
@@ -106,17 +113,22 @@ export class FormDiscountComponent extends Base{
         return date1.getTime() < date2.getTime();
     }
     override  submit() {
-    const res = this.update ? 'modification effectué, ' + this.model?.name : 'Création effectuée avec succès'
+      this.loading = true
     try {
-        if(!this.model.name||!this.model.percent) throw new Error('Veuillez remplir les champs')
-        if (!this.verifierDate(new Date(this.model.date_start),new Date(this.model.date_end))) throw new Error('la date début doit etre inférieur à date fin')
+        if(!this.model.name||!this.model.percent) {
+            this.loading = false
+            throw new Error('Veuillez remplir les champs')
+        }
+        if (!this.verifierDate(new Date(this.model.date_start),new Date(this.model.date_end))) {
+            this.loading = false
+            throw new Error('la date début doit etre inférieur à date fin')
+        }
       if (this.update) {
          this.updateModel()
       } else {
          this.create()
       }
-      this.data = res
-      super.submit()
+
     } catch (e: any) {
       this.messageService.add({ severity: 'error', summary: "Erreur d'entrée", detail: e.message })
     }

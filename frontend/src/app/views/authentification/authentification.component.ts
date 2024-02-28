@@ -51,10 +51,12 @@ import {MessageModule} from "primeng/message";
 export class AuthentificationComponent {
     public loginValid = null
     public username = ''
+    loading = false
     public password = ''
     auth = inject(AuthService)
   constructor(private router: Router  ) {}
   handleSubmit(){
+        this.loading = true
     const form = {
       mail:this.username,
       password:this.password
@@ -64,6 +66,7 @@ export class AuthentificationComponent {
       .then(async (data) => {
         // const expiryDate = new Date().getTime() + 12 * 60 * 60 * 1000;
         // localStorage.setItem('expiryDate', String(expiryDate));
+          this.loading = false
         sessionStorage.setItem('person_profil', JSON.stringify(data))
         if (typeof data !== "string")
           switch (data.role) {
@@ -80,6 +83,7 @@ export class AuthentificationComponent {
       })
       .catch((error)=> {
         console.log(error)
+          this.loading=false
         this.loginValid = error.message
       })
 

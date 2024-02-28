@@ -22,6 +22,7 @@ export class PersonListComponent {
     row:number = MaxRows
     totalrow:number
     role = 'employe'
+    loaded = false
   constructor(private user:PersonService, private ref:ChangeDetectorRef,private refreshService: RefreshService,private route: ActivatedRoute) {
       let params = this.route.snapshot.queryParams;
       this.role = params['role'] ? params['role'] :'employe'
@@ -36,6 +37,7 @@ export class PersonListComponent {
   updatePage(newPage,row){
       this.page =newPage
       this.row=row
+      this.loaded = false
       this.findAllEmploye()
       this.refreshService.triggerRefresh();
   }
@@ -43,6 +45,7 @@ export class PersonListComponent {
     this.user.findByrole(this.role,this.page,this.row)
       .then((list)=> {
           this.person_list = list
+          this.loaded = true
       })
       .catch((error)=>console.log('ito le message'+error.message))
   }
@@ -50,9 +53,11 @@ export class PersonListComponent {
         console.log(text)
         if (text) {
             this.totalrow = 1
+            this.loaded = false
             this.user.searchBar(text,this.role)
                 .then((list)=> {
                     this.person_list = list
+                    this.loaded = true
                 })
         }else {
             this.user.countByrole(this.role)

@@ -12,6 +12,7 @@ import {RippleModule} from "primeng/ripple";
 import {Base} from "../base";
 import {PaginatorModule} from "primeng/paginator";
 import {InputTextModule} from "primeng/inputtext";
+import {SkeletonModule} from "primeng/skeleton";
 @Component({
   selector: 'app-list',
   standalone: true,
@@ -27,7 +28,8 @@ import {InputTextModule} from "primeng/inputtext";
         ToolbarModule,
         RippleModule,
         PaginatorModule,
-        InputTextModule
+        InputTextModule,
+        SkeletonModule
     ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
@@ -46,9 +48,12 @@ export class ListComponent {
     @Input() totalRow!:number
     @Input() acceptNew:boolean = true
     @Input() searchBar:any
+    @Input() loaded=false
     text:string=''
+    current_page = 0
+    skeletons = new Array(5);
+    rows = 5
   constructor(private router: Router) {}
-
   async onRowClick(rowData: any) {
 
     if (this.isLink) {
@@ -58,8 +63,12 @@ export class ListComponent {
     else this.clicked(rowData)
   }
   changePage(event){
-      if (this.updatePage)
-          this.updatePage(event.page,event.rows)
+      if (this.updatePage) {
+          console.log(event.page)
+          this.current_page = event.page
+          this.rows= event.rows
+          this.updatePage(event.page, event.rows)
+      }
   }
 
 }

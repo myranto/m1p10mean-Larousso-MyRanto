@@ -42,7 +42,7 @@
         <br>
     </div>
     <div class="col-12 md:col-2">
-        <p-button (onClick)="submit()"  severity="success" label="valider" />
+        <p-button (onClick)="submit()" [loading]="loading"  severity="success" label="valider" />
     </div>
     <div class="col-12 md:col-2">
         <p-button (onClick)="close()" severity="secondary" label="annuler" />

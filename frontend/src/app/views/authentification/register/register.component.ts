@@ -53,6 +53,7 @@ import {MessageService} from "primeng/api";
 export class RegisterComponent implements OnInit{
   public registerValid = null
   role = 'admin'
+    loading = false
   employe:User[] = []
   service_list:Service[] = []
   error_log = ''
@@ -104,10 +105,10 @@ export class RegisterComponent implements OnInit{
     if (!this.matchPassword()) this.password_message = 'Les mots de passe ne correspondent pas'
     else
     {
-    console.log(this.person)
+        this.loading = true
       this.person_srv.register(this.person)
         .then(async (data) => {
-
+        this.loading=false
         this.message.add({ severity: 'success', summary: 'Succès', detail: 'inscription réussi' });
           this.person = {
             _id:null,
@@ -126,7 +127,10 @@ export class RegisterComponent implements OnInit{
             await this.router.navigate(['/'])
           }
         })
-        .catch((error) => this.registerValid = error.message)
+        .catch((error) => {
+            this.loading = false
+            this.registerValid = error.message
+        })
     }
   }
 }

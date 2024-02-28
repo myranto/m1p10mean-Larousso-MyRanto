@@ -41,6 +41,7 @@ export class RecoverycomponentComponent {
     mail:'',
     password:'',
   }
+  loading = false
   user = inject(AuthService)
   action = 'sendMail'
   confirmPassword=''
@@ -56,6 +57,7 @@ export class RecoverycomponentComponent {
       await this.router.navigate(['/'])
   }
   async handleSubmit() {
+      this.loading = true
     switch (this.action) {
       case 'sendMail':
         this.action = 'modify'
@@ -63,19 +65,25 @@ export class RecoverycomponentComponent {
       case 'modify':
         if (this.person.password!=this.confirmPassword) {
           this.password_message = 'Les mots de passe ne correspondent pas'
+            this.loading = false
           console.log(this.password_message)
         }
         else {
           this.user.recoverypassword(this.person)
             .then(async (data) => {
             alert(data)
+                this.loading = false
             await this.router.navigate(['/'])
           })
-            .catch((error) => this.error = error.message)
+            .catch((error) => {
+                this.loading = false
+                this.error = error.message
+            })
         }
         break
       default:
         this.error = 'action non reconnu'
+          this.loading = false
         break
     }
   }

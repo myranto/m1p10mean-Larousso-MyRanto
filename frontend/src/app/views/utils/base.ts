@@ -4,6 +4,7 @@ import {inject} from "@angular/core";
 import {MessageService} from "primeng/api";
 
 export class Base {
+    loading = false;
   refreshService= inject(RefreshService)
     ref = inject(DynamicDialogRef)
     public messageService = inject(MessageService)

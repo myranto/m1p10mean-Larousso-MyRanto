@@ -22,6 +22,7 @@ import {MessageService} from "primeng/api";
 export class DiscountComponent {
     page:number = 0
     row:number = MaxRows
+    loaded = false
     totalrow:number
   discount_list:Discount[] = []
   constructor(private discount:Discountservice, private refreshService: RefreshService, private mess:MessageService) {
@@ -38,12 +39,16 @@ export class DiscountComponent {
     updatePage(newPage,row){
         this.page =newPage
         this.row=row
+        this.loaded = false
         this.findAll()
         this.refreshService.triggerRefresh();
     }
   findAll(){
     this.discount.getPaginate(this.page,this.row).subscribe({
-      next:list => this.discount_list = list,
+      next:list => {
+          this.discount_list = list
+          this.loaded = true
+      },
       error: e => this.mess.add({ severity: 'error', summary: "Erreur d'entrée", detail: e.error })
     })
   }
@@ -51,9 +56,11 @@ export class DiscountComponent {
       console.log(text)
       if (text) {
           this.totalrow = 1
+          this.loaded = false
           this.discount.searchBar(text)
               .subscribe({
                   next: list => {
+                      this.loaded = true
                       this.discount_list = list
                   }
               })

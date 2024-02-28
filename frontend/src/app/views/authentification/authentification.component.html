@@ -21,7 +21,7 @@
                     </div>
                         <div *ngIf="loginValid!=null"><p-message  severity="error" text="{{loginValid}}" />
                             <br> <br><br></div>
-                    <button pButton pRipple  label="Se connecter" (click)="handleSubmit()" class="w-full p-3 text-xl"></button>
+                    <button pButton pRipple  label="Se connecter" [loading]="loading" (click)="handleSubmit()" class="w-full p-3 text-xl"></button>
                 </div>
             </div>
         </div>

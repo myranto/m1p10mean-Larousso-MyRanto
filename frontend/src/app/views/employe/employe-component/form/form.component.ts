@@ -74,12 +74,14 @@ export class FormComponent extends Base {
 
   // @ts-ignore
   create() {
-    if (!this.matchPassword()) return Promise.reject(new Error('Les mots de passe ne correspondent pas'))
+    if (!this.matchPassword()) {
+        return Promise.reject(new Error('Les mots de passe ne correspondent pas'))
+    }
     else {
-      console.log(this.model)
+        this.loading = true
       return this.person_srv.registerother(this.model)
         .then(async (data) => {
-          console.log(data)
+            this.loading = false
           this.model = {
             _id: null,
             name: '',
@@ -93,8 +95,11 @@ export class FormComponent extends Base {
             end_time: null,
           }
           this.confirmPassword = ''
+            this.data = 'Création effectuée avec succès'
+            super.submit()
         })
         .catch((error) => {
+            this.loading = false
           return Promise.reject(new Error(error.message))
         })
     }
@@ -102,30 +107,30 @@ export class FormComponent extends Base {
   updateModel(){
     if (!this.matchPassword()) return Promise.reject(new Error('Les mots de passe ne correspondent pas'))
     else {
-      console.log(this.model)
+        this.loading = true
       return this.person_srv.update(this.model)
         .then(async (data) => {
+            this.loading = false
           console.log(data)
           this.model.role = 'employe'
           this.confirmPassword = ''
+            this.data = 'modification effectué, '+ this.model?.name
+            super.submit()
         })
         .catch((error) => {
+            this.loading = false
           return Promise.reject(new Error(error.message))
         })
     }
   }
 
   override async submit() {
-    const res = this.update ? 'modification effectué, ' + this.model?.name : 'Création effectuée avec succès'
     try {
       if (this.update) {
         await this.updateModel()
       } else {
         await this.create()
       }
-      this.data = res
-      // this.refreshService.triggerRefresh();
-      super.submit()
     } catch (e: any) {
       this.registerValid = e.message
     }

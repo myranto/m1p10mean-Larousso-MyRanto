@@ -61,7 +61,7 @@
               <p-button (onClick)="close()" severity="secondary" label="annuler" />
           </div>
           <div class="col-12 md:col-5">
-          <p-button [disabled]="!registerForm.form.valid" (onClick)="submit()" severity="success" label="valider"></p-button>
+          <p-button [disabled]="!registerForm.form.valid" [loading]="loading" (onClick)="submit()" severity="success" label="valider"></p-button>
           </div>
           <br>
           </div>

@@ -41,7 +41,7 @@
       <br>
         <p-button (click)="goBack()" severity="secondary">Retour</p-button>
         {{'   '}}
-      <p-button [disabled]="!recoveryForm.form.valid" [style]="{float:'right'}" (onClick)="handleSubmit()" color="primary" label="valider"></p-button>
+      <p-button [disabled]="!recoveryForm.form.valid" [loading]="loading" [style]="{float:'right'}" (onClick)="handleSubmit()" color="primary" label="valider"></p-button>
     </form>
   </mat-card-content>
   </p-card>

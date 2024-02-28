@@ -50,6 +50,7 @@ export class HomeCustomerComponent {
         this.findAllDiscount()
         this.user = getProfileStorage()
         this.service.byCustomer(this.user.id,0,true).subscribe((next)=>{
+            console.log(next)
             this.appointment_list = next
         });
         this.service.countByCustomer(this.user.id,true).subscribe((next)=> {this.totalAppointments = next.count});
