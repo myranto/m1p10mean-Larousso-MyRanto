@@ -1,0 +1,16 @@
+<p>Liste des {{ role=='employe' ? 'employées' : 'clients' }}!</p>
+<app-list
+  [data]="person_list"
+  [column]="column"
+  [clicked]="getPersonneLink"
+  [nameDelete]="'name'"
+  [edit]="role=='employe'"
+  [totalRow]="totalrow"
+  [acceptNew]="role=='employe'"
+  [header]="role=='employe' ? 'employées' : 'clients'"
+  [trash]="drop"
+  [searchBar]="searchBar"
+  [loaded]="loaded"
+  [updatePage]="updatePage"
+  [MyComponent]="FormComponent"
+/>

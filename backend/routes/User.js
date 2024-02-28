@@ -40,6 +40,7 @@ function validMail(email) {
 
 async function register(req,res) { 
     try {
+        
         // const person =  new User(req.body)
         if (!validMail(req.body.mail)) {
             throw new Error("Email invalid")
@@ -129,6 +130,7 @@ router.get('/count/:role',async function(req,res){
 // find by role
 router.get('/find/:role',async function(req,res) {
     try {
+        // await new Promise(resolve => setTimeout(resolve, 2000));
         if(req.query.text){
             let regex = new RegExp(req.query.text, 'i'); 
             return res.json(await user.find({

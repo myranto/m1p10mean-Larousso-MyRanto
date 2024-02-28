@@ -65,7 +65,7 @@ router.get('/', async function (req, res) {
             };
         }
         if (req.query.week && req.query.week!='null') {
-            query.date_end = AdParams;
+            query.date = AdParams;
         }
         console.log(query);
         result = appointment.find(query).sort({ date: -1 });
@@ -101,7 +101,7 @@ router.get('/count',async function(req,res){
             };
         }
         if (req.query.week && req.query.week!='null') {
-            query.date_end = AdParams;
+            query.date = AdParams;
         }
         return res.status(200).json(await appointment.countDocuments(query));
     } catch(error) {

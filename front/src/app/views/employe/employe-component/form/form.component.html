@@ -1,0 +1,70 @@
+<!--<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">-->
+<!--  <p-card>-->
+      <form #registerForm="ngForm" (ngSubmit)="submit()">
+<!--        <div class="flex justify-content-center">-->
+          <p-message *ngIf="registerValid!=null" severity="error" text="{{registerValid}}"></p-message>
+<!--          <p-message *ngIf="error_log" severity="error" text="{{error_log}}"></p-message>-->
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-user"></i>
+            </p-inputGroupAddon>
+            <input [(ngModel)]="model.name" aria-describedby="name-help" id="name" name="name" pInputText
+                   placeholder="Nom" required/>
+          </p-inputGroup>
+          <br>
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-envelope"></i>
+            </p-inputGroupAddon>
+            <input [(ngModel)]="model.mail" aria-describedby="mail-help" id="mail" name="mail" pInputText
+                   placeholder="Email" required
+                   type="email"/>
+          </p-inputGroup>
+          <br>
+
+            <br>
+            <span style="float: left;text-align: left; margin-top: -17px; max-height: 3px">Horaires de travail:</span><br>
+            <div style="display: flex; align-items: center;">
+              <div class="p-field" style="width: 40%; height: 2%;">
+                <input [(ngModel)]="model.start_time" pInputText name="start_time" type="time"/>
+              </div>
+              <span style="width: 20%; text-align: center;"> à </span>
+              <div class="p-field" style="width: 40%;  height: 40%;">
+                <input [(ngModel)]="model.end_time" pInputText name="end_time" placeholder="Heure de fin" type="time">
+              </div>
+            </div>
+            <br>
+        <div *ngIf="!update">
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-lock"></i>
+            </p-inputGroupAddon>
+            <input [(ngModel)]="model.password" name="password" pInputText placeholder="mot de passe" required
+                   type="password">
+          </p-inputGroup>
+          <br>
+          <p-inputGroup>
+            <p-inputGroupAddon>
+              <i class="pi pi-lock"></i>
+            </p-inputGroupAddon>
+            <input [(ngModel)]="confirmPassword" name="confirmPassword" pInputText placeholder="Retaper mot de passe"
+                   required type="password">
+          </p-inputGroup>
+        </div>
+          <p *ngIf="password_message!=null" style="color: crimson">
+            <br>
+            {{password_message}}
+          </p>
+          <br>
+          <div class="grid formgrid" style="position:relative;top:10px;">
+          <div class="col-12 md:col-2">
+              <p-button (onClick)="close()" severity="secondary" label="annuler" />
+          </div>
+          <div class="col-12 md:col-5">
+          <p-button [disabled]="!registerForm.form.valid" [loading]="loading" (onClick)="submit()" severity="success" label="valider"></p-button>
+          </div>
+          <br>
+          </div>
+<!--        </div>-->
+      </form>
+<!--  </p-card>-->

@@ -1,0 +1,50 @@
+<div class="grid formgrid" style="position:relative;top:10px;">
+    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <input [(ngModel)]="model.name" pInputText placeholder="nom" type="text">
+    </div>
+    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <input [(ngModel)]="model.percent" pInputText placeholder="pourcentage" type="number">
+    </div>
+    <span>Service?</span>
+    <div class="col-12 md:col-1">
+        <div class="field-radiobutton">
+            <p-radioButton [(ngModel)]="model.is_service" id="city1" name="city" value="true"></p-radioButton>
+            <label for="city1">oui</label>
+        </div>
+    </div>
+    <div class="col-12 md:col-1">
+        <div class="field-radiobutton">
+            <p-radioButton [(ngModel)]="model.is_service" id="city2" name="city"
+                           value="false"></p-radioButton>
+            <label for="city2">non</label>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<div class="grid formgrid" style="position:relative;top:10px;">
+    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <span class="p-float-label">
+            <p-calendar [(ngModel)]="model.date_start" [touchUI]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" appendTo="body" id="start" required></p-calendar>
+            <label for="start">Début</label>
+        </span>
+    </div>
+    <div class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <span class="p-float-label">
+            <p-calendar [(ngModel)]="model.date_end" [touchUI]="true" [readonlyInput]="true" dateFormat="dd/mm/yy" appendTo="body" [minDate]="model.date_start" id="end" required></p-calendar>
+            <label for="end">Fin</label>
+        </span>
+    </div>
+    <div *ngIf="model.is_service.toString() === 'true'" class="col-12 mb-2 lg:col-4 lg:mb-0">
+        <span class="p-float-label">
+        <p-dropdown id="in"  [style]="{width:'100%'}" appendTo="body" [options]="options" [(ngModel)]="selected" />
+            <label for="in">Choisir un service</label>
+        </span>
+        <br>
+    </div>
+    <div class="col-12 md:col-2">
+        <p-button (onClick)="submit()" [loading]="loading"  severity="success" label="valider" />
+    </div>
+    <div class="col-12 md:col-2">
+        <p-button (onClick)="close()" severity="secondary" label="annuler" />
+    </div>
+</div>

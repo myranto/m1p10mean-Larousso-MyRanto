@@ -1,0 +1,79 @@
+<div class="card">
+<!--    <p-toolbar styleClass="mb-1 gap-1 d-flex justify-content-between">-->
+<!--        <ng-template pTemplate="left">-->
+            <app-modal [acceptNew]="acceptNew" [MyComponent]="MyComponent" header="Création {{header}}" class="ml-auto"></app-modal>
+<!--        </ng-template>-->
+    <div class="col-12 mb-2 lg:col-12 lg:mb-0 d-flex justify-content-end" style="display: flex; justify-content: flex-end;">
+
+        <span class="p-input-icon-right">
+            <input type="text" [(ngModel)]="text" (ngModelChange)="searchBar(text)"  pInputText placeholder="Rechercher..."/>
+            <i class="pi pi-search"></i>
+        </span>
+        </div>
+<!--    </p-toolbar>-->
+
+    <p-table
+        *ngIf="loaded; else loading"
+    [columns]="column"
+    [value]="data"
+    [rowHover]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.name }}
+        </th>
+        <th>action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr style="cursor: pointer">
+        <td  *ngFor="let col of columns" (click)="onRowClick(rowData)">
+          {{ col.selector(rowData) }}
+        </td>
+        <td >
+          <span *ngIf="edit">
+            <app-modal [MyComponent]="MyComponent" header="Modification {{header}}" [update]="true" [model]="rowData" ></app-modal>
+          </span>{{' '}}
+          <span *ngIf="trash">
+           <app-delete-row [name]="nameDelete" [row]="rowData" [delete]="trash"></app-delete-row>
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+    <ng-template #loading>
+        <div *ngFor="let skeleton of skeletons">
+            <p-table
+                [columns]="column"
+                [value]="skeletons"
+                [rowHover]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+            >
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            <p-skeleton width="100px"></p-skeleton>
+                        </th>
+                        <th><p-skeleton width="100px"></p-skeleton></th>
+                    </tr>
+                </ng-template>
+<!--                <ng-template pTemplate="body" let-rowData let-columns="columns">-->
+<!--                    <tr style="cursor: pointer">-->
+<!--                        <td *ngFor="let col of columns">-->
+<!--                            <p-skeleton width="100px"></p-skeleton>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <p-skeleton width="100px"></p-skeleton>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                </ng-template>-->
+            </p-table>
+        </div>
+    </ng-template>
+
+    <p-paginator  *ngIf="loaded"  [first]="current_page*rows" (onPageChange)="changePage($event)" [rowsPerPageOptions]="[5, 10, 20]" [rows]="rows"  [totalRecords]="totalRow" ></p-paginator>
+  <p-confirmDialog></p-confirmDialog>
+</div>
+

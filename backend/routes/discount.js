@@ -15,6 +15,7 @@ router.get('/', async function (req, res) {
                 ]
             }))
         }
+        // await new Promise(resolve => setTimeout(resolve, 2000));
         const currentDate = new Date();
         let futureDiscountsQuery = discount.find({ date_start: { $gte: currentDate } }).sort({ date_start: 1 });
         let pastDiscountsQuery = discount.find({ date_start: { $lt: currentDate } }).sort({ date_start: -1 });
