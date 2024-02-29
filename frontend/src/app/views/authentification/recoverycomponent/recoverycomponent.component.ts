@@ -57,7 +57,6 @@ export class RecoverycomponentComponent {
       await this.router.navigate(['/'])
   }
   async handleSubmit() {
-      this.loading = true
     switch (this.action) {
       case 'sendMail':
         this.action = 'modify'
@@ -69,6 +68,7 @@ export class RecoverycomponentComponent {
           console.log(this.password_message)
         }
         else {
+            this.loading = true
           this.user.recoverypassword(this.person)
             .then(async (data) => {
             alert(data)

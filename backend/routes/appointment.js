@@ -134,11 +134,11 @@ router.put('/date/:id',async function(req,res){
         } 
         val.date = new Date(req.body.start)
         await val.save()
-        const message = 'Cher client, nous vous informons que votre rendez-vous viens d\'etre deplacer'
+        const message = 'Cher client, nous vous informons que votre rendez-vous viens d\'etre déplacer'
         const msg = {
             to: val.customer.mail,
             from: 'my.randrianantoandro@gmail.com',
-            subject: 'Coiffure:Offre spéciale!',
+            subject: 'Coiffure:Déplacement rendez-vous!',
             text: message,
             html: HTML_TEMPLATE(message)
         };

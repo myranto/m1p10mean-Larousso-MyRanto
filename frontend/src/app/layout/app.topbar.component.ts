@@ -22,9 +22,10 @@ export class AppTopBarComponent {
         this.profile = getProfileStorage()
     }
     async logOut() {
+
         removeProfileStorage()
         this.message.add({ severity: 'success', summary: 'Succès', detail: 'déconnexion réussi' });
-        await this.router.navigate(['/'])
+        await this.router.navigate(['/'],{ queryParams: { role: this.profile.role } })
     }
     async updateProfile() {
         const link = this.profile.role === 'employe' ? '/views/employe/profile' : '/views/customer/profile'

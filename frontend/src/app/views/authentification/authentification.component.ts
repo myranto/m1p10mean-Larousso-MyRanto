@@ -6,7 +6,7 @@ import {FormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
 import {AuthService} from "../../utils/services/person/auth-service";
 import {NgIf, NgOptimizedImage} from "@angular/common";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {InputTextModule} from "primeng/inputtext";
 import {ButtonModule} from "primeng/button";
 import {PasswordModule} from "primeng/password";
@@ -50,11 +50,22 @@ import {MessageModule} from "primeng/message";
 })
 export class AuthentificationComponent {
     public loginValid = null
-    public username = ''
+    public username = 'mahatokyrafalimanana@gmail.com'
     loading = false
-    public password = ''
+    role='customer'
+    public password = 'mahatoky'
     auth = inject(AuthService)
-  constructor(private router: Router  ) {}
+  constructor(private router: Router,private route:ActivatedRoute  ) {
+      let params = this.route.snapshot.queryParams;
+      this.role = params['role']
+      if (this.role==='admin'){
+          this.username= 'my.randria@gmail.com'
+          this.password = 'myranto'
+      }else if (this.role === 'employe'){
+          this.username= 'lars.ratovo@gmail.com'
+          this.password = 'lars'
+      }
+  }
   handleSubmit(){
         this.loading = true
     const form = {
@@ -74,7 +85,7 @@ export class AuthentificationComponent {
               await this.router.navigate(['/views/admin/home'])
               break
             case 'employe':
-              await this.router.navigate(['/views/employe/home'])
+              await this.router.navigate(['/views/employe/appointment'])
               break
             default:
               await this.router.navigate(['/views/customer/home-customer'])
