@@ -216,14 +216,21 @@ router.get('/commission', async function(req, res) {
         start.setHours(0,0,0,0);
         let end = new Date(pdate);
         end.setHours(23,59,59,999);
+        const aplistt = appointment.find({
+            date: {
+                $gte: start,
+                $lt: end
+            }
+        })
+        aplistt.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
+        aplistt.populate({path:"customer",model:"User",select:"name profile"});
+        let commission = 0;
         const aplist = await appointment.find({
             date: {
                 $gte: start,
                 $lt: end
             }
-        });
-
-        let commission = 0;
+        })
         for (const row of aplist) {
             for (const key of row.services) {
                 
@@ -234,7 +241,7 @@ router.get('/commission', async function(req, res) {
         }
         return res.status(200).json({
             commission: commission,
-            listtask: aplist
+            listtask: await aplistt
         });
     } else {
         return res.status(400).json("veuillez indiquer la date");
