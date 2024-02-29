@@ -103,7 +103,10 @@ router.get('/count',async function(req,res){
         if (req.query.week && req.query.week!='null') {
             query.date = AdParams;
         }
-        return res.status(200).json(await appointment.countDocuments(query));
+        console.log(query);
+        const v = await appointment.countDocuments(query)
+        console.log(v);
+        return res.status(200).json(v);
     } catch(error) {
         console.log(error);
         return res.sendStatus(500);
@@ -132,9 +135,10 @@ router.put('/date/:id',async function(req,res){
         if (!val) {
             throw new Error('Aucun rendez-vous trouvé avec cet ID');
         } 
+        const oldDate = val.date
         val.date = new Date(req.body.start)
         await val.save()
-        const message = 'Cher client, nous vous informons que votre rendez-vous viens d\'etre déplacer'
+        const message = 'Cher client, nous vous informons que votre rendez-vous viens du '+new Date(oldDate)+' d\'etre déplacer à '+new Date(req.body.start)
         const msg = {
             to: val.customer.mail,
             from: 'my.randrianantoandro@gmail.com',

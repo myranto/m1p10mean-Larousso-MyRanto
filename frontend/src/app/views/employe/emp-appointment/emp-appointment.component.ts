@@ -76,7 +76,7 @@ export class EmpAppointmentComponent {
     this.service.byEmp(customer.id).subscribe((next)=>{
       this.appointments = next
     });
-    this.service.countByEmp(customer.id).subscribe((next)=> {this.totalAppointments = next.count});
+    this.service.countByEmp(customer.id).subscribe((next)=> {this.totalAppointments = next});
   }
 
   showDetail(){

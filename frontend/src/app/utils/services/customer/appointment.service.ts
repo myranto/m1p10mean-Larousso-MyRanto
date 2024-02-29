@@ -18,13 +18,13 @@ export class AppointmentService extends CrudService<Appointment> {
     return this.http.get<Appointment[]>(host+this.url,{params:{customer:id,page: page ? page : 0,week:week},headers: this.getHeaders()});
   }
   countByCustomer(id : string, week = null){
-    return this.http.get<{count:number}>(host+this.url+'/count',{params:{customer:id,week:week},headers: this.getHeaders()});
+    return this.http.get<number>(host+this.url+'/count',{params:{customer:id,week:week},headers: this.getHeaders()});
   }
   byEmp(id : string,page? : number){
     return this.http.get<Appointment[]>(host+this.url,{params:{employe : id,page: page ? page : 0},headers: this.getHeaders()});
   }
   countByEmp(id : string){
-    return this.http.get<{count:number}>(host+this.url+'/count',{params:{employe : id},headers: this.getHeaders()});
+    return this.http.get<number>(host+this.url+'/count',{params:{employe : id},headers: this.getHeaders()});
   }
   calendar(role:string,id:string,mode:string,date:string){
       return this.http.get<any[]>(host+this.url+'/calendar',{params:{role : role, id:id, mode: mode, date: date},headers: this.getHeaders()})

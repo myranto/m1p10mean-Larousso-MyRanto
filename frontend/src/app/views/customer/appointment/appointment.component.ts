@@ -80,7 +80,7 @@ export class AppointmentComponent implements OnInit{
     this.service.byCustomer(customer.id).subscribe((next)=>{
       this.appointments = next
     });
-    this.service.countByCustomer(customer.id).subscribe((next)=> {this.totalAppointments = next.count});
+    this.service.countByCustomer(customer.id).subscribe((next)=> {this.totalAppointments = next});
   }
 
   showDetail(){

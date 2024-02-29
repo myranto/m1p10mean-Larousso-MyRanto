@@ -146,7 +146,7 @@ router.post('/',async function (req,res){
             srv.discount = document._id
             await srv.save()
         }
-        const message = 'Voici un nouvel offre que vous ne pouvez laisser passer '+req.body.name+', avec une remise de <strong>'+req.body.percent+'%'
+        const message = '<p>Voici un nouvel offre que vous ne pouvez laisser passer '+req.body.name+', avec une remise de <strong>'+req.body.percent+'%</strong></p><p>il sera actif dès le '+new Date(req.body.date_start)+'</p>'
             user_list.forEach(async p => {
                 const msg = {
                     to: p.mail,

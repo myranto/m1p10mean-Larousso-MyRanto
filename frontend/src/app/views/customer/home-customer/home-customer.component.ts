@@ -53,7 +53,9 @@ export class HomeCustomerComponent {
             console.log(next)
             this.appointment_list = next
         });
-        this.service.countByCustomer(this.user.id,true).subscribe((next)=> {this.totalAppointments = next.count});
+        this.service.countByCustomer(this.user.id,true).subscribe((next)=> {
+            this.totalAppointments = next
+        });
         this.refreshService.refresh.subscribe(()=>this.findAllDiscount())
     }
     showDetail(){

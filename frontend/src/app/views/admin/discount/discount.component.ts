@@ -91,7 +91,7 @@ export class DiscountComponent {
     },
     {
       name:'Service',
-      selector:(row:any)=>row?.is_service,
+      selector:(row:any)=>row?.is_service && row.is_service==='true' ? 'par service' : 'global',
       sortable:true,
     },
     {
