@@ -119,7 +119,7 @@ export class EmpAppointmentComponent {
     let total = 0;
     let emp = getProfileStorage()
     appointment.services.forEach((srv)=>{
-      if(srv.emp && srv.emp === emp.id){
+      if(srv.emp && srv.emp?._id === emp.id){
         total += (srv.committee/100) * srv.price;
       }
     });

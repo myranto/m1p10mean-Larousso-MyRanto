@@ -32,7 +32,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-appointment>
                 <tr [pSelectableRow]="appointment">
-                    <td><p-avatar [image]="getProfile(appointments.customer)" shape="circle" size="xlarge" ></p-avatar></td>
+                    <td><p-avatar [image]="getProfile(appointment.customer)" shape="circle" size="xlarge" ></p-avatar></td>
                     <td>{{ appointment.customer.name}}</td>
                     <td>{{ appointment.date | date:'d MMMM yyyy':'':'fr' }}</td>
                     <td>{{ calculateTotalMinute(appointment) }} Mn.</td>
