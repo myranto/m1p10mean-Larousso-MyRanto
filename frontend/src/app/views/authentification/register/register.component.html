@@ -8,8 +8,8 @@
                             <p-button icon="pi pi-arrow-left" (click)="goBack()"></p-button>
                             {{'   '}}</ng-container>
                     </div>
-                    <div class="text-900 text-3xl font-medium mb-3">Bienvenue!</div>
-                    <span class="text-600 font-medium">Connectez-vous pour continuer</span>
+                    <div class="text-900 text-3xl font-medium mb-3">Page d'inscription!</div>
+                    <span class="text-600 font-medium">Inscirvez-vous</span>
                 </div>
 
                 <div>
@@ -22,15 +22,17 @@
                     </p-inputGroup>
 
                     <br>
+<!--                    <label for="email1" class="block text-900 text-xl font-medium mb-2">Addresse email</label>-->
+<!--                    <input id="email1" type="text" placeholder="Addresse email" [(ngModel)]="person.mail" pInputText required class="w-full md:w-30rem mb-5" style="padding:1rem">-->
+
                     <p-inputGroup>
-                        <p-inputGroupAddon>
+                        <p-inputGroupAddon style="height: 58%">
                             <i class="pi pi-envelope"></i>
                         </p-inputGroupAddon>
-                        <input [(ngModel)]="person.mail" aria-describedby="mail-help" id="mail" name="mail" pInputText
+                        <input [(ngModel)]="person.mail" aria-describedby="mail-help" id="mail" class="w-full md:w-30rem mb-5" name="mail" pInputText
                                placeholder="Email" required
                                type="email"/>
                     </p-inputGroup>
-                    <br>
                     <!-- champ pour l'employé -->
                     <div *ngIf="role === 'employe'">
                         <br>
@@ -51,7 +53,7 @@
                         <p-inputGroupAddon>
                             <i class="pi pi-lock"></i>
                         </p-inputGroupAddon>
-                        <input [(ngModel)]="person.password" name="password" pInputText placeholder="mot de passe" required
+                        <input [(ngModel)]="person.password" name="password"  pInputText placeholder="mot de passe" required
                                type="password">
                     </p-inputGroup>
                     <br>
