@@ -84,20 +84,25 @@ router.post('/register',async (req,res)=>{
 router.post('/register/cli',async (req,res)=>{
     await register(req,res)
 })
-router.put('/recovery',async function (req,res) {
+router.put('/recovery', async function (req, res) {
     try {
-    const one = await user.findOne({ mail: req.body.mail })
+        const one = await user.findOne({ mail: req.body.mail });
         console.log(one);
         if (!one) {
-           return res.status(404).json('Mail introuvable.')
+            return res.status(404).json('Mail introuvable.');
         }
-        one.password = await bcrypt.hash(req.body.password,saltRounds)
-        await user.updateOne(one);
-        return res.status(200).json('modification réussi');
+
+        const updateData = {
+            password: await bcrypt.hash(req.body.password, saltRounds),
+        };
+
+        await user.updateOne({ _id: one._id }, { $set: updateData });
+        return res.status(200).json('Modification réussie');
     } catch (error) {
-       return res.status(400).json(error.message);
+        return res.status(400).json(error.message);
     }
-})
+});
+
 // updated user
 router.put('/',async function(req,res){
     try {
