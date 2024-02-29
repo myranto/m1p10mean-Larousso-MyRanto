@@ -18,7 +18,7 @@ router.post('/', async function(req,res){
                 end_date.setMinutes(employe.end_time.minutes);
                 let appointment_date = new Date(req.body.date);
                 if(appointment_date < start_date || appointment_date > end_date){
-                    return res.status(400).send(`L' employé ${employe.name} commence à ${start_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})} et fini à ${end_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})}`);
+                    return res.status(400).send(`L' employé ${employe.name} commence à ${start_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})} et fini à ${end_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})} or ${appointment_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})}`);
                 }
             }
         }
