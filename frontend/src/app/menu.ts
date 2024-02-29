@@ -23,9 +23,9 @@ export const MenuCustomer =  [
 
 export const MenuAdmin= [
         {
-            label: 'Home',
+            label: 'Accueil',
             items: [
-                { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['admin/dashboard'] }
+                { label: 'Tableau de bord', icon: 'pi pi-fw pi-home', routerLink: ['admin/dashboard'] }
             ]
         },
         {
