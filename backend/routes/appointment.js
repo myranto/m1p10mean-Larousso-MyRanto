@@ -17,7 +17,8 @@ router.post('/', async function(req,res){
                 end_date.setHours(employe.end_time.hours);
                 end_date.setMinutes(employe.end_time.minutes);
                 let appointment_date = new Date(req.body.date);
-                if(new Date(appointment_date.toUTCString()) < new Date(start_date.toUTCString()) || new Date(appointment_date.toUTCString()) > new Date(end_date.toUTCString())){
+                appointment_date.setHours(appointment_date.getHours()+3);
+                if(appointment_date < start_date || appointment_date > end_date){
                     return res.status(400).send(`L' employé ${employe.name} commence à ${start_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})} et fini à ${end_date.toLocaleDateString("fr-FR",{hour:'2-digit',minute:'2-digit'})}`);
                 }
             }
@@ -61,11 +62,7 @@ router.get('/', async function (req, res) {
             };
         } else if (req.query.employe) {
             query = {
-                services: { $elemMatch: { 'emp': req.query.employe } },
-                payment:{
-                    $exists:true,
-                    $ne:null
-                }
+                services: { $elemMatch: { 'emp': req.query.employe } }
             };
         }
         if (req.query.week && req.query.week!='null') {
@@ -107,10 +104,7 @@ router.get('/count',async function(req,res){
         if (req.query.week && req.query.week!='null') {
             query.date = AdParams;
         }
-        console.log(query);
-        const v = await appointment.countDocuments(query)
-        console.log(v);
-        return res.status(200).json(v);
+        return res.status(200).json(await appointment.countDocuments(query));
     } catch(error) {
         console.log(error);
         return res.sendStatus(500);
@@ -139,14 +133,13 @@ router.put('/date/:id',async function(req,res){
         if (!val) {
             throw new Error('Aucun rendez-vous trouvé avec cet ID');
         } 
-        const oldDate = val.date
         val.date = new Date(req.body.start)
         await val.save()
-        const message = 'Cher client, nous vous informons que votre rendez-vous viens du '+new Date(oldDate)+' d\'etre déplacer à '+new Date(req.body.start)
+        const message = 'Cher client, nous vous informons que votre rendez-vous viens d\'etre deplacer'
         const msg = {
             to: val.customer.mail,
             from: 'my.randrianantoandro@gmail.com',
-            subject: 'Salon de beauté:Déplacement rendez-vous!',
+            subject: 'Coiffure:Offre spéciale!',
             text: message,
             html: HTML_TEMPLATE(message)
         };
@@ -216,21 +209,14 @@ router.get('/commission', async function(req, res) {
         start.setHours(0,0,0,0);
         let end = new Date(pdate);
         end.setHours(23,59,59,999);
-        const aplistt = appointment.find({
-            date: {
-                $gte: start,
-                $lt: end
-            }
-        })
-        aplistt.populate({path:"services",populate:{path:"emp",model:"User",select:"name profile"}});
-        aplistt.populate({path:"customer",model:"User",select:"name profile"});
-        let commission = 0;
         const aplist = await appointment.find({
             date: {
                 $gte: start,
                 $lt: end
             }
-        })
+        });
+
+        let commission = 0;
         for (const row of aplist) {
             for (const key of row.services) {
                 
@@ -241,7 +227,7 @@ router.get('/commission', async function(req, res) {
         }
         return res.status(200).json({
             commission: commission,
-            listtask: await aplistt
+            listtask: aplist
         });
     } else {
         return res.status(400).json("veuillez indiquer la date");
