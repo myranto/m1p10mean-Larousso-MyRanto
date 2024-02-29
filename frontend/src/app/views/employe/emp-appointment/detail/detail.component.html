@@ -7,6 +7,8 @@
             <th>Durrée estimée</th>
             <th>Taux de la commission</th>
             <th>commission</th>
+            <th>Prix sans promotion</th>
+            <th>Promotion</th>
             <th>Prix</th>
         </tr>
     </ng-template>
@@ -18,6 +20,8 @@
             <td>{{ product.committee }} %</td>
             <td>{{ (product.committee/100)*product.price }} Ar.</td>
             <td>{{ product.price }} Ar.</td>
+            <td>{{ product.discount }}%</td>
+            <td>{{ product.price - (product.price * (product.discount/100)) }} Ar.</td>
         </tr>
     </ng-template>
 </p-table>

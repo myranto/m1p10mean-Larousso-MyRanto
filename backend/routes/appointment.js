@@ -61,7 +61,11 @@ router.get('/', async function (req, res) {
             };
         } else if (req.query.employe) {
             query = {
-                services: { $elemMatch: { 'emp': req.query.employe } }
+                services: { $elemMatch: { 'emp': req.query.employe } },
+                payment:{
+                    $exists:true,
+                    $ne:null
+                }
             };
         }
         if (req.query.week && req.query.week!='null') {

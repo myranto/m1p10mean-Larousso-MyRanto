@@ -124,7 +124,7 @@ router.get("/day/ca", async function (req, res) {
           $group: {
             _id: { $dateToString: { format: "%d/%m/%Y", date: "$date" } },
             total: {
-              $sum: "$services.price",
+              $sum: "$payment.amount",
             },
             committee: {
               $sum: {
@@ -177,7 +177,7 @@ router.get("/month/ca", async function (req, res) {
               year: { $year: "$date" },
             },
             total: {
-              $sum: "$services.price",
+              $sum: "$payment.amount",
             },
             committee: {
               $sum: {
@@ -233,7 +233,7 @@ router.get("/month/bonus", async function (req, res) {
               year: { $year: "$date" },
             },
             total: {
-              $sum: "$services.price",
+              $sum: "$payment.amount",
             },
             committee: {
               $sum: {

@@ -74,6 +74,7 @@ export class EmpAppointmentComponent {
     this.state = 'loading';
     let customer = getProfileStorage()
     this.service.byEmp(customer.id).subscribe((next)=>{
+      console.log(next);
       this.appointments = next
     });
     this.service.countByEmp(customer.id).subscribe((next)=> {this.totalAppointments = next});
@@ -96,10 +97,18 @@ export class EmpAppointmentComponent {
     });
   }
 
+  calculateServicePrice(service){
+    let total = service.price;
+    if(service.discount){
+      total -= (total*(service.discount/100));
+    }
+    return total;
+  }
+
   calculateTotal(appointment : Appointment){
     let total = 0;
     appointment.services.forEach((srv)=>{
-      total += srv.price;
+      total += this.calculateServicePrice(srv);
     });
     return total;
   }
@@ -108,7 +117,7 @@ export class EmpAppointmentComponent {
     let total = 0;
     let emp = getProfileStorage()
     appointment.services.forEach((srv)=>{
-      if(srv.emp && srv.emp === emp.id){
+      if(srv.emp && srv.emp._id === emp.id){
         total += srv.duration;
       }
     });
@@ -117,9 +126,9 @@ export class EmpAppointmentComponent {
 
   calculateCommittee(appointment : Appointment){
     let total = 0;
-    let emp = getProfileStorage()
+    let emp = getProfileStorage();
     appointment.services.forEach((srv)=>{
-      if(srv.emp && srv.emp === emp.id){
+      if(srv.emp && srv.emp._id === emp.id){
         total += (srv.committee/100) * srv.price;
       }
     });

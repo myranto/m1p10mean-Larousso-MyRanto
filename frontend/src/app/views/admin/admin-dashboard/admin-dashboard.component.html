@@ -111,9 +111,9 @@
         <ng-template pTemplate="body" let-appointment>
             <tr>
                 <td>{{ appointment._id }}</td>
-                <td>{{ appointment.balance}}</td>
-                <td>{{ appointment.committee}}</td>
                 <td>{{ appointment.total}}</td>
+                <td>{{ appointment.committee}}</td>
+                <td>{{ appointment.balance}}</td>
             </tr>
         </ng-template>
     </p-table>
@@ -138,8 +138,9 @@
             <tr>
                 <td>{{ formatMonth(sell._id.month) }}</td>
                 <td>{{ sell._id.year }}</td>
+                <td>{{ sell.total }}</td>
+                <td>{{ sell.committee }}</td>
                 <td>{{ sell.balance}}</td>
-                <td>{{ sell.committee}}</td>
             </tr>
         </ng-template>
     </p-table>

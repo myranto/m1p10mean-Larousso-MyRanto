@@ -9,7 +9,7 @@ export interface Appointment {
         committee : number,
         price:number,
         discount: number,
-        emp: string
+        emp: any
     }[],
     payment : {
         payment_date : Date,
