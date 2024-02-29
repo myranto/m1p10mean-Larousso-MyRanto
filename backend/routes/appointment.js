@@ -138,7 +138,7 @@ router.put('/date/:id',async function(req,res){
         const msg = {
             to: val.customer.mail,
             from: 'my.randrianantoandro@gmail.com',
-            subject: 'Coiffure:Déplacement rendez-vous!',
+            subject: 'Salon de beauté:Déplacement rendez-vous!',
             text: message,
             html: HTML_TEMPLATE(message)
         };

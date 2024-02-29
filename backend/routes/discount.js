@@ -142,7 +142,7 @@ router.post('/',async function (req,res){
                 const msg = {
                     to: p.mail,
                     from: 'my.randrianantoandro@gmail.com',
-                    subject: 'Coiffure:Offre spéciale!',
+                    subject: 'Salon de beauté:Offre spéciale!',
                     text: message,
                     html: HTML_TEMPLATE(message)
                 };
