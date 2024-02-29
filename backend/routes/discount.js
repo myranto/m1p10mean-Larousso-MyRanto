@@ -17,17 +17,26 @@ router.get('/', async function (req, res) {
         }
         // await new Promise(resolve => setTimeout(resolve, 2000));
         const currentDate = new Date();
-        let futureDiscountsQuery = discount.find({ date_start: { $gte: currentDate } }).sort({ date_start: 1 });
-        let pastDiscountsQuery = discount.find({ date_start: { $lt: currentDate } }).sort({ date_start: -1 });
+        let futureDiscountsQuery = discount.find().sort({ date_start: -1 });
+        // let futureDiscountsQuery = discount.find({ date_start: { $gte: currentDate } }).sort({ date_start: 1 });
+        // let pastDiscountsQuery = discount.find({ date_start: { $lt: currentDate } }).sort({ date_start: -1 });
         if (req.query.page) {
             const page = parseInt(req.query.page);
             const row = parseInt(req.query.row);
             futureDiscountsQuery = futureDiscountsQuery.skip(page * row).limit(row);
-            pastDiscountsQuery = pastDiscountsQuery.skip(page * row).limit(row);
         }
         const futureDiscounts = await futureDiscountsQuery.exec();
-        const pastDiscounts = await pastDiscountsQuery.exec();
-        return res.json([...futureDiscounts, ...pastDiscounts]);
+        // if (req.query.page) {
+        //     const page = parseInt(req.query.page);
+        //     const row = parseInt(req.query.row);
+        //     let remaining = row - futureDiscounts.length;
+        //     pastDiscountsQuery = pastDiscountsQuery.skip(page * remaining).limit(remaining);
+        // }
+        // const pastDiscounts = await pastDiscountsQuery.exec();
+        // console.log(futureDiscounts.length);
+        // console.log(pastDiscounts.length);
+        // return res.json([...futureDiscounts, ...pastDiscounts]);
+        return res.json(futureDiscounts)
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
