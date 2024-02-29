@@ -1,1 +1,1 @@
-export const host : string = "http://localhost:3000";
+export const host : string = "http://m1p10mean-larousso-myranto.onrender.com";
