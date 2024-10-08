@@ -17,4 +17,4 @@ function isPathExcluded(req) {
     // console.log(excludedRegexPaths.some(regex => regex.test(req.path)));
   return excludedRegexPaths.some(regex => regex.test(req.path));
 }
-module.exports = isPathExcluded 
+module.exports = isPathExcluded
